@@ -145,6 +145,8 @@ legend { font-family: var(--display); font-weight: 600; font-size: 1.125rem; lin
 .slots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 560px) { .slots { grid-template-columns: 1fr; } }
 .cta .field label { font-size: 0.875rem; }
+.consent { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 0.875rem; line-height: 1.45; cursor: pointer; }
+.consent input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--heart); }
 .copy-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .cta .btn-light { background: transparent; color: var(--on-olive); border-color: color-mix(in srgb, var(--on-olive) 60%, transparent); padding: 10px 18px; font-size: 0.9375rem; }
 .cta .btn-light:hover { background: transparent; color: var(--on-olive); border-color: var(--on-olive); }
@@ -175,7 +177,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <footer>
   <div class="wrap">
     <span>Simoné · Wellbeing &amp; Regenerative Art · Bogotá</span>
-    <span>Tus respuestas no se guardan en esta página. Solo llegan a Simoné si tú las envías.</span>
+    <span>Simoné guarda tus respuestas sin datos personales para mejorar este diagnóstico. Tu nombre y tu empresa solo se guardan si lo autorizas.</span>
   </div>
 </footer>
 
@@ -283,6 +285,30 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   ];
 
   var ORIGIN = (function () { try { return (new URLSearchParams(location.search).get("origen") || "").replace(/[^a-z0-9-]/gi, "").slice(0, 40); } catch (e) { return ""; } })();
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbz5npQIBjEG_xR1iNcVp1ALmjQFo1TV-5YcbyUbVrPegt7WUwTpjg60J0MDrv_aR5oP/exec";
+  var CLAVE = "simone-diagnostico-2026";
+  var SID = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  var sent = {};
+  function logEvent(evento, ctx) {
+    if (sent[evento] || !ENDPOINT) return;
+    sent[evento] = true;
+    try {
+      var p = state.profile, c = state.close, by = {};
+      ctx.results.forEach(function (r) { by[r.m.id] = r.need; });
+      var payload = {
+        clave: CLAVE, id: SID, origen: ORIGIN || "directo", evento: evento,
+        area: PROFILE[0].opts[p.cargo], tamano: PROFILE[1].opts[p.tam], sector: PROFILE[2].opts[p.sector], operativo: PROFILE[3].opts[p.oper],
+        cultura: by.cultura, liderazgo: by.liderazgo, bienestar: by.bienestar, sostenibilidad: by.sostenibilidad, formacion: by.formacion,
+        prioridad: ctx.main ? ctx.main.m.name : "Ninguna",
+        recomendacion: ctx.main ? SVC[ctx.main.rec].name : "", segundo: ctx.second ? SVC[ctx.second.rec].name : "",
+        cuando: CLOSE[0].opts[c.cuando], presupuesto: CLOSE[1].opts[c.ppto],
+        respuestas: MODS.map(function (m) { var a = state.answers[m.id]; return m.id + ":" + a.l0 + "," + a.l1 + "," + a.s; }).join(" ; "),
+        autoriza: !!state.autoriza
+      };
+      if (state.autoriza) { payload.nombre = state.name; payload.empresa = state.company; payload.grupo = groupList().join(" | "); }
+      fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(function () {});
+    } catch (e) {}
+  }
   var state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" };
   var TOTAL = MODS.length + 2; // perfil + 5 módulos + cierre
   var app = document.getElementById("app");
@@ -562,6 +588,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         '<li><div class="path-n">3</div><div class="path-body"><h3>Agenda la sesión por WhatsApp</h3><p>Nathalia Velasco recibe tu resultado y el grupo, y te propone fechas.</p>' +
           '<div class="grid2"><div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" value="' + esc(state.name) + '"></div>' +
           '<div class="field"><label for="f-company">Empresa</label><input id="f-company" autocomplete="organization" value="' + esc(state.company) + '"></div></div>' +
+          '<label class="consent"><input type="checkbox" id="f-consent"' + (state.autoriza ? ' checked' : '') + '><span>Autorizo a Simoné a guardar mi nombre, mi empresa y el grupo para contactarme, según la Ley 1581 de 2012 de protección de datos.</span></label>' +
           '<div class="copy-row"><a class="btn btn-wa" id="send" target="_blank" rel="noopener" href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Agendar la sesión por WhatsApp</a>' +
           '<button class="btn btn-light" id="copy" type="button">Copiar resumen</button><span class="copied" id="copied" role="status"></span></div>' +
           '<p class="small">También puedes escribir al +57 321 773 8039 o a experienciasimone@gmail.com.</p></div></li>' +
@@ -574,14 +601,18 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     function refresh() {
       state.name = document.getElementById("f-name").value.trim();
       state.company = document.getElementById("f-company").value.trim();
+      state.autoriza = document.getElementById("f-consent").checked;
       for (var k = 0; k < 6; k++) state.group[k] = document.getElementById("g-" + k).value.trim();
       send.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(summary(results, ranked));
     }
     refresh();
-    app.querySelectorAll(".cta input").forEach(function (inp) { inp.oninput = refresh; });
+    app.querySelectorAll(".cta input").forEach(function (inp) { inp.oninput = refresh; inp.onchange = refresh; });
+    var ctx = { results: results, main: main, second: second };
+    logEvent("resultado", ctx);
+    send.addEventListener("click", function () { refresh(); logEvent("whatsapp", ctx); });
 
     document.getElementById("pdf").onclick = function () {
-      refresh();
+      refresh(); logEvent("pdf", { results: results, main: main, second: second });
       var msg = document.getElementById("pdf-msg"), btn = this;
       btn.disabled = true; msg.textContent = "Preparando tu informe…";
       buildPDF(results, ranked, main, second).then(function (d) {
