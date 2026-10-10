@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inventario de Equilibrio Laboral</title>
+<meta name="description" content="Un test de 5 minutos para conocer tu energía, tu conexión con el entorno y tu sentido de logro en el trabajo. Simoné.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* Layout: una columna tranquila, una dimensión por pantalla. El resultado se lee como tres
+   medidores y un perfil general; la marca es la misma de Simoné, más pausada. */
+:root {
+  --cream: #F6F0E2; --paper: #FCF9F2; --olive: #363A12; --olive-soft: #5C6132;
+  --rust: #8A3300; --heart: #F2A03D; --magenta: #BE1A82; --line: #DCD3BC;
+  --good: #4F6B2A; --mid: #C9861F; --high: #A8321C; --on-olive: #F6F0E2;
+  --logo-light: block; --logo-dark: none;
+  --display: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --body: "Lato", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+    --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+    --good: #93B46A; --mid: #E6AE4E; --high: #EF7B60; --on-olive: #1B1D0D;
+    --logo-light: none; --logo-dark: block; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+  --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+  --good: #93B46A; --mid: #E6AE4E; --high: #EF7B60; --on-olive: #1B1D0D;
+  --logo-light: none; --logo-dark: block; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--olive); font-family: var(--body); font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 720px; margin-inline: auto; padding-inline: 16px; }
+header.top { border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.logo img { height: 34px; width: auto; }
+.logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
+.meta { font-family: var(--display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
+main { padding-block: 32px 72px; }
+.eyebrow { font-family: var(--display); font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); }
+.lead { color: var(--olive-soft); font-size: 1.125rem; max-width: 60ch; }
+.intro, .step, .result { display: grid; gap: 24px; }
+.intro h1, .result h1 { font-size: clamp(1.9rem, 1.4rem + 2.4vw, 2.7rem); font-weight: 600; letter-spacing: -0.01em; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.facts span { background: var(--paper); border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px; font-size: 0.9375rem; }
+.dims { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.dims li { padding-block: 12px; border-bottom: 1px solid var(--line); }
+.dims strong { font-family: var(--display); }
+.dims span { display: block; color: var(--olive-soft); font-size: 0.9375rem; }
+.note { font-size: 0.9375rem; color: var(--olive-soft); background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+
+.progress { display: grid; gap: 10px; margin-bottom: 28px; }
+.progress-bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.progress-bar span { display: block; height: 100%; background: var(--rust); transition: width .3s ease; }
+.progress-label { display: flex; justify-content: space-between; gap: 12px; font-size: 0.875rem; color: var(--olive-soft); font-variant-numeric: tabular-nums; }
+.step-head { display: grid; gap: 10px; }
+.step-head h2 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.2rem); font-weight: 600; }
+fieldset { border: 0; margin: 0; padding: 20px 0 0; min-width: 0; border-top: 1px solid var(--line); }
+legend { font-family: var(--display); font-weight: 600; font-size: 1.0625rem; line-height: 1.4; padding: 0; margin-bottom: 12px; float: left; width: 100%; }
+legend + * { clear: both; }
+.scale { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+@media (max-width: 560px) { .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); } .scale .choice:last-child { grid-column: span 2; } }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choice label { display: block; height: 100%; text-align: center; background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 4px; cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 0.875rem; line-height: 1.25; transition: border-color .15s, background .15s; }
+.choice input:hover + label { border-color: var(--olive-soft); }
+.choice input:checked + label { border-color: var(--rust); background: color-mix(in srgb, var(--rust) 9%, var(--paper)); box-shadow: inset 0 0 0 1px var(--rust); }
+.choice input:focus-visible + label { outline: 3px solid var(--magenta); outline-offset: 2px; }
+.nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; margin-top: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 1rem; padding: 13px 24px; border-radius: 99px; border: 2px solid var(--olive); background: var(--olive); color: var(--cream); cursor: pointer; text-decoration: none; }
+.btn:hover { background: var(--rust); border-color: var(--rust); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; background: var(--olive); border-color: var(--olive); }
+.btn-ghost { background: transparent; color: var(--olive); }
+.btn-ghost:hover { background: transparent; color: var(--rust); border-color: var(--rust); }
+.btn svg { width: 20px; height: 20px; }
+.hint { font-size: 0.875rem; color: var(--olive-soft); }
+
+.profile { border-radius: 16px; padding: 22px; border: 2px solid var(--pc); background: color-mix(in srgb, var(--pc) 8%, var(--paper)); display: grid; gap: 10px; }
+.profile .tag { font-family: var(--display); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pc); }
+.profile h2 { font-size: 1.5rem; }
+.meters { display: grid; gap: 18px; }
+.meter { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; }
+.meter-name { font-family: var(--display); font-weight: 600; }
+.meter-sub { grid-column: 1 / -1; font-size: 0.9375rem; color: var(--olive-soft); }
+.meter-val { font-variant-numeric: tabular-nums; font-size: 0.9375rem; white-space: nowrap; }
+.meter-track { grid-column: 1 / -1; height: 12px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.meter-fill { height: 100%; border-radius: 99px; }
+.lvl { display: inline-block; font-family: var(--display); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; margin-left: 8px; vertical-align: 1px; }
+.lvl-good { color: var(--good); background: color-mix(in srgb, var(--good) 14%, transparent); }
+.lvl-mid { color: var(--mid); background: color-mix(in srgb, var(--mid) 16%, transparent); }
+.lvl-high { color: var(--high); background: color-mix(in srgb, var(--high) 14%, transparent); }
+.tips { display: grid; gap: 14px; }
+.tip { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 8px; }
+.tip h3 { font-size: 1.0625rem; }
+.tip ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.hero-photo { margin: 0; }
+.hero-photo img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 30%; border-radius: 16px; }
+.hero-photo figcaption, .strip figcaption { font-size: 0.875rem; color: var(--olive-soft); padding-top: 8px; }
+.strip { margin: 0; }
+.strip-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 8px; }
+.strip-grid img { width: 100%; height: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; }
+@media (max-width: 520px) { .strip-grid { grid-template-columns: 1fr 1fr; } .strip-grid img:first-child { grid-column: span 2; aspect-ratio: 16 / 10; } }
+.cta { background: var(--olive); color: var(--on-olive); border-radius: 18px; padding: 24px 22px; display: grid; gap: 14px; }
+.cta h2 { font-size: 1.375rem; color: var(--on-olive); }
+.cta p { color: color-mix(in srgb, var(--on-olive) 86%, transparent); }
+.cta .btn { background: var(--heart); border-color: var(--heart); color: #2A2C0E; }
+.cta .btn:hover { background: var(--cream); border-color: var(--cream); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.status { font-size: 0.875rem; }
+footer { border-top: 1px solid var(--line); padding-block: 22px; font-size: 0.875rem; color: var(--olive-soft); }
+footer .wrap { display: grid; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { .progress-bar span { transition: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.13-1.35A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.05.8.82-2.97-.2-.31a8.2 8.2 0 1 1 6.91 3.81Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22a7.4 7.4 0 0 1-1.37-1.7c-.14-.25 0-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.66.31c-.23.25-.86.84-.86 2.05s.88 2.38 1 2.55c.12.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29Z"/></symbol>
+</defs></svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
+      <img class="l-light" src="logo.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
+      <img class="l-dark" src="logo-claro.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
+    </a>
+    <span class="meta">Equilibrio laboral</span>
+  </div>
+</header>
+
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<footer>
+  <div class="wrap">
+    <span>Este inventario es una herramienta de autoconocimiento y orientación. No es un diagnóstico médico ni psicológico.</span>
+    <span>Tus respuestas no se guardan ni se envían a nadie: el resultado solo lo ves tú.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var WA = "573217738039";
+  var SCALE = ["Nunca", "Rara vez", "Algunas veces", "Con frecuencia", "Casi siempre"];
+
+  // Tres dimensiones del desgaste laboral (energía, conexión, sentido de logro). Frases propias de Simoné.
+  var DIMS = [
+    { id: "energia", name: "Tu energía", sub: "Cansancio y desgaste", desc: "Qué tanto te está costando sostener tu energía en el trabajo.", inverse: false,
+      items: [
+        "Termino la jornada sin energía para lo que me importa fuera del trabajo.",
+        "Me cuesta arrancar el día cuando pienso en el trabajo que me espera.",
+        "Siento que el trabajo me pide más de lo que puedo dar.",
+        "Necesito más descanso del que tengo para recuperarme.",
+        "Atender las demandas de otras personas me deja sin fuerzas.",
+        "Sigo pensando en el trabajo aun cuando quiero desconectarme."
+      ] },
+    { id: "conexion", name: "Tu conexión con el entorno", sub: "Distancia y desapego", desc: "Si te estás alejando de las personas y de lo que haces, como una forma de protegerte.", inverse: false,
+      items: [
+        "Me he vuelto más impaciente o cortante con las personas del trabajo.",
+        "Hago mis tareas en automático, sin interés por el resultado.",
+        "Evito conversaciones con compañeros o clientes cuando puedo.",
+        "Lo que pasa a mi alrededor en el trabajo ya no me importa como antes."
+      ] },
+    { id: "logro", name: "Tu sentido de logro", sub: "Propósito y eficacia", desc: "Si sientes que tu trabajo tiene valor y que lo haces bien.", inverse: true,
+      items: [
+        "Siento que mi trabajo aporta algo valioso a otras personas.",
+        "Resuelvo bien los problemas que se presentan en mi día.",
+        "Termino la semana con la sensación de haber avanzado en algo importante.",
+        "Aprendo y crezco con lo que hago.",
+        "Siento que mi aporte es reconocido."
+      ] }
+  ];
+
+  var TIPS = {
+    energia: { t: "Para tu energía", items: ["Elige un momento fijo del día para desconectarte del correo y el chat del trabajo.", "Revisa qué tareas puedes delegar, aplazar o dejar de hacer esta semana.", "Cuida lo básico: sueño, pausas cortas cada 90 minutos y movimiento."] },
+    conexion: { t: "Para tu conexión", items: ["Busca una conversación sin agenda con alguien de tu equipo esta semana.", "Recuerda a una persona a la que tu trabajo le cambió algo, y por qué.", "Nombra en voz alta lo que te está molestando antes de que se vuelva distancia."] },
+    logro: { t: "Para tu sentido de logro", items: ["Al final de cada día, anota una cosa que salió bien.", "Pide retroalimentación concreta sobre algo que hiciste.", "Conecta una tarea de esta semana con el propósito que te trajo a este trabajo."] }
+  };
+
+  var PROFILES = {
+    alto: { k: "high", tag: "Señales de desgaste alto", title: "Tu energía está pidiendo atención",
+      text: "Tus respuestas muestran señales fuertes en más de una dimensión. No es un juicio sobre ti: es una señal de cómo tu trabajo está afectando tu energía. Te recomendamos conversarlo con un profesional de salud, tu EPS o el programa de bienestar de tu empresa o ARL. Si sientes que estás al límite, no lo cargues solo o sola." },
+    medio: { k: "mid", tag: "Equilibrio en tensión", title: "Hay señales que conviene atender ahora",
+      text: "Algunas dimensiones muestran desgaste. Es el mejor momento para actuar: con pequeños cambios y herramientas de autogestión se puede recuperar el equilibrio antes de que el cansancio crezca." },
+    bajo: { k: "good", tag: "Buen equilibrio", title: "Tu equilibrio está en un buen lugar",
+      text: "Tus respuestas muestran una relación sana con tu trabajo. Vale la pena cuidarla: el equilibrio se sostiene con hábitos, no se da por hecho." }
+  };
+
+  var state = { step: 0, a: {} };
+  var app = document.getElementById("app");
+  var TOTAL = DIMS.length;
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function top() { window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+  function level(risk) { return risk >= 67 ? { k: "high", t: "Alto", c: "var(--high)" } : risk >= 34 ? { k: "mid", t: "Medio", c: "var(--mid)" } : { k: "good", t: "Bajo", c: "var(--good)" }; }
+
+  function intro() {
+    app.innerHTML = '<section class="intro">' +
+      '<p class="eyebrow">Inventario de Equilibrio Laboral</p>' +
+      '<h1>Bienvenido a tu espacio de autorreconocimiento</h1>' +
+      '<p class="lead">Este inventario no califica quién eres, sino cómo está interactuando tu entorno profesional con tu energía vital. Lee cada frase y marca con honestidad con qué frecuencia la vives en tu día a día.</p>' +
+      '<div class="facts"><span>15 frases</span><span>5 minutos</span><span>Resultado privado</span><span>Informe en PDF</span></div>' +
+      '<figure class="hero-photo"><img src="img/acompanamiento.jpg" alt="Nathalia Velasco acompaña a una participante durante una experiencia de bienestar" width="936" height="1100"><figcaption>Una experiencia de bienestar de Simoné. Fotos reales de nuestras sesiones.</figcaption></figure>' +
+      '<ul class="dims">' + DIMS.map(function (d) { return '<li><strong>' + esc(d.name) + '</strong><span>' + esc(d.desc) + '</span></li>'; }).join("") + '</ul>' +
+      '<p class="note">Se inspira en las tres dimensiones del desgaste laboral descritas por la investigadora Christina Maslach: energía, conexión y sentido de logro. Es una herramienta de orientación de Simoné, no un diagnóstico médico.</p>' +
+      '<div class="nav"><span class="hint">Piensa en las últimas cuatro semanas.</span><button class="btn" id="go">Empezar</button></div></section>';
+    document.getElementById("go").onclick = function () { state.step = 1; render(); top(); };
+  }
+
+  function dimStep(di) {
+    var d = DIMS[di], a = state.a[d.id] || (state.a[d.id] = []);
+    var html = '<div class="progress"><div class="progress-label"><span>' + esc(d.name) + '</span><span>Parte ' + (di + 1) + ' de ' + TOTAL + '</span></div><div class="progress-bar"><span style="width:' + Math.round((di + 1) / TOTAL * 100) + '%"></span></div></div>' +
+      '<section class="step"><div class="step-head"><p class="eyebrow">' + esc(d.sub) + '</p><h2>' + esc(d.name) + '</h2><p class="lead">' + esc(d.desc) + '</p></div>';
+    d.items.forEach(function (it, ii) {
+      var n = d.id + "-" + ii;
+      html += '<fieldset><legend>' + esc(it) + '</legend><div class="scale">' + SCALE.map(function (s, v) {
+        return '<div class="choice"><input type="radio" id="' + n + '-' + v + '" name="' + n + '" value="' + v + '"' + (a[ii] === v ? " checked" : "") + '><label for="' + n + '-' + v + '">' + s + '</label></div>';
+      }).join("") + '</div></fieldset>';
+    });
+    html += '<div class="nav"><button class="btn btn-ghost" id="back">Atrás</button><button class="btn" id="next" disabled>' + (di === TOTAL - 1 ? "Ver mi resultado" : "Continuar") + '</button></div></section>';
+    app.innerHTML = html;
+    var next = document.getElementById("next");
+    function check() { next.disabled = !d.items.every(function (_, i) { return a[i] != null; }); }
+    check();
+    app.querySelectorAll('input[type="radio"]').forEach(function (inp) {
+      inp.onchange = function () { a[+inp.name.split("-")[1]] = +inp.value; check(); };
+    });
+    document.getElementById("back").onclick = function () { state.step--; render(); top(); };
+    next.onclick = function () { state.step++; render(); top(); };
+  }
+
+  function compute() {
+    var res = DIMS.map(function (d) {
+      var sum = state.a[d.id].reduce(function (x, y) { return x + y; }, 0), max = d.items.length * 4;
+      var pct = Math.round(sum / max * 100);
+      var risk = d.inverse ? 100 - pct : pct;
+      return { d: d, pct: pct, risk: risk, lv: level(risk) };
+    });
+    var highs = res.filter(function (r) { return r.lv.k === "high"; }).length;
+    var mids = res.filter(function (r) { return r.lv.k === "mid"; }).length;
+    var prof = (highs >= 2 || (res[0].lv.k === "high" && mids >= 1)) ? "alto" : (highs >= 1 || mids >= 2) ? "medio" : "bajo";
+    return { res: res, prof: prof };
+  }
+
+  function result() {
+    var c = compute(), P = PROFILES[c.prof];
+    var pc = P.k === "high" ? "var(--high)" : P.k === "mid" ? "var(--mid)" : "var(--good)";
+    var focus = c.res.slice().sort(function (x, y) { return y.risk - x.risk; }).filter(function (r) { return r.risk >= 34; }).slice(0, 2);
+    var html = '<section class="result">' +
+      '<div class="step-head"><p class="eyebrow">Tu resultado</p><h1>' + esc(P.title) + '</h1></div>' +
+      '<div class="profile" style="--pc:' + pc + '"><p class="tag">' + P.tag + '</p><p>' + esc(P.text) + '</p></div>' +
+      '<div class="meters" role="list">' + c.res.map(function (r) {
+        var label = r.d.inverse ? (r.pct + " / 100 de logro") : (r.pct + " / 100 de " + (r.d.id === "energia" ? "desgaste" : "distancia"));
+        return '<div class="meter" role="listitem"><span class="meter-name">' + esc(r.d.name) + '<span class="lvl lvl-' + r.lv.k + '">Riesgo ' + r.lv.t.toLowerCase() + '</span></span><span class="meter-val">' + label + '</span>' +
+          '<div class="meter-track"><div class="meter-fill" style="width:' + Math.max(r.pct, 3) + '%;background:' + r.lv.c + '"></div></div>' +
+          '<span class="meter-sub">' + esc(r.d.desc) + (r.d.inverse ? " Aquí, una barra más larga es mejor." : " Aquí, una barra más larga indica más desgaste.") + '</span></div>';
+      }).join("") + '</div>' +
+      (focus.length ? '<div class="tips"><h2 style="font-size:1.375rem">Por dónde empezar</h2>' + focus.map(function (r) {
+        var T = TIPS[r.d.id]; return '<article class="tip"><h3>' + esc(T.t) + '</h3><ul>' + T.items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></article>';
+      }).join("") + '</div>' : '') +
+      '<div class="row"><button class="btn" id="pdf" type="button">Descargar mi resultado en PDF</button><span class="status" id="pdf-msg" role="status"></span></div>' +
+      '<figure class="strip"><div class="strip-grid"><img src="img/dibujo-piso.jpg" alt="Una participante dibuja en el piso durante una sesión de bienestar" loading="lazy"><img src="img/acuarela-mesa.jpg" alt="Participantes pintan con acuarela alrededor de una mesa" loading="lazy"><img src="img/collage-piso.jpg" alt="Collages, acuarelas y cartas sobre el piso al final de una sesión" loading="lazy"></div><figcaption>Así se viven nuestras experiencias de bienestar.</figcaption></figure>' +
+      '<section class="cta" aria-labelledby="cta-h"><h2 id="cta-h">¿Lideras un equipo o un área de bienestar?</h2>' +
+      '<p>Podemos aplicar este inventario a tu equipo de forma anónima y entregarte un mapa de energía por áreas, sin datos personales. Es el primer paso de <strong>Equilibrio Total</strong>, nuestro acompañamiento de 6 meses para prevenir el agotamiento laboral, y de la <strong>Escuela de Ecología Emocional</strong>, para que cada persona aprenda a gestionar su energía y sus relaciones.</p>' +
+      '<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/' + WA + '?text=' + encodeURIComponent("Hola Simoné, hice el Inventario de Equilibrio Laboral y quiero saber cómo aplicarlo a mi equipo de forma anónima.") + '"><svg aria-hidden="true"><use href="#wa"/></svg>Quiero medir a mi equipo</a></div>' +
+      '<p class="hint" style="color:inherit;opacity:.8">Este mensaje no incluye tus resultados.</p></section>' +
+      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://nathaliavelasco.github.io">Conocer Simoné</a></div></section>';
+    app.innerHTML = html;
+    document.getElementById("restart").onclick = function () { state = { step: 0, a: {} }; render(); top(); };
+    document.getElementById("pdf").onclick = function () {
+      var msg = document.getElementById("pdf-msg"), btn = this; btn.disabled = true; msg.textContent = "Preparando tu informe…";
+      buildPDF(c, P, focus).then(function (d) {
+        var name = "Equilibrio-Laboral-Simone.pdf";
+        var v = window.claude && window.claude.use ? window.claude.use("downloads") : Promise.resolve(null);
+        return v.then(function (dl) {
+          if (dl) return dl.save({ filename: name, data: d.output("blob") }).then(function () { msg.textContent = "Informe listo."; });
+          d.save(name); msg.textContent = "Informe descargado.";
+        });
+      }).catch(function (e) { msg.textContent = (e && e.code === "declined") ? "Descarga cancelada." : "No se pudo crear el PDF aquí."; })
+        .then(function () { btn.disabled = false; });
+    };
+  }
+
+  function loadImage(src) {
+    return fetch(src).then(function (r) { return r.blob(); }).then(function (b) {
+      return new Promise(function (res) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.readAsDataURL(b); });
+    }).catch(function () { return null; });
+  }
+
+  function buildPDF(c, P, focus) {
+    var J = window.jspdf && window.jspdf.jsPDF;
+    if (!J) return Promise.reject(new Error("nolib"));
+    return loadImage("logo.png").then(function (logo) {
+      var d = new J({ unit: "mm", format: "a4" }), W = 210, M = 18, CW = W - 2 * M, y = 18;
+      var OL = [54, 58, 18], RU = [138, 51, 0], SOFT = [92, 97, 50], LINE = [220, 211, 188];
+      var LV = { good: [79, 107, 42], mid: [201, 134, 31], high: [168, 50, 28] };
+      function ensure(h) { if (y + h > 280) { d.addPage(); y = 18; } }
+      function text(s, size, color, style, gap) {
+        d.setFont("helvetica", style || "normal"); d.setFontSize(size); d.setTextColor.apply(d, color);
+        var lines = d.splitTextToSize(String(s), CW), lh = size * 0.45;
+        ensure(lines.length * lh + (gap || 0)); d.text(lines, M, y + lh * 0.8); y += lines.length * lh + (gap || 0);
+      }
+      function rule() { ensure(6); d.setDrawColor.apply(d, LINE); d.setLineWidth(0.3); d.line(M, y, W - M, y); y += 6; }
+      if (logo) d.addImage(logo, "PNG", M, y, 46, 13.3);
+      d.setFont("helvetica", "bold"); d.setFontSize(9); d.setTextColor.apply(d, RU); d.text("INVENTARIO DE EQUILIBRIO LABORAL", W - M, y + 5, { align: "right" });
+      d.setFont("helvetica", "normal"); d.setTextColor.apply(d, SOFT);
+      d.text(new Date().toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" }), W - M, y + 10, { align: "right" });
+      y += 22;
+      text(P.tag.toUpperCase(), 8.5, LV[P.k], "bold", 1.5);
+      text(P.title, 17, OL, "bold", 3);
+      text(P.text, 10, OL, "normal", 5); rule();
+      text("Tus tres dimensiones", 13, OL, "bold", 4);
+      c.res.forEach(function (r) {
+        ensure(20);
+        d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor.apply(d, OL); d.text(r.d.name, M, y + 4);
+        d.setFont("helvetica", "normal"); d.setFontSize(9.5); d.setTextColor.apply(d, LV[r.lv.k]);
+        d.text("Riesgo " + r.lv.t.toLowerCase() + "  ·  " + r.pct + " / 100", W - M, y + 4, { align: "right" });
+        d.setFillColor.apply(d, LINE); d.roundedRect(M, y + 6.5, CW, 3, 1.5, 1.5, "F");
+        d.setFillColor.apply(d, LV[r.lv.k]); d.roundedRect(M, y + 6.5, Math.max(CW * r.pct / 100, 3), 3, 1.5, 1.5, "F");
+        y += 12;
+        text(r.d.desc + (r.d.inverse ? " Aquí, más alto es mejor." : " Aquí, más alto indica más desgaste."), 9, SOFT, "normal", 4);
+      });
+      if (focus.length) {
+        rule(); text("Por dónde empezar", 13, OL, "bold", 3);
+        focus.forEach(function (r) { var T = TIPS[r.d.id]; ensure(16); text(T.t, 10.5, OL, "bold", 1); T.items.forEach(function (x) { text("•  " + x, 10, OL, "normal", 0.8); }); y += 3; });
+      }
+      rule();
+      text("Este inventario es una herramienta de autoconocimiento y orientación de Simoné. Se inspira en las tres dimensiones del desgaste laboral descritas por Christina Maslach. No es un diagnóstico médico ni psicológico. Si tu resultado te preocupa, conversa con un profesional de salud.", 8.5, SOFT, "italic", 5);
+      ensure(18);
+      d.setFillColor.apply(d, OL); d.roundedRect(M, y, CW, 16, 3, 3, "F");
+      d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(246, 240, 226);
+      d.text("¿Quieres medir el equilibrio de tu equipo? WhatsApp +57 321 773 8039", M + 6, y + 6.5);
+      d.setFont("helvetica", "normal"); d.setFontSize(9.5);
+      d.text("experienciasimone@gmail.com  ·  nathaliavelasco.github.io", M + 6, y + 11.8);
+      return d;
+    });
+  }
+
+  function render() {
+    if (state.step === 0) return intro();
+    if (state.step <= TOTAL) return dimStep(state.step - 1);
+    return result();
+  }
+  render();
+})();
+</script>
+</body>
+</html>
