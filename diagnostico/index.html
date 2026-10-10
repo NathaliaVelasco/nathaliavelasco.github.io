@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagnóstico Simoné</title>
+<meta name="description" content="En 5 minutos, descubre en qué punto está tu organización en cultura, liderazgo, bienestar, sostenibilidad y formación, y por dónde empezar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:wght@400;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* Layout: una sola columna tipo cuaderno de trabajo; una etapa por pantalla, barra de avance arriba,
+   resultado como ranking de las cinco dimensiones. Misma marca que la web de Simoné. */
+:root {
+  --cream: #F6F0E2; --paper: #FCF9F2; --olive: #363A12; --olive-soft: #5C6132;
+  --rust: #8A3300; --heart: #F2A03D; --magenta: #BE1A82; --line: #DCD3BC;
+  --good: #4F6B2A; --mid: #C9861F; --high: #A8321C; --on-olive: #F6F0E2;
+  --logo-light: block; --logo-dark: none;
+  --display: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --body: "Lato", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+    --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+    --good: #93B46A; --mid: #E6AE4E; --high: #EF7B60; --on-olive: #1B1D0D;
+    --logo-light: none; --logo-dark: block; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+  --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+  --good: #93B46A; --mid: #E6AE4E; --high: #EF7B60; --on-olive: #1B1D0D;
+  --logo-light: none; --logo-dark: block; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--olive); font-family: var(--body); font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 760px; margin-inline: auto; padding-inline: 16px; }
+
+header.top { border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.logo img { height: 34px; width: auto; }
+.logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
+.meta { font-family: var(--display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
+
+main { padding-block: 32px 72px; }
+.eyebrow { font-family: var(--display); font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); }
+.lead { color: var(--olive-soft); font-size: 1.125rem; max-width: 60ch; }
+
+/* Avance */
+.progress { display: grid; gap: 10px; margin-bottom: 28px; }
+.progress-bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.progress-bar span { display: block; height: 100%; background: var(--rust); width: 0; transition: width .3s ease; }
+.progress-label { display: flex; justify-content: space-between; gap: 12px; font-size: 0.875rem; color: var(--olive-soft); font-variant-numeric: tabular-nums; }
+
+/* Intro */
+.intro { display: grid; gap: 22px; }
+.intro h1 { font-size: clamp(1.9rem, 1.4rem + 2.4vw, 2.8rem); font-weight: 600; letter-spacing: -0.01em; }
+.dims { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.dims li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding-block: 12px; border-bottom: 1px solid var(--line); }
+.dims b { font-family: var(--display); font-weight: 700; color: var(--rust); }
+.dims span { display: block; color: var(--olive-soft); font-size: 0.9375rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.facts span { background: var(--paper); border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px; font-size: 0.9375rem; }
+
+/* Preguntas */
+.step { display: grid; gap: 26px; }
+.step-head { display: grid; gap: 10px; }
+.step-head h2 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.2rem); font-weight: 600; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 12px; }
+legend { font-family: var(--display); font-weight: 600; font-size: 1.125rem; line-height: 1.35; padding: 0; margin-bottom: 12px; }
+.q-kind { display: block; font-family: var(--body); font-weight: 400; font-size: 0.875rem; color: var(--olive-soft); margin-bottom: 4px; }
+.scale { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.opts { display: grid; gap: 10px; }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choice label { display: block; height: 100%; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: border-color .15s, background .15s; font-size: 1rem; line-height: 1.4; }
+.scale .choice label { text-align: center; font-family: var(--display); font-weight: 600; font-size: 0.9375rem; padding: 12px 6px; }
+.choice input:hover + label { border-color: var(--olive-soft); }
+.choice input:checked + label { border-color: var(--rust); background: color-mix(in srgb, var(--rust) 9%, var(--paper)); box-shadow: inset 0 0 0 1px var(--rust); }
+.choice input:focus-visible + label { outline: 3px solid var(--magenta); outline-offset: 2px; }
+@media (max-width: 520px) { .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.qblock { padding-top: 22px; border-top: 1px solid var(--line); }
+.qblock:first-of-type { padding-top: 0; border-top: 0; }
+
+.field { display: grid; gap: 6px; }
+.field label { font-family: var(--display); font-weight: 600; font-size: 0.9375rem; }
+.field input, .field select { font: inherit; color: var(--olive); background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 12px; width: 100%; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+
+.nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; margin-top: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 1rem; padding: 13px 24px; border-radius: 99px; border: 2px solid var(--olive); background: var(--olive); color: var(--cream); cursor: pointer; text-decoration: none; }
+.btn:hover { background: var(--rust); border-color: var(--rust); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; background: var(--olive); border-color: var(--olive); }
+.btn-ghost { background: transparent; color: var(--olive); }
+.btn-ghost:hover { background: transparent; color: var(--rust); border-color: var(--rust); }
+.btn svg { width: 20px; height: 20px; }
+.hint { font-size: 0.875rem; color: var(--olive-soft); }
+
+/* Resultado */
+.result { display: grid; gap: 30px; }
+.result h1 { font-size: clamp(1.8rem, 1.3rem + 2.2vw, 2.6rem); font-weight: 600; }
+.bars { display: grid; gap: 14px; }
+.bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; }
+.bar-name { font-family: var(--display); font-weight: 600; font-size: 1rem; }
+.bar-val { font-variant-numeric: tabular-nums; font-size: 0.9375rem; color: var(--olive-soft); white-space: nowrap; }
+.bar-val b { color: var(--olive); }
+.bar-track { grid-column: 1 / -1; height: 12px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; }
+.lvl { display: inline-block; font-family: var(--display); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; margin-left: 8px; vertical-align: 1px; }
+.lvl-good { color: var(--good); background: color-mix(in srgb, var(--good) 14%, transparent); }
+.lvl-mid { color: var(--mid); background: color-mix(in srgb, var(--mid) 16%, transparent); }
+.lvl-high { color: var(--high); background: color-mix(in srgb, var(--high) 14%, transparent); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8125rem; color: var(--olive-soft); }
+
+.rec { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px 22px; display: grid; gap: 14px; }
+.rec.main { border: 2px solid var(--rust); }
+.rec .tag { font-family: var(--display); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); }
+.rec h3 { font-size: 1.375rem; }
+.rec .line { font-size: 0.9375rem; color: var(--olive-soft); }
+.rec dl { margin: 0; display: grid; gap: 10px; }
+.rec dt { font-family: var(--display); font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.rec dd { margin: 2px 0 0; }
+
+.cta { background: var(--olive); color: var(--on-olive); border-radius: 18px; padding: 26px 22px; display: grid; gap: 16px; }
+.cta h2 { font-size: 1.5rem; color: var(--on-olive); }
+.cta p { color: color-mix(in srgb, var(--on-olive) 85%, transparent); }
+.cta .field label { color: var(--on-olive); }
+.cta .field input { border-color: transparent; }
+.cta .btn { background: var(--heart); border-color: var(--heart); color: #2A2C0E; }
+.cta .btn:hover { background: var(--cream); border-color: var(--cream); }
+.cta .small { font-size: 0.875rem; }
+.cta-eyebrow { font-family: var(--display); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heart); }
+.path { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 0; }
+.path > li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; padding-block: 18px; border-top: 1px solid color-mix(in srgb, var(--on-olive) 22%, transparent); }
+.path-n { width: 32px; height: 32px; border-radius: 50%; background: var(--heart); color: #2A2C0E; font-family: var(--display); font-weight: 700; display: grid; place-items: center; }
+.path-body { display: grid; gap: 10px; min-width: 0; }
+.path-body h3 { font-size: 1.125rem; color: var(--on-olive); }
+.slots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 560px) { .slots { grid-template-columns: 1fr; } }
+.cta .field label { font-size: 0.875rem; }
+.copy-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.cta .btn-light { background: transparent; color: var(--on-olive); border-color: color-mix(in srgb, var(--on-olive) 60%, transparent); padding: 10px 18px; font-size: 0.9375rem; }
+.cta .btn-light:hover { background: transparent; color: var(--on-olive); border-color: var(--on-olive); }
+.copied { font-size: 0.875rem; }
+
+footer { border-top: 1px solid var(--line); padding-block: 22px; font-size: 0.875rem; color: var(--olive-soft); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+@media (prefers-reduced-motion: reduce) { .progress-bar span { transition: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.13-1.35A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.05.8.82-2.97-.2-.31a8.2 8.2 0 1 1 6.91 3.81Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22a7.4 7.4 0 0 1-1.37-1.7c-.14-.25 0-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.66.31c-.23.25-.86.84-.86 2.05s.88 2.38 1 2.55c.12.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29Z"/></symbol>
+</defs></svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
+      <img class="l-light" src="logo.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
+      <img class="l-dark" src="logo-claro.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
+    </a>
+    <span class="meta">Diagnóstico</span>
+  </div>
+</header>
+
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<footer>
+  <div class="wrap">
+    <span>Simoné · Wellbeing &amp; Regenerative Art · Bogotá</span>
+    <span>Tus respuestas no se guardan en esta página. Solo llegan a Simoné si tú las envías.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var WA = "573217738039";
+  var SCALE = [
+    { t: "Totalmente cierto", v: 0 },
+    { t: "En buena parte", v: 1 },
+    { t: "Poco", v: 2 },
+    { t: "Nada cierto", v: 3 }
+  ];
+
+  // Servicios del portafolio, con la puerta de entrada de la estrategia comercial
+  var SVC = {
+    mapa:      { line: "Consultorías estratégicas", name: "Mapa de Navegación · clima y cultura (Modelo 5E)", what: "Diagnóstico con nuestra herramienta El Árbol, alineación de propósito y valores, y un plan de cultura en 4 meses.", start: "Un diagnóstico de cultura de un mes, abonable al proceso completo." },
+    equilibrio:{ line: "Consultorías estratégicas", name: "Equilibrio Total · prevención del agotamiento laboral", what: "Medición del agotamiento, espacios de conciencia y herramientas de autocuidado activo durante 6 meses.", start: "Un diagnóstico de bienestar con El Árbol." },
+    mentorias: { line: "Consultorías estratégicas", name: "Mentorías individuales para líderes", what: "Plan de desarrollo individual para C-Level y gerentes: autoconocimiento y decisiones estratégicas.", start: "Una sesión individual de 90 minutos." },
+    liderazgo: { line: "Programas y escuelas de formación", name: "Escuela de Liderazgo · modelo humanista", what: "Un proceso por módulos para que todos los líderes compartan una misma forma de dirigir.", start: "Una sesión de alto impacto con el equipo directivo." },
+    blandas:   { line: "Programas y escuelas de formación", name: "Escuela de Habilidades Blandas", what: "Comunicación, empatía y colaboración llevadas a las interacciones del día a día, en todos los niveles.", start: "Una sesión de alto impacto de 8 horas, presencial y virtual." },
+    emocional: { line: "Programas y escuelas de formación", name: "Escuela de Ecología Emocional", what: "Arte y naturaleza para que las personas gestionen su energía, el estrés y sus relaciones.", start: "Una sesión de alto impacto para un equipo piloto." },
+    borde:     { line: "Programas y escuelas de formación", name: "Plan de formación con El Borde Visible™", what: "Rediseñamos tus entrenamientos para que se aprenda haciendo y el cambio se vea en el trabajo, con medición antes y después.", start: "Una revisión de tu plan de formación y una sesión piloto." },
+    salud:     { line: "Campañas educativas", name: "Semana de la salud · promoción y prevención", what: "Campañas vivenciales de autocuidado, movimiento, nutrición y salud mental para toda la empresa.", start: "Un juego o experiencia para tu próxima semana de la salud." },
+    cultura:   { line: "Campañas educativas", name: "Campaña para activar la cultura", what: "Experiencias y piezas que sacan el propósito del manual y lo llevan a la inducción y a la operación.", start: "Una experiencia de lanzamiento con tus valores." },
+    sostenible:{ line: "Campañas educativas", name: "Semana de la sostenibilidad con juegos personalizados", what: "Tableros gigantes, rompecabezas y cartas con tus propios temas ambientales y ODS.", start: "Un juego diseñado para tu próxima semana de la sostenibilidad." },
+    ambiental: { line: "Experiencias focalizadas", name: "Educación ambiental y sostenibilidad con arte y juego", what: "Una intervención que traduce los sistemas de gestión y los ODS a algo que la gente entiende y aplica.", start: "Una sesión de alto impacto para un área piloto." },
+    power:     { line: "Experiencias focalizadas", name: "Power Skills · habilidades de alto desempeño", what: "Experiencias inmersivas que convierten la teoría en comportamientos observables: comunicación, presión, servicio.", start: "Una sesión de alto impacto de 8 horas, presencial y virtual." },
+    planta:    { line: "Experiencias focalizadas", name: "Experiencias para personal operativo", what: "Juego, arte y lenguaje sencillo para que la planta, la logística y los técnicos vivan el mismo propósito que la oficina.", start: "Una experiencia piloto en planta." },
+    marca:     { line: "Activaciones de marca y eventos", name: "Experiencias con el ADN de tu marca", what: "Rutas de experiencia para clientes, aliados o proveedores, con arte, diseño y producción integral.", start: "Una activación diseñada con el ADN de tu marca." }
+  };
+
+  var MODS = [
+    { id: "cultura", name: "Cultura y ADN de marca", short: "Cultura",
+      intro: "Si el propósito de la empresa está vivo, guardado en un cajón o desconectado de la operación.",
+      likert: ["Las personas de mi empresa pueden explicar con sus palabras nuestro propósito y valores.",
+               "Lo que dicen nuestros valores se ve en las decisiones de los líderes."],
+      def: "mapa",
+      q: "¿Cuál de estas frases describe mejor cómo vive hoy su empresa el propósito, la misión y los valores?",
+      opts: [
+        { t: "No están claros, están desactualizados o nunca se definieron formalmente.", w: 3, rec: "mapa", see: "Falta un norte compartido: sin propósito definido, cada área decide desde su propio criterio." },
+        { t: "Existen en el manual o la intranet, pero nadie los menciona y no hacen parte de la inducción.", w: 2, rec: "cultura", see: "La cultura existe en papel, pero no ha bajado a la operación ni a la conversación diaria." },
+        { t: "Están publicados, pero lo que hacen los líderes y equipos va en otra dirección.", w: 3, rec: "liderazgo", see: "Hay distancia entre lo que la marca dice y lo que los líderes modelan; la gente sigue el ejemplo, no el manual." },
+        { t: "Nuestros colaboradores los viven, pero nuestros clientes y aliados no conocen esa esencia.", w: 2, rec: "marca", see: "La cultura interna es una fortaleza que todavía no llega a la experiencia de clientes y aliados." },
+        { t: "Están vivos y se notan en el día a día.", w: 0, rec: null, see: "" }
+      ] },
+    { id: "liderazgo", name: "Liderazgo y equipos", short: "Liderazgo",
+      intro: "Si hay una forma compartida de dirigir o si los mandos medios están navegando a la deriva.",
+      likert: ["Nuestros líderes comparten una misma forma de dirigir.",
+               "Los mandos medios tienen herramientas para manejar la presión y desarrollar a su gente."],
+      def: "liderazgo",
+      q: "¿Cómo se ejerce hoy el liderazgo en su organización?",
+      opts: [
+        { t: "Cada jefe lidera a su manera, hay silos entre áreas y los mandos medios están colapsados.", w: 3, rec: "liderazgo", see: "No hay un modelo de liderazgo común; los equipos dependen del estilo de cada jefe." },
+        { t: "Los líderes tienen buena intención, pero les faltan herramientas prácticas para la presión, la comunicación y los cambios rápidos.", w: 2, rec: "power", see: "La voluntad está; falta llevar las habilidades a comportamientos concretos en el día a día." },
+        { t: "El equipo directivo necesita acompañamiento individual para sus decisiones y su rol.", w: 2, rec: "mentorias", see: "El reto está en la cabeza de la organización: decisiones complejas que piden claridad personal." },
+        { t: "Tenemos un modelo de liderazgo claro que se vive en todos los niveles.", w: 0, rec: null, see: "" }
+      ] },
+    { id: "bienestar", name: "Clima laboral y bienestar", short: "Bienestar",
+      intro: "Si hay agotamiento estructural o falta de autogestión emocional en los equipos.",
+      likert: ["Los equipos terminan la semana con energía para la siguiente.",
+               "Las personas saben manejar el estrés y sus emociones en el trabajo."],
+      def: "emocional",
+      q: "¿Cuál es hoy el estado de la energía y el bienestar en sus equipos?",
+      opts: [
+        { t: "Hay agotamiento constante, rotación alta y los equipos operan al límite.", w: 3, rec: "equilibrio", see: "El desgaste viene del sistema de trabajo, no de la actitud de las personas; necesita una intervención estructural." },
+        { t: "El ambiente se tensa por momentos, hay desmotivación o cuesta manejar las emociones del día a día.", w: 2, rec: "emocional", see: "Faltan herramientas de autogestión emocional para sostener la energía de los equipos." },
+        { t: "Queremos que toda la empresa adopte prácticas de autocuidado y prevención en salud.", w: 1, rec: "salud", see: "Es el momento de instalar una cultura preventiva de bienestar que llegue a todos." },
+        { t: "El clima es bueno y las personas tienen herramientas para cuidarse.", w: 0, rec: null, see: "" }
+      ] },
+    { id: "sostenibilidad", name: "Sostenibilidad y ODS", short: "Sostenibilidad",
+      intro: "Si los temas ambientales se viven como requisito aburrido o como convicción de la cultura.",
+      likert: ["Los colaboradores entienden cómo su trabajo afecta las metas ambientales de la empresa.",
+               "Las actividades de sostenibilidad generan participación real, no solo asistencia."],
+      def: "ambiental",
+      q: "¿Cómo se viven hoy los temas de sostenibilidad en su empresa?",
+      opts: [
+        { t: "Son un requisito técnico que la gente ve aburrido y no conecta con su trabajo.", w: 3, rec: "ambiental", see: "Hay una brecha entre cumplir la norma y que las personas se apropien de la sostenibilidad." },
+        { t: "Hacemos semana de la sostenibilidad, pero siempre son charlas y la participación es baja.", w: 2, rec: "sostenible", see: "El espacio existe; cambiar el formato a juego y experiencia puede multiplicar la participación." },
+        { t: "Necesitamos herramientas didácticas para replicar estos temas en inducciones y pausas activas.", w: 2, rec: "sostenible", see: "Necesitan herramientas propias, como juegos personalizados, que el equipo pueda usar una y otra vez." },
+        { t: "La sostenibilidad ya es parte de nuestra cultura.", w: 0, rec: null, see: "" }
+      ] },
+    { id: "formacion", name: "Formación y gestión del cambio", short: "Formación",
+      intro: "Si los entrenamientos cambian comportamientos y cómo acompañan a administrativos y operativos en los cambios.",
+      likert: ["Lo que se aprende en las capacitaciones se ve después en el trabajo diario.",
+               "Cuando hay un cambio (proceso, sistema o reestructura) acompañamos a las personas, no solo la parte técnica."],
+      def: "borde",
+      q: "¿Cómo funcionan hoy la formación y los procesos de cambio en su empresa?",
+      opts: [
+        { t: "Capacitamos solo cuando toca, y cada cambio genera resistencia y atrasos por falta de acompañamiento humano.", w: 3, rec: "blandas", see: "Se atiende la parte técnica del cambio y se olvida a las personas; faltan habilidades blandas instaladas." },
+        { t: "La parte administrativa recibe formación, pero la operación (planta, logística, técnicos) casi nunca, o no le conecta.", w: 3, rec: "planta", see: "El personal operativo está quedando por fuera; necesita metodologías hechas para su realidad." },
+        { t: "Tenemos plan y presupuesto, pero la gente va a cumplir horas y no se ve cambio en el comportamiento.", w: 2, rec: "borde", see: "La formación se mide en horas y no en cambios de conducta; el formato tradicional no está transformando." },
+        { t: "Nuestra formación funciona y los cambios se acompañan bien.", w: 0, rec: null, see: "" }
+      ] }
+  ];
+
+  var PROFILE = [
+    { id: "cargo", label: "Su área", opts: ["Gestión Humana o Talento", "Bienestar o SST", "Formación o L&D", "Gerencia general", "Mercadeo o Comunicaciones", "Otra"] },
+    { id: "tam", label: "Número de colaboradores", opts: ["Menos de 50", "50 a 200", "201 a 1.000", "Más de 1.000"] },
+    { id: "sector", label: "Sector", opts: ["Financiero", "Salud o farmacéutico", "Tecnología", "Educación", "Industria o manufactura", "Comercio o centros comerciales", "Sector público", "Otro"] },
+    { id: "oper", label: "¿Tienen personal operativo (planta, logística, técnicos)?", opts: ["Sí", "No"] }
+  ];
+  var CLOSE = [
+    { id: "cuando", label: "¿Cuándo quieren empezar a trabajar en esto?", opts: ["Este trimestre", "En el plan del próximo año", "Estamos explorando"] },
+    { id: "ppto", label: "¿Tienen presupuesto para formación o bienestar?", opts: ["Sí, asignado", "En planeación", "Aún no"] }
+  ];
+
+  var state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" };
+  var TOTAL = MODS.length + 2; // perfil + 5 módulos + cierre
+  var app = document.getElementById("app");
+
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function top() { window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+
+  function progress(n, label) {
+    var pct = Math.round(n / TOTAL * 100);
+    return '<div class="progress"><div class="progress-label"><span>' + esc(label) + '</span><span>Paso ' + n + ' de ' + TOTAL + '</span></div><div class="progress-bar"><span style="width:' + pct + '%"></span></div></div>';
+  }
+
+  function radioGroup(name, opts, current, cls) {
+    return '<div class="' + cls + '">' + opts.map(function (o, i) {
+      var id = name + "-" + i, t = typeof o === "string" ? o : o.t;
+      return '<div class="choice"><input type="radio" id="' + id + '" name="' + name + '" value="' + i + '"' + (current === i ? " checked" : "") + '><label for="' + id + '">' + esc(t) + '</label></div>';
+    }).join("") + '</div>';
+  }
+
+  function renderIntro() {
+    app.innerHTML =
+      '<section class="intro">' +
+      '<p class="eyebrow">Diagnóstico Simoné</p>' +
+      '<h1>¿En qué punto está tu organización y por dónde conviene empezar?</h1>' +
+      '<p class="lead">Responde 21 preguntas cortas sobre cinco dimensiones. Al final verás tus prioridades, qué experiencia de Simoné responde a cada una y podrás descargar tu informe en PDF.</p>' +
+      '<div class="facts"><span>5 minutos</span><span>Resultado inmediato</span><span>Informe en PDF</span><span>Sin registro</span></div>' +
+      '<ol class="dims">' + MODS.map(function (m, i) { return '<li><b>' + (i + 1) + '</b><div><strong>' + esc(m.name) + '</strong><span>' + esc(m.intro) + '</span></div></li>'; }).join("") + '</ol>' +
+      '<div class="nav"><span class="hint">Responde pensando en tu organización como es hoy, no como quisieras que fuera.</span><button class="btn" id="go">Empezar el diagnóstico</button></div>' +
+      '</section>';
+    document.getElementById("go").onclick = function () { state.step = 1; render(); top(); };
+  }
+
+  function renderSelects(list, store, idPrefix) {
+    return list.map(function (f) {
+      var id = idPrefix + f.id;
+      return '<fieldset class="qblock"><legend>' + esc(f.label) + '</legend>' + radioGroup(id, f.opts, store[f.id], "opts") + '</fieldset>';
+    }).join("");
+  }
+
+  function bind(list, store, idPrefix, check) {
+    list.forEach(function (f) {
+      app.querySelectorAll('input[name="' + idPrefix + f.id + '"]').forEach(function (inp) {
+        inp.onchange = function () { store[f.id] = +inp.value; check(); };
+      });
+    });
+  }
+
+  function navHTML(nextLabel) {
+    return '<div class="nav"><button class="btn btn-ghost" id="back">Atrás</button><button class="btn" id="next" disabled>' + nextLabel + '</button></div>';
+  }
+  function wireNav(ready) {
+    var next = document.getElementById("next");
+    var check = function () { next.disabled = !ready(); };
+    check();
+    document.getElementById("back").onclick = function () { state.step--; render(); top(); };
+    next.onclick = function () { if (ready()) { state.step++; render(); top(); } };
+    return check;
+  }
+
+  function renderProfile() {
+    app.innerHTML = progress(1, "Tu organización") +
+      '<section class="step"><div class="step-head"><p class="eyebrow">Antes de empezar</p><h2>Cuéntanos sobre tu organización</h2></div>' +
+      renderSelects(PROFILE, state.profile, "p-") + navHTML("Continuar") + '</section>';
+    var check = wireNav(function () { return PROFILE.every(function (f) { return state.profile[f.id] != null; }); });
+    bind(PROFILE, state.profile, "p-", check);
+  }
+
+  function renderModule(mi) {
+    var m = MODS[mi], a = state.answers[m.id] || (state.answers[m.id] = {});
+    var html = progress(mi + 2, m.name) +
+      '<section class="step"><div class="step-head"><p class="eyebrow">Dimensión ' + (mi + 1) + ' de ' + MODS.length + '</p><h2>' + esc(m.name) + '</h2><p class="lead">' + esc(m.intro) + '</p></div>';
+    m.likert.forEach(function (s, li) {
+      html += '<fieldset class="qblock"><legend><span class="q-kind">¿Qué tan cierta es esta frase en su empresa?</span>' + esc(s) + '</legend>' + radioGroup(m.id + "-l" + li, SCALE, a["l" + li], "scale") + '</fieldset>';
+    });
+    html += '<fieldset class="qblock"><legend><span class="q-kind">Elige la opción que más se parece a su situación</span>' + esc(m.q) + '</legend>' + radioGroup(m.id + "-s", m.opts, a.s, "opts") + '</fieldset>';
+    html += navHTML(mi === MODS.length - 1 ? "Continuar" : "Siguiente dimensión") + '</section>';
+    app.innerHTML = html;
+    var check = wireNav(function () { return a.l0 != null && a.l1 != null && a.s != null; });
+    [["l0", m.id + "-l0"], ["l1", m.id + "-l1"], ["s", m.id + "-s"]].forEach(function (pair) {
+      app.querySelectorAll('input[name="' + pair[1] + '"]').forEach(function (inp) {
+        inp.onchange = function () { a[pair[0]] = +inp.value; check(); };
+      });
+    });
+  }
+
+  function renderClose() {
+    app.innerHTML = progress(TOTAL, "Último paso") +
+      '<section class="step"><div class="step-head"><p class="eyebrow">Último paso</p><h2>Dos preguntas para orientar la recomendación</h2></div>' +
+      renderSelects(CLOSE, state.close, "c-") + navHTML("Ver mi resultado") + '</section>';
+    var check = wireNav(function () { return CLOSE.every(function (f) { return state.close[f.id] != null; }); });
+    bind(CLOSE, state.close, "c-", check);
+  }
+
+  function score(m) {
+    var a = state.answers[m.id];
+    var l = SCALE[a.l0].v + SCALE[a.l1].v, o = m.opts[a.s];
+    var need = Math.round((l + o.w) / 9 * 100);
+    var rec = o.rec || (need >= 34 ? m.def : null);
+    return { m: m, need: need, rec: rec, see: o.see, opt: o };
+  }
+  function level(n) { return n >= 67 ? { k: "high", t: "Prioridad", c: "var(--high)" } : n >= 34 ? { k: "mid", t: "Por fortalecer", c: "var(--mid)" } : { k: "good", t: "Fortaleza", c: "var(--good)" }; }
+
+  function recCard(r, main) {
+    var s = SVC[r.rec];
+    return '<article class="rec' + (main ? " main" : "") + '"><p class="tag">' + (main ? "Por dónde empezar" : "Segundo frente") + ' · ' + esc(r.m.name) + '</p>' +
+      '<h3>' + esc(s.name) + '</h3><p class="line">' + esc(s.line) + '</p><dl>' +
+      (r.see ? '<div><dt>Lo que vemos</dt><dd>' + esc(r.see) + '</dd></div>' : '') +
+      '<div><dt>Qué proponemos</dt><dd>' + esc(s.what) + '</dd></div>' +
+      '<div><dt>Primer paso</dt><dd>' + esc(s.start) + '</dd></div></dl></article>';
+  }
+
+  var GROUP_HINT = {
+    cultura: "Incluye a alguien que haya llegado hace poco: ve la cultura con ojos nuevos.",
+    liderazgo: "Mezcla directivos y mandos medios de áreas distintas.",
+    bienestar: "Incluye a alguien de bienestar o SST y a personas de las áreas con más carga.",
+    sostenibilidad: "Incluye a quien lidera la gestión ambiental y a personas de la operación.",
+    formacion: "Incluye a quien diseña la formación y a quienes la reciben, de oficina y de operación."
+  };
+  var SLOTS = ["Decide", "Decide", "Lidera un equipo", "Lidera un equipo", "Vive el reto de cerca", "Vive el reto de cerca"];
+  var SLOT_PH = ["Ej.: Directora de Gestión Humana", "Ej.: Gerente del área priorizada", "Ej.: Jefe de producción", "Ej.: Coordinadora de servicio", "Ej.: Analista con 1 año en la empresa", "Ej.: Operario de planta"];
+
+  function groupList() { return (state.group || []).map(function (g, i) { return g ? (SLOTS[i] + ": " + g) : null; }).filter(Boolean); }
+
+  function summary(results, ranked) {
+    var p = state.profile, c = state.close;
+    var lines = ["Hola Simoné, hice el diagnóstico en su página."];
+    if (state.name || state.company) lines.push("Nombre: " + (state.name || "-") + " · Empresa: " + (state.company || "-"));
+    lines.push("Área: " + PROFILE[0].opts[p.cargo] + " · Colaboradores: " + PROFILE[1].opts[p.tam] + " · Sector: " + PROFILE[2].opts[p.sector] + " · Personal operativo: " + PROFILE[3].opts[p.oper]);
+    lines.push("");
+    lines.push("Resultado (nivel de necesidad de 0 a 100):");
+    ranked.forEach(function (r) { lines.push("- " + r.m.name + ": " + r.need + " (" + level(r.need).t + ")"); });
+    var recs = ranked.filter(function (r) { return r.rec; }).slice(0, 2);
+    if (recs.length) { lines.push(""); lines.push("Recomendación: " + recs.map(function (r) { return SVC[r.rec].name; }).join(" / ")); }
+    lines.push("Cuándo: " + CLOSE[0].opts[c.cuando] + " · Presupuesto: " + CLOSE[1].opts[c.ppto]);
+    lines.push("");
+    var g = groupList();
+    if (g.length) { lines.push("Grupo para la sesión vivencial (" + g.length + " de 6):"); g.forEach(function (x) { lines.push("- " + x); }); }
+    else lines.push("Estamos armando el grupo de 6 personas para la sesión vivencial.");
+    lines.push("");
+    lines.push("Queremos agendar la sesión vivencial de diagnóstico.");
+    return lines.join("\n");
+  }
+
+  function loadImage(src) {
+    return fetch(src).then(function (r) { return r.blob(); }).then(function (b) {
+      return new Promise(function (res) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.readAsDataURL(b); });
+    }).catch(function () { return null; });
+  }
+
+  function buildPDF(results, ranked, main, second) {
+    var J = window.jspdf && window.jspdf.jsPDF;
+    if (!J) return Promise.reject(new Error("nolib"));
+    return loadImage("logo.png").then(function (logo) {
+      var d = new J({ unit: "mm", format: "a4" });
+      var W = 210, M = 18, CW = W - 2 * M, y = 18;
+      var OL = [54, 58, 18], RU = [138, 51, 0], SOFT = [92, 97, 50], LINE = [220, 211, 188];
+      var LV = { good: [79, 107, 42], mid: [201, 134, 31], high: [168, 50, 28] };
+      function clean(s) { return String(s).replace(/™/g, ""); }
+      function ensure(h) { if (y + h > 280) { d.addPage(); y = 18; } }
+      function text(s, size, color, style, gap) {
+        d.setFont("helvetica", style || "normal"); d.setFontSize(size); d.setTextColor.apply(d, color);
+        var lines = d.splitTextToSize(clean(s), CW);
+        var lh = size * 0.45;
+        ensure(lines.length * lh + (gap || 0));
+        d.text(lines, M, y + lh * 0.8); y += lines.length * lh + (gap || 0);
+      }
+      function label(s) { ensure(14); text(s, 9.5, [54, 58, 18], "bold", 0.5); }
+      function rule() { ensure(6); d.setDrawColor.apply(d, LINE); d.setLineWidth(0.3); d.line(M, y, W - M, y); y += 6; }
+
+      if (logo) d.addImage(logo, "PNG", M, y, 46, 13.3);
+      d.setFont("helvetica", "bold"); d.setFontSize(9); d.setTextColor.apply(d, RU);
+      d.text("INFORME DE DIAGNÓSTICO", W - M, y + 5, { align: "right" });
+      d.setFont("helvetica", "normal"); d.setTextColor.apply(d, SOFT);
+      d.text(new Date().toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" }), W - M, y + 10, { align: "right" });
+      y += 22;
+
+      text(main ? "Tu prioridad hoy: " + main.m.name.toLowerCase() : "Tu organización está en un buen momento", 18, OL, "bold", 3);
+      var p = state.profile;
+      var who = [state.company, state.name].filter(Boolean).join(" · ");
+      if (who) text(who, 11, OL, "bold", 1);
+      text(PROFILE[0].opts[p.cargo] + " · " + PROFILE[1].opts[p.tam] + " colaboradores · " + PROFILE[2].opts[p.sector] + " · Personal operativo: " + PROFILE[3].opts[p.oper], 9.5, SOFT, "normal", 5);
+      rule();
+
+      text("Tus cinco dimensiones", 13, OL, "bold", 2);
+      text("Nivel de necesidad de 0 a 100. Entre más alto, más urgente es trabajar en esa dimensión.", 9.5, SOFT, "normal", 4);
+      ranked.forEach(function (r) {
+        var lv = level(r.need); ensure(13);
+        d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor.apply(d, OL); d.text(r.m.name, M, y + 4);
+        d.setFont("helvetica", "normal"); d.setFontSize(9.5); d.setTextColor.apply(d, LV[lv.k]);
+        d.text(lv.t + "  ·  " + r.need + " / 100", W - M, y + 4, { align: "right" });
+        d.setFillColor.apply(d, LINE); d.roundedRect(M, y + 6.5, CW, 3, 1.5, 1.5, "F");
+        d.setFillColor.apply(d, LV[lv.k]); d.roundedRect(M, y + 6.5, Math.max(CW * r.need / 100, 3), 3, 1.5, 1.5, "F");
+        y += 14;
+      });
+      y += 2; rule();
+
+      [main, second].forEach(function (r, i) {
+        if (!r) return; var s = SVC[r.rec];
+        text((i === 0 ? "POR DÓNDE EMPEZAR" : "SEGUNDO FRENTE") + " · " + r.m.name.toUpperCase(), 8.5, RU, "bold", 1.5);
+        text(s.name, 13, OL, "bold", 1);
+        text(s.line, 9.5, SOFT, "normal", 3);
+        if (r.see) { label("Lo que vemos"); text(r.see, 10, OL, "normal", 2.5); }
+        label("Qué proponemos"); text(s.what, 10, OL, "normal", 2.5);
+        label("Primer paso"); text(s.start, 10, OL, "normal", 5);
+      });
+      rule();
+
+      text("SIGUIENTE PASO", 8.5, RU, "bold", 1.5);
+      text("Sesión vivencial de diagnóstico con 6 personas", 13, OL, "bold", 2);
+      text("Antes de reunirnos, selecciona un grupo de 6 personas con las que podamos tener una sesión complementaria de diagnóstico. En 90 minutos vivirán una muestra de nuestro modelo El Borde Visible: observarán una obra con una rutina de pensamiento visible de Harvard Project Zero, crearán una pieza en grupo y conversarán sobre su prioridad. Tú ves cómo trabajamos; nosotros vemos tu cultura desde adentro.", 10, OL, "normal", 2);
+      text("La sesión tiene un valor que se abona en su totalidad al servicio que contraten con Simoné.", 10, OL, "bold", 3);
+      var g = groupList();
+      if (g.length) { text("Tu grupo:", 9.5, OL, "bold", 0.5); g.forEach(function (x) { text("•  " + x, 10, OL, "normal", 0.5); }); y += 2; }
+      else {
+        text("A quién invitar:", 9.5, OL, "bold", 0.5);
+        ["2 personas que deciden, por ejemplo Gestión Humana y el gerente del área priorizada.", "2 líderes de equipo o mandos medios.", "2 personas que viven el reto de cerca" + (p.oper === 0 ? ", al menos una del personal operativo." : ".")].forEach(function (x) { text("•  " + x, 10, OL, "normal", 0.5); });
+        y += 2;
+      }
+      if (main && GROUP_HINT[main.m.id]) text(GROUP_HINT[main.m.id], 9.5, SOFT, "italic", 5);
+
+      ensure(18);
+      d.setFillColor.apply(d, OL); d.roundedRect(M, y, CW, 16, 3, 3, "F");
+      d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(246, 240, 226);
+      d.text("Agenda la sesión: WhatsApp +57 321 773 8039", M + 6, y + 6.5);
+      d.setFont("helvetica", "normal"); d.setFontSize(9.5);
+      d.text("experienciasimone@gmail.com  ·  nathaliavelasco.github.io", M + 6, y + 11.8);
+      return d;
+    });
+  }
+
+  function fileName() {
+    var base = (state.company || "mi-empresa").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "mi-empresa";
+    return "Diagnostico-Simone-" + base + ".pdf";
+  }
+
+  function renderResult() {
+    var results = MODS.map(score);
+    var ranked = results.slice().sort(function (a, b) { return b.need - a.need || MODS.indexOf(a.m) - MODS.indexOf(b.m); });
+    var withRec = ranked.filter(function (r) { return r.rec; });
+    var main = withRec[0], second = null;
+    for (var i = 1; i < withRec.length; i++) { if (withRec[i].rec !== main.rec && withRec[i].need >= 34) { second = withRec[i]; break; } }
+    if (!state.group) state.group = ["", "", "", "", "", ""];
+    var prio = main ? main.m.name.toLowerCase() : "lo que quieren fortalecer";
+
+    var headline = main
+      ? 'Tu prioridad hoy: <span style="color:var(--rust)">' + esc(main.m.name.toLowerCase()) + '</span>'
+      : 'Tu organización está en un buen momento';
+    var html = '<section class="result">' +
+      '<div class="step-head"><p class="eyebrow">Tu resultado</p><h1>' + headline + '</h1>' +
+      '<p class="lead">' + (main ? 'Así se ven las cinco dimensiones. Entre más alta la barra, más urgente es trabajar en ella.' : 'Ninguna dimensión aparece como urgente. Podemos ayudarte a sostener lo que ya funciona.') + '</p></div>' +
+      '<div class="bars" role="list">' + ranked.map(function (r) {
+        var lv = level(r.need);
+        return '<div class="bar" role="listitem"><span class="bar-name">' + esc(r.m.name) + '<span class="lvl lvl-' + lv.k + '">' + lv.t + '</span></span><span class="bar-val"><b>' + r.need + '</b> / 100</span>' +
+          '<div class="bar-track"><div class="bar-fill" style="width:' + Math.max(r.need, 3) + '%;background:' + lv.c + '"></div></div></div>';
+      }).join("") + '</div>' +
+      '<p class="legend"><span>0–33: fortaleza</span><span>34–66: por fortalecer</span><span>67–100: prioridad</span></p>' +
+      (main ? recCard(main, true) : '') + (second ? recCard(second, false) : '') +
+
+      '<section class="cta" aria-labelledby="cta-h">' +
+      '<p class="cta-eyebrow">Siguiente paso</p>' +
+      '<h2 id="cta-h">Una sesión vivencial de diagnóstico con 6 personas de tu equipo</h2>' +
+      '<p>Antes de reunirnos, selecciona un grupo de 6 personas con las que podamos tener una sesión complementaria de diagnóstico. En 90 minutos vivirán una muestra de nuestro modelo El Borde Visible™: observarán una obra con una rutina de pensamiento visible de Harvard Project Zero, crearán una pieza en grupo y conversarán sobre su prioridad: ' + esc(prio) + '. Tú ves cómo trabajamos; nosotros vemos tu cultura desde adentro.</p><p><strong>La sesión tiene un valor que se abona en su totalidad al servicio que contraten con Simoné.</strong></p>' +
+      '<ol class="path">' +
+        '<li><div class="path-n">1</div><div class="path-body"><h3>Guarda tu informe</h3><p>Tu resultado, las recomendaciones y la guía para armar el grupo, en un PDF.</p>' +
+          '<div class="copy-row"><button class="btn" id="pdf" type="button">Descargar informe en PDF</button><span class="copied" id="pdf-msg" role="status"></span></div></div></li>' +
+        '<li><div class="path-n">2</div><div class="path-body"><h3>Elige a las 6 personas</h3><p>Dos que deciden, dos que lideran equipos y dos que viven el reto de cerca' + (state.profile.oper === 0 ? ', al menos una del personal operativo' : '') + '. ' + esc(main && GROUP_HINT[main.m.id] ? GROUP_HINT[main.m.id] : '') + '</p>' +
+          '<div class="slots">' + SLOTS.map(function (s, i) {
+            return '<div class="field"><label for="g-' + i + '">Persona ' + (i + 1) + ' · ' + s.toLowerCase() + '</label><input id="g-' + i + '" placeholder="' + SLOT_PH[i] + '" value="' + esc(state.group[i]) + '"></div>';
+          }).join("") + '</div><p class="small">Escribe cargos o nombres. Es opcional, pero nos ayuda a preparar la sesión.</p></div></li>' +
+        '<li><div class="path-n">3</div><div class="path-body"><h3>Agenda la sesión por WhatsApp</h3><p>Nathalia Velasco recibe tu resultado y el grupo, y te propone fechas.</p>' +
+          '<div class="grid2"><div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" value="' + esc(state.name) + '"></div>' +
+          '<div class="field"><label for="f-company">Empresa</label><input id="f-company" autocomplete="organization" value="' + esc(state.company) + '"></div></div>' +
+          '<div class="copy-row"><a class="btn btn-wa" id="send" target="_blank" rel="noopener" href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Agendar la sesión por WhatsApp</a>' +
+          '<button class="btn btn-light" id="copy" type="button">Copiar resumen</button><span class="copied" id="copied" role="status"></span></div>' +
+          '<p class="small">También puedes escribir al +57 321 773 8039 o a experienciasimone@gmail.com.</p></div></li>' +
+      '</ol></section>' +
+      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://nathaliavelasco.github.io">Conocer Simoné</a></div>' +
+      '</section>';
+    app.innerHTML = html;
+
+    var send = document.getElementById("send");
+    function refresh() {
+      state.name = document.getElementById("f-name").value.trim();
+      state.company = document.getElementById("f-company").value.trim();
+      for (var k = 0; k < 6; k++) state.group[k] = document.getElementById("g-" + k).value.trim();
+      send.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(summary(results, ranked));
+    }
+    refresh();
+    app.querySelectorAll(".cta input").forEach(function (inp) { inp.oninput = refresh; });
+
+    document.getElementById("pdf").onclick = function () {
+      refresh();
+      var msg = document.getElementById("pdf-msg"), btn = this;
+      btn.disabled = true; msg.textContent = "Preparando tu informe…";
+      buildPDF(results, ranked, main, second).then(function (d) {
+        var name = fileName();
+        var viaViewer = window.claude && window.claude.use ? window.claude.use("downloads") : Promise.resolve(null);
+        return viaViewer.then(function (dl) {
+          if (dl) return dl.save({ filename: name, data: d.output("blob") }).then(function () { msg.textContent = "Informe listo."; });
+          d.save(name); msg.textContent = "Informe descargado.";
+        });
+      }).catch(function (e) {
+        msg.textContent = (e && e.code === "declined") ? "Descarga cancelada." : "No se pudo crear el PDF aquí. Usa el resumen por WhatsApp.";
+      }).then(function () { btn.disabled = false; });
+    };
+
+    document.getElementById("copy").onclick = function () {
+      refresh();
+      var txt = summary(results, ranked), msg = document.getElementById("copied");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function () { msg.textContent = "Resumen copiado."; }, function () { msg.textContent = "No se pudo copiar. Usa el botón de WhatsApp."; });
+      } else { msg.textContent = "No se pudo copiar. Usa el botón de WhatsApp."; }
+    };
+    document.getElementById("restart").onclick = function () { state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" }; render(); top(); };
+  }
+
+  function render() {
+    var s = state.step;
+    if (s === 0) return renderIntro();
+    if (s === 1) return renderProfile();
+    if (s <= MODS.length + 1) return renderModule(s - 2);
+    if (s === MODS.length + 2) return renderClose();
+    return renderResult();
+  }
+  render();
+})();
+</script>
+</body>
+</html>
