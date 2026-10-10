@@ -282,6 +282,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     { id: "ppto", label: "¿Tienen presupuesto para formación o bienestar?", opts: ["Sí, asignado", "En planeación", "Aún no"] }
   ];
 
+  var ORIGIN = (function () { try { return (new URLSearchParams(location.search).get("origen") || "").replace(/[^a-z0-9-]/gi, "").slice(0, 40); } catch (e) { return ""; } })();
   var state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" };
   var TOTAL = MODS.length + 2; // perfil + 5 módulos + cierre
   var app = document.getElementById("app");
@@ -428,6 +429,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     else lines.push("Estamos armando el grupo de 6 personas para la sesión vivencial.");
     lines.push("");
     lines.push("Queremos agendar la sesión vivencial de diagnóstico.");
+    if (ORIGIN) lines.push("(Origen: " + ORIGIN + ")");
     return lines.join("\n");
   }
 
