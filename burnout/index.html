@@ -44,7 +44,7 @@ img { max-width: 100%; display: block; }
 .wrap { max-width: 720px; margin-inline: auto; padding-inline: 16px; }
 header.top { border-bottom: 1px solid var(--line); }
 header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
-.logo img { height: 34px; width: auto; }
+.logo img { height: 44px; width: auto; }
 .logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
 .meta { font-family: var(--display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
 main { padding-block: 32px 72px; }
@@ -131,8 +131,8 @@ footer .wrap { display: grid; gap: 6px; }
 <header class="top">
   <div class="wrap">
     <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
-      <img class="l-light" src="logo.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
-      <img class="l-dark" src="logo-claro.png" alt="Simoné · Wellbeing &amp; Regenerative Art" width="900" height="261">
+      <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
+      <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
     </a>
     <span class="meta">Equilibrio laboral</span>
   </div>
@@ -310,7 +310,7 @@ footer .wrap { display: grid; gap: 6px; }
         ensure(lines.length * lh + (gap || 0)); d.text(lines, M, y + lh * 0.8); y += lines.length * lh + (gap || 0);
       }
       function rule() { ensure(6); d.setDrawColor.apply(d, LINE); d.setLineWidth(0.3); d.line(M, y, W - M, y); y += 6; }
-      if (logo) d.addImage(logo, "PNG", M, y, 46, 13.3);
+      if (logo) d.addImage(logo, "PNG", M, y, 46, 11.7);
       d.setFont("helvetica", "bold"); d.setFontSize(9); d.setTextColor.apply(d, RU); d.text("INVENTARIO DE EQUILIBRIO LABORAL", W - M, y + 5, { align: "right" });
       d.setFont("helvetica", "normal"); d.setTextColor.apply(d, SOFT);
       d.text(new Date().toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" }), W - M, y + 10, { align: "right" });
