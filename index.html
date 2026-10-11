@@ -100,11 +100,11 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 .logo img { height: 38px; width: auto; }
 .logo .l-light { display: var(--logo-light); }
 .logo .l-dark { display: var(--logo-dark); }
-.top nav { display: flex; gap: 28px; font-family: var(--display); font-weight: 500; font-size: 0.9375rem; }
+.top nav { display: flex; gap: 22px; white-space: nowrap; font-family: var(--display); font-weight: 500; font-size: 0.9375rem; }
 .top nav a { text-decoration: none; }
 .top nav a:hover { color: var(--rust); }
 .top .btn { padding: 10px 18px; font-size: 0.9375rem; }
-@media (max-width: 860px) { .top nav { display: none; } }
+@media (max-width: 1180px) { .top nav { display: none; } }
 @media (max-width: 420px) { .logo img { height: 30px; } .top .btn span { display: none; } .top .btn { padding: 10px 12px; } }
 
 /* Hero */
@@ -234,6 +234,25 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 @media (max-width: 960px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .clients-grid { grid-template-columns: 1fr; } }
 
+/* Testimonios */
+.voices-head { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(24px, 5vw, 64px); align-items: end; }
+.voices-stat { display: flex; gap: 18px; align-items: baseline; border-top: 2px solid var(--rust); padding-top: 16px; }
+.voices-stat b { font-family: var(--display); font-weight: 700; font-size: var(--step-3); color: var(--rust); line-height: 1; }
+.voices-stat span { color: var(--olive-soft); max-width: 30ch; }
+.voice-feature { margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(28px, 4vw, 48px); background: var(--paper); border: 1px solid var(--line); border-radius: 12px 12px 12px 120px; display: grid; gap: 18px; }
+.voice-feature blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 46ch; text-wrap: pretty; }
+.voices { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.voice { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: grid; gap: 16px; align-content: space-between; min-width: 0; }
+.voice blockquote { margin: 0; font-size: 1.0625rem; line-height: 1.55; }
+.voice blockquote::before, .voice-feature blockquote::before { content: "“"; color: var(--magenta); font-family: var(--display); font-weight: 700; margin-right: 2px; }
+.voice blockquote::after, .voice-feature blockquote::after { content: "”"; color: var(--magenta); font-family: var(--display); font-weight: 700; }
+.who-said { font-family: var(--display); font-weight: 600; font-size: 0.9375rem; line-height: 1.35; }
+.who-said small { display: block; font-family: var(--body); font-weight: 400; color: var(--olive-soft); font-size: 0.875rem; margin-top: 2px; }
+.voices-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+@media (max-width: 960px) { .voices { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 860px) { .voices-head { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .voices { grid-template-columns: 1fr; } .voice-feature { border-radius: 12px 12px 12px 64px; } }
+
 /* Nathalia */
 .founder-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
 .founder-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; border-radius: 12px 12px 200px 200px; }
@@ -291,6 +310,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
       <a href="#como-trabajamos">Cómo trabajamos</a>
       <a href="#como-medimos">Cómo medimos</a>
       <a href="#clientes">Clientes</a>
+      <a href="#testimonios">Testimonios</a>
       <a href="diagnostico/">Diagnóstico</a>
     </nav>
     <a class="btn btn-wa wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener">
@@ -522,8 +542,57 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
         <div class="sector"><p class="eyebrow">Tecnología</p><ul><li>Naska Digital</li><li>ID Interactive</li></ul></div>
         <div class="sector"><p class="eyebrow">Consumo e industria</p><ul><li>Doria</li><li>Darnel</li><li>Ajover</li><li>Brot</li></ul></div>
         <div class="sector"><p class="eyebrow">Centros comerciales</p><ul><li>Santa Ana</li><li>Centro Mayor</li><li>Parque La Colina</li></ul></div>
-        <div class="sector"><p class="eyebrow">Sector público y fundaciones</p><ul><li>Imprenta Nacional</li><li>Fundación Cakike</li></ul></div>
+        <div class="sector"><p class="eyebrow">Sector público y fundaciones</p><ul><li>Imprenta Nacional</li><li>Cámara de Comercio de Cartagena</li><li>Fundación Cakike</li></ul></div>
         <div class="sector"><p class="eyebrow">Aliados</p><ul><li>Táktikos</li><li>Dinámika</li><li>Evoforma+</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios">
+    <div class="wrap">
+      <div class="voices-head">
+        <div style="display:grid;gap:14px">
+          <p class="eyebrow">Lo que dicen quienes la vivieron</p>
+          <h2>Lo que se lleva la gente, en sus propias palabras.</h2>
+        </div>
+        <p class="voices-stat"><b>143</b><span>personas respondieron nuestra encuesta después de su experiencia. Las 143 recomendarían a Simoné.</span></p>
+      </div>
+
+      <figure class="voice-feature">
+        <blockquote>En lo personal, aprendí a escucharme con mayor compasión y claridad; y en lo profesional, a liderar desde un lugar más consciente y empático.</blockquote>
+        <figcaption class="who-said">Joaquín Berrocal<small>Cámara de Comercio de Cartagena</small></figcaption>
+      </figure>
+
+      <ul class="voices">
+        <li class="voice">
+          <blockquote>Nos ayuda a reconocernos, valorar lo que nos rodea y motivarnos para el trabajo en equipo.</blockquote>
+          <p class="who-said">Diana María Álvarez<small>Productos Alimenticios Doria</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Cada persona tiene visiones diferentes de la organización y sus desafíos. Lo interesante es armonizarlo todo para, desde la individualidad, construir en conjunto.</blockquote>
+          <p class="who-said">Lina María Acero<small>Sociedad Entorno y Compañía</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>La importancia de identificar nuestro lado humanista en la forma de liderar a nuestros grupos de trabajo.</blockquote>
+          <p class="who-said">Libia del Socorro Quintero<small>Nueva EPS · Líderes asumiendo desafíos</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Me gustó mucho el espacio de introspección guiado. Siento que normalmente no generamos ese tiempo, muchas veces por temor a lo que podamos encontrar.</blockquote>
+          <p class="who-said">Claudia Contreras<small>Macecofar</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Entender la dinámica de interacción humana a través de lo lúdico, y el potencial detrás de una metodología con un objetivo claro.</blockquote>
+          <p class="who-said">Alexis Muñoz<small>Evoforma · Área comercial</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Una rutina de pensamiento: observa, identifica y asume el desafío.</blockquote>
+          <p class="who-said">Miguel Ángel Cárdenas<small>Hotel y Centro de Convenciones Pueblito de Yerbabuena</small></p>
+        </li>
+      </ul>
+
+      <div class="voices-cta">
+        <a class="btn btn-ghost" href="diagnostico/?origen=testimonios">¿Qué viviría tu equipo? Haz el diagnóstico</a>
+        <span style="color:var(--olive-soft);font-size:0.9375rem">Testimonios publicados con autorización de cada participante.</span>
       </div>
     </div>
   </section>
