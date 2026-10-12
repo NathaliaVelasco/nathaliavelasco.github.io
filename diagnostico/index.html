@@ -44,7 +44,8 @@ img { max-width: 100%; display: block; }
 
 header.top { border-bottom: 1px solid var(--line); }
 header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
-.logo img { height: 44px; width: auto; }
+.logo { flex-shrink: 0; }
+.logo img { height: 44px; width: auto; max-width: none; }
 .logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
 .meta { font-family: var(--display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
 
@@ -165,8 +166,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <header class="top">
   <div class="wrap">
     <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
-      <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
-      <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
+      <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+      <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
     </a>
     <span class="meta">Diagnóstico</span>
   </div>

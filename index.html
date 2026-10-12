@@ -97,14 +97,15 @@ section { padding-block: clamp(64px, 9vw, 120px); }
   backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
 }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
-.logo img { height: 44px; width: auto; }
+.logo { flex-shrink: 0; }
+.logo img { height: 44px; width: auto; max-width: none; }
 .logo .l-light { display: var(--logo-light); }
 .logo .l-dark { display: var(--logo-dark); }
 .top nav { display: flex; gap: 22px; white-space: nowrap; font-family: var(--display); font-weight: 500; font-size: 0.9375rem; }
 .top nav a { text-decoration: none; }
 .top nav a:hover { color: var(--rust); }
-.top .btn { padding: 10px 18px; font-size: 0.9375rem; }
-@media (max-width: 1180px) { .top nav { display: none; } }
+.top .btn { padding: 10px 18px; font-size: 0.9375rem; white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 1340px) { .top nav { display: none; } }
 @media (max-width: 420px) { .logo img { height: 30px; } .top .btn span { display: none; } .top .btn { padding: 10px 12px; } }
 
 /* Hero */
@@ -301,8 +302,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#inicio" aria-label="Simoné, inicio">
-      <img class="l-light" src="img/logo.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
-      <img class="l-dark" src="img/logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="900" height="229">
+      <img class="l-light" src="img/logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+      <img class="l-dark" src="img/logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
     </a>
     <nav aria-label="Secciones">
       <a href="#que-hacemos">Qué hacemos</a>
