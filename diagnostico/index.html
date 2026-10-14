@@ -167,7 +167,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
+    <a class="logo" href="https://www.experienciasimone.com" aria-label="Simoné, ir a la página principal">
       <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
       <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
     </a>
@@ -180,7 +180,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <footer>
   <div class="wrap">
     <span>Simoné · Desarrollo humano a través del arte · Colombia</span>
-    <span>Simoné guarda tus respuestas sin datos personales para mejorar este diagnóstico. Tu nombre y tu empresa solo se guardan si lo autorizas.</span>
+    <span>Simoné guarda tus respuestas sin datos personales para mejorar este diagnóstico. Tus datos de contacto solo se guardan si los autorizas para recibir el informe.</span>
   </div>
 </footer>
 
@@ -287,7 +287,23 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     { id: "ppto", label: "¿Tienen presupuesto para formación o bienestar?", opts: ["Sí, asignado", "En planeación", "Aún no"] }
   ];
 
-  var ORIGIN = (function () { try { return (new URLSearchParams(location.search).get("origen") || "").replace(/[^a-z0-9-]/gi, "").slice(0, 40); } catch (e) { return ""; } })();
+  var ORIGIN = (function () {
+    try {
+      var o = (new URLSearchParams(location.search).get("origen") || "").replace(/[^a-z0-9-]/gi, "").slice(0, 40);
+      if (o) return o;
+      var r = (document.referrer || "").toLowerCase();
+      if (/instagram/.test(r)) return "instagram";
+      if (/linkedin|lnkd/.test(r)) return "linkedin";
+      if (/facebook|fb\.com/.test(r)) return "facebook";
+      if (/whatsapp|wa\.me/.test(r)) return "whatsapp";
+      if (/google\./.test(r)) return "google";
+      if (/experienciasimone|nathaliavelasco\.github/.test(r)) return "web";
+      if (/Instagram/.test(navigator.userAgent)) return "instagram";
+      if (/FBAN|FBAV/.test(navigator.userAgent)) return "facebook";
+      if (/LinkedInApp/.test(navigator.userAgent)) return "linkedin";
+      return "";
+    } catch (e) { return ""; }
+  })();
   var ENDPOINT = "https://script.google.com/macros/s/AKfycbz5npQIBjEG_xR1iNcVp1ALmjQFo1TV-5YcbyUbVrPegt7WUwTpjg60J0MDrv_aR5oP/exec";
   var CLAVE = "simone-diagnostico-2026";
   var SID = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -308,11 +324,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         respuestas: MODS.map(function (m) { var a = state.answers[m.id]; return m.id + ":" + a.l0 + "," + a.l1 + "," + a.s; }).join(" ; "),
         autoriza: !!state.autoriza
       };
-      if (state.autoriza) { payload.nombre = state.name; payload.empresa = state.company; payload.grupo = groupList().join(" | "); }
+      if (state.autoriza) {
+        payload.nombre = [state.name, state.cargo, state.email, state.phone].filter(Boolean).join(" · ");
+        payload.empresa = state.company; payload.grupo = groupList().join(" | ");
+      }
       fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(function () {});
     } catch (e) {}
   }
-  var state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" };
+  var state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "", cargo: "", email: "", phone: "", autoriza: false };
   var TOTAL = MODS.length + 2; // perfil + 5 módulos + cierre
   var app = document.getElementById("app");
 
@@ -544,7 +563,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(246, 240, 226);
       d.text("Agenda la sesión: WhatsApp +57 321 773 8039", M + 6, y + 6.5);
       d.setFont("helvetica", "normal"); d.setFontSize(9.5);
-      d.text("experienciasimone@gmail.com  ·  nathaliavelasco.github.io", M + 6, y + 11.8);
+      d.text("experienciasimone@gmail.com  ·  www.experienciasimone.com", M + 6, y + 11.8);
       return d;
     });
   }
@@ -582,21 +601,26 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       '<h2 id="cta-h">Una sesión vivencial de diagnóstico con 6 personas de tu equipo</h2>' +
       '<p>Antes de reunirnos, selecciona un grupo de 6 personas con las que podamos tener una sesión complementaria de diagnóstico. En 90 minutos vivirán una muestra de nuestro modelo El Borde Visible™: observarán una obra con una rutina de pensamiento visible de Harvard Project Zero, crearán una pieza en grupo y conversarán sobre su prioridad: ' + esc(prio) + '. Tú ves cómo trabajamos; nosotros vemos tu cultura desde adentro.</p><p><strong>La sesión tiene un valor que se abona en su totalidad al servicio que contraten con Simoné.</strong></p>' +
       '<ol class="path">' +
-        '<li><div class="path-n">1</div><div class="path-body"><h3>Guarda tu informe</h3><p>Tu resultado, las recomendaciones y la guía para armar el grupo, en un PDF.</p>' +
+        '<li><div class="path-n">1</div><div class="path-body"><h3>Recibe tu informe en PDF</h3><p>Tu resultado, las recomendaciones y la guía para armar el grupo. Déjanos tus datos para descargarlo y para que Nathalia pueda acompañarte.</p>' +
+          '<div class="grid2">' +
+            '<div class="field"><label for="f-name">Tu nombre *</label><input id="f-name" autocomplete="name" value="' + esc(state.name) + '"></div>' +
+            '<div class="field"><label for="f-cargo">Cargo *</label><input id="f-cargo" autocomplete="organization-title" placeholder="Ej.: Directora de Gestión Humana" value="' + esc(state.cargo) + '"></div>' +
+            '<div class="field"><label for="f-company">Empresa *</label><input id="f-company" autocomplete="organization" value="' + esc(state.company) + '"></div>' +
+            '<div class="field"><label for="f-email">Correo de trabajo *</label><input id="f-email" type="email" autocomplete="email" inputmode="email" value="' + esc(state.email) + '"></div>' +
+            '<div class="field"><label for="f-phone">Celular o WhatsApp (opcional)</label><input id="f-phone" type="tel" autocomplete="tel" inputmode="tel" value="' + esc(state.phone) + '"></div>' +
+          '</div>' +
+          '<label class="consent"><input type="checkbox" id="f-consent"' + (state.autoriza ? ' checked' : '') + '><span>Autorizo a Simoné, Creación Arte y Naturaleza S.A.S. a guardar estos datos, mi resultado y el grupo para contactarme sobre sus servicios, según la Ley 1581 de 2012 de protección de datos. *</span></label>' +
           '<div class="copy-row"><button class="btn" id="pdf" type="button">Descargar informe en PDF</button><span class="copied" id="pdf-msg" role="status"></span></div></div></li>' +
         '<li><div class="path-n">2</div><div class="path-body"><h3>Elige a las 6 personas</h3><p>Dos que deciden, dos que lideran equipos y dos que viven el reto de cerca' + (state.profile.oper === 0 ? ', al menos una del personal operativo' : '') + '. ' + esc(main && GROUP_HINT[main.m.id] ? GROUP_HINT[main.m.id] : '') + '</p>' +
           '<div class="slots">' + SLOTS.map(function (s, i) {
             return '<div class="field"><label for="g-' + i + '">Persona ' + (i + 1) + ' · ' + s.toLowerCase() + '</label><input id="g-' + i + '" placeholder="' + SLOT_PH[i] + '" value="' + esc(state.group[i]) + '"></div>';
           }).join("") + '</div><p class="small">Escribe cargos o nombres. Es opcional, pero nos ayuda a preparar la sesión.</p></div></li>' +
         '<li><div class="path-n">3</div><div class="path-body"><h3>Agenda la sesión por WhatsApp</h3><p>Nathalia Velasco recibe tu resultado y el grupo, y te propone fechas.</p>' +
-          '<div class="grid2"><div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" value="' + esc(state.name) + '"></div>' +
-          '<div class="field"><label for="f-company">Empresa</label><input id="f-company" autocomplete="organization" value="' + esc(state.company) + '"></div></div>' +
-          '<label class="consent"><input type="checkbox" id="f-consent"' + (state.autoriza ? ' checked' : '') + '><span>Autorizo a Simoné a guardar mi nombre, mi empresa y el grupo para contactarme, según la Ley 1581 de 2012 de protección de datos.</span></label>' +
           '<div class="copy-row"><a class="btn btn-wa" id="send" target="_blank" rel="noopener" href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Agendar la sesión por WhatsApp</a>' +
           '<button class="btn btn-light" id="copy" type="button">Copiar resumen</button><span class="copied" id="copied" role="status"></span></div>' +
           '<p class="small">También puedes escribir al +57 321 773 8039 o a experienciasimone@gmail.com.</p></div></li>' +
       '</ol></section>' +
-      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://nathaliavelasco.github.io">Conocer Simoné</a></div>' +
+      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://www.experienciasimone.com">Conocer Simoné</a></div>' +
       '</section>';
     app.innerHTML = html;
 
@@ -604,6 +628,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     function refresh() {
       state.name = document.getElementById("f-name").value.trim();
       state.company = document.getElementById("f-company").value.trim();
+      state.cargo = document.getElementById("f-cargo").value.trim();
+      state.email = document.getElementById("f-email").value.trim();
+      state.phone = document.getElementById("f-phone").value.trim();
       state.autoriza = document.getElementById("f-consent").checked;
       for (var k = 0; k < 6; k++) state.group[k] = document.getElementById("g-" + k).value.trim();
       send.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(summary(results, ranked));
@@ -615,8 +642,22 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     send.addEventListener("click", function () { refresh(); logEvent("whatsapp", ctx); });
 
     document.getElementById("pdf").onclick = function () {
-      refresh(); logEvent("pdf", { results: results, main: main, second: second });
+      refresh();
       var msg = document.getElementById("pdf-msg"), btn = this;
+      var missing = [];
+      if (!state.name) missing.push("tu nombre");
+      if (!state.cargo) missing.push("tu cargo");
+      if (!state.company) missing.push("la empresa");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) missing.push("un correo válido");
+      if (!state.autoriza) missing.push("la autorización de datos");
+      if (missing.length) {
+        msg.textContent = "Para descargar el informe falta: " + missing.join(", ") + ".";
+        var first = !state.name ? "f-name" : !state.cargo ? "f-cargo" : !state.company ? "f-company" : !state.autoriza && /@/.test(state.email) ? "f-consent" : "f-email";
+        if (!state.autoriza && state.name && state.cargo && state.company && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) first = "f-consent";
+        document.getElementById(first).focus();
+        return;
+      }
+      logEvent("pdf", { results: results, main: main, second: second });
       btn.disabled = true; msg.textContent = "Preparando tu informe…";
       buildPDF(results, ranked, main, second).then(function (d) {
         var name = fileName();
@@ -637,7 +678,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         navigator.clipboard.writeText(txt).then(function () { msg.textContent = "Resumen copiado."; }, function () { msg.textContent = "No se pudo copiar. Usa el botón de WhatsApp."; });
       } else { msg.textContent = "No se pudo copiar. Usa el botón de WhatsApp."; }
     };
-    document.getElementById("restart").onclick = function () { state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "" }; render(); top(); };
+    document.getElementById("restart").onclick = function () { state = { step: 0, answers: {}, profile: {}, close: {}, name: "", company: "", cargo: "", email: "", phone: "", autoriza: false }; render(); top(); };
   }
 
   function render() {

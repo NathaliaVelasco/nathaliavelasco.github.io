@@ -133,7 +133,7 @@ footer .wrap { display: grid; gap: 6px; }
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="https://nathaliavelasco.github.io" aria-label="Simoné, ir a la página principal">
+    <a class="logo" href="https://www.experienciasimone.com" aria-label="Simoné, ir a la página principal">
       <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
       <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
     </a>
@@ -276,7 +276,7 @@ footer .wrap { display: grid; gap: 6px; }
       '<p>Podemos aplicar este inventario a tu equipo de forma anónima y entregarte un mapa de energía por áreas, sin datos personales. Es el primer paso de <strong>Equilibrio Total</strong>, nuestro acompañamiento de 6 meses para prevenir el agotamiento laboral, y de la <strong>Escuela de Ecología Emocional</strong>, para que cada persona aprenda a gestionar su energía y sus relaciones.</p>' +
       '<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/' + WA + '?text=' + encodeURIComponent("Hola Simoné, hice el Inventario de Equilibrio Laboral y quiero saber cómo aplicarlo a mi equipo de forma anónima.") + '"><svg aria-hidden="true"><use href="#wa"/></svg>Quiero medir a mi equipo</a></div>' +
       '<p class="hint" style="color:inherit;opacity:.8">Este mensaje no incluye tus resultados.</p></section>' +
-      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://nathaliavelasco.github.io">Conocer Simoné</a></div></section>';
+      '<div class="nav"><button class="btn btn-ghost" id="restart">Volver a empezar</button><a class="btn btn-ghost" href="https://www.experienciasimone.com">Conocer Simoné</a></div></section>';
     app.innerHTML = html;
     document.getElementById("restart").onclick = function () { state = { step: 0, a: {} }; render(); top(); };
     document.getElementById("pdf").onclick = function () {
@@ -343,7 +343,7 @@ footer .wrap { display: grid; gap: 6px; }
       d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(246, 240, 226);
       d.text("¿Quieres medir el equilibrio de tu equipo? WhatsApp +57 321 773 8039", M + 6, y + 6.5);
       d.setFont("helvetica", "normal"); d.setFontSize(9.5);
-      d.text("experienciasimone@gmail.com  ·  nathaliavelasco.github.io", M + 6, y + 11.8);
+      d.text("experienciasimone@gmail.com  ·  www.experienciasimone.com", M + 6, y + 11.8);
       return d;
     });
   }
