@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<link rel="canonical" href="https://www.experienciasimone.com/burnout/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Inventario de Equilibrio Laboral</title>
 <meta name="description" content="Un test de 5 minutos para conocer tu energía, tu conexión con el entorno y tu sentido de logro en el trabajo. Simoné.">
@@ -254,7 +255,10 @@ footer .wrap { display: grid; gap: 6px; }
     return { res: res, prof: prof };
   }
 
+  var gcSent = {};
+  function gcOnce(k, t) { if (gcSent[k]) return; gcSent[k] = true; if (typeof gcEvento === "function") gcEvento(k, t); }
   function result() {
+    gcOnce("burnout-resultado", "Test de burnout: resultado");
     var c = compute(), P = PROFILES[c.prof];
     var pc = P.k === "high" ? "var(--high)" : P.k === "mid" ? "var(--mid)" : "var(--good)";
     var focus = c.res.slice().sort(function (x, y) { return y.risk - x.risk; }).filter(function (r) { return r.risk >= 34; }).slice(0, 2);
@@ -280,6 +284,7 @@ footer .wrap { display: grid; gap: 6px; }
     app.innerHTML = html;
     document.getElementById("restart").onclick = function () { state = { step: 0, a: {} }; render(); top(); };
     document.getElementById("pdf").onclick = function () {
+      gcOnce("burnout-pdf", "Test de burnout: PDF");
       var msg = document.getElementById("pdf-msg"), btn = this; btn.disabled = true; msg.textContent = "Preparando tu informe…";
       buildPDF(c, P, focus).then(function (d) {
         var name = "Equilibrio-Laboral-Simone.pdf";

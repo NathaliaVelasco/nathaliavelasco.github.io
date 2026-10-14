@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<link rel="canonical" href="https://www.experienciasimone.com/diagnostico/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Diagnóstico Simoné</title>
 <meta name="description" content="En 5 minutos, descubre en qué punto está tu organización en cultura, liderazgo, bienestar, sostenibilidad y formación, y por dónde empezar.">
@@ -311,6 +312,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   function logEvent(evento, ctx) {
     if (sent[evento] || !ENDPOINT) return;
     sent[evento] = true;
+    if (typeof gcEvento === "function") gcEvento("diagnostico-" + evento, "Diagnóstico: " + evento);
     try {
       var p = state.profile, c = state.close, by = {};
       ctx.results.forEach(function (r) { by[r.m.id] = r.need; });
