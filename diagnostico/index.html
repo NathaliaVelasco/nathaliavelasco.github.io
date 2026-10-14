@@ -325,8 +325,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         autoriza: !!state.autoriza
       };
       if (state.autoriza) {
-        payload.nombre = [state.name, state.cargo, state.email, state.phone].filter(Boolean).join(" · ");
-        payload.empresa = state.company; payload.grupo = groupList().join(" | ");
+        payload.nombre = state.name; payload.cargo = state.cargo; payload.empresa = state.company;
+        payload.correo = state.email; payload.celular = state.phone; payload.grupo = groupList().join(" | ");
       }
       fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(function () {});
     } catch (e) {}
@@ -609,7 +609,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             '<div class="field"><label for="f-email">Correo de trabajo *</label><input id="f-email" type="email" autocomplete="email" inputmode="email" value="' + esc(state.email) + '"></div>' +
             '<div class="field"><label for="f-phone">Celular o WhatsApp (opcional)</label><input id="f-phone" type="tel" autocomplete="tel" inputmode="tel" value="' + esc(state.phone) + '"></div>' +
           '</div>' +
-          '<label class="consent"><input type="checkbox" id="f-consent"' + (state.autoriza ? ' checked' : '') + '><span>Autorizo a Simoné, Creación Arte y Naturaleza S.A.S. a guardar estos datos, mi resultado y el grupo para contactarme sobre sus servicios, según la Ley 1581 de 2012 de protección de datos. *</span></label>' +
+          '<label class="consent"><input type="checkbox" id="f-consent"' + (state.autoriza ? ' checked' : '') + '><span>Autorizo a Simoné, Creación Arte y Naturaleza S.A.S. a guardar estos datos, mi resultado y el grupo para contactarme sobre sus servicios, según la Ley 1581 de 2012 y su <a href="../privacidad/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">política de tratamiento de datos</a>. *</span></label>' +
           '<div class="copy-row"><button class="btn" id="pdf" type="button">Descargar informe en PDF</button><span class="copied" id="pdf-msg" role="status"></span></div></div></li>' +
         '<li><div class="path-n">2</div><div class="path-body"><h3>Elige a las 6 personas</h3><p>Dos que deciden, dos que lideran equipos y dos que viven el reto de cerca' + (state.profile.oper === 0 ? ', al menos una del personal operativo' : '') + '. ' + esc(main && GROUP_HINT[main.m.id] ? GROUP_HINT[main.m.id] : '') + '</p>' +
           '<div class="slots">' + SLOTS.map(function (s, i) {
