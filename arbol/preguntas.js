@@ -3,7 +3,7 @@
    "neg": opciones que se leen como alerta en el tablero. */
 window.ARBOL = {
   // URL de la aplicación web del programa de la hoja "el arbol radiografia de una organizacion" (cuenta experienciasimone@gmail.com).
-  endpoint: "",
+  endpoint: "https://script.google.com/macros/s/AKfycbxABb10TcbRIrcOx2DB7ICqsSeh0dn6Ad9_P0V7V5zdtxB2jC5bj1UBH5DUETQ-IGcN0w/exec",
   clave: "simone-arbol-envio",
   meta: 85,
   minimoGrupo: 5,
