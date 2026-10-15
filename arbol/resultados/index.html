@@ -75,6 +75,12 @@ input, select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 
 .dist div { flex: 1; background: var(--leaf); border-radius: 4px 4px 0 0; min-height: 2px; position: relative; }
 .dist-l { display: flex; gap: 4px; font-size: .75rem; color: var(--olive-soft); }
 .dist-l span { flex: 1; text-align: center; }
+.sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.sum-card { background: var(--olive); color: var(--cream); border-radius: 14px; padding: 16px 18px; display: grid; gap: 4px; align-content: start; }
+.sum-card .sum-k { font-family: "Montserrat", Arial, sans-serif; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--heart); font-weight: 600; }
+.sum-card b { font-family: "Montserrat", Arial, sans-serif; font-size: 1.125rem; line-height: 1.25; margin-top: 6px; }
+.sum-card b.neg { color: #FFB59A; }
+.sum-card .sum-p { font-size: .8125rem; opacity: .8; }
 .empty { padding: 30px; text-align: center; color: var(--olive-soft); background: var(--paper); border: 1px dashed var(--line); border-radius: 14px; }
 .legend { font-size: .8125rem; color: var(--olive-soft); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
 .legend i { display: inline-block; width: 12px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
@@ -102,7 +108,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     <h1 style="font-size:1.5rem">Ver los resultados de una empresa</h1>
     <label>Código de la empresa <input id="in-code" autocomplete="off" style="text-transform:uppercase"></label>
     <label>Clave de resultados <input id="in-key" type="password" autocomplete="off"></label>
-    <label>Personas en la empresa <input id="in-total" type="number" min="1" inputmode="numeric" placeholder="Para calcular la participación"></label>
+    <label>Personas en la empresa <input id="in-total" type="number" min="1" inputmode="numeric" placeholder="Opcional si ya está en la consola"></label>
     <p class="msg" id="access-msg" role="alert"></p>
     <button class="btn" id="go">Ver resultados</button>
   </section>
@@ -133,7 +139,8 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
   var DEMO = qs.get("demo") === "1";
   var cfg = { code: (qs.get("e") || "").toUpperCase(), key: qs.get("k") || "", total: +qs.get("n") || 0 };
   var rows = [], view = { med: "base", grp: "Todos", cmp: "" }, timer = null;
-  $("in-code").value = cfg.code; $("in-total").value = cfg.total || "";
+  try { if (!cfg.key) cfg.key = localStorage.getItem("arbol-k") || ""; } catch (e) {}
+  $("in-code").value = cfg.code; $("in-key").value = cfg.key; $("in-total").value = cfg.total || "";
 
   var ICON = {
     tronco: '<svg viewBox="0 0 36 36"><path d="M15 34c1-8 1-16 0-22h6c-1 6-1 14 0 22Z" fill="var(--bark)"/><path d="M18 14c-3-4-8-6-12-6M18 14c3-4 8-6 12-6" stroke="var(--bark)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
@@ -164,7 +171,9 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     var url = A.endpoint + "?arbol=" + encodeURIComponent(cfg.code) + "&k=" + encodeURIComponent(cfg.key);
     fetch(url).then(function (r) { return r.json(); }).then(function (d) {
       if (!d.ok) { stop(); $("board").hidden = true; $("access").hidden = false; $("access-msg").textContent = "El código o la clave no son correctos."; return; }
-      rows = d.filas || []; render(); setLive(true, "En vivo · " + new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }));
+      rows = d.filas || [];
+      if (d.empresa) { $("title").textContent = d.empresa.nombre; if (!cfg.total && d.empresa.personas) cfg.total = d.empresa.personas; }
+      render(); setLive(true, "En vivo · " + new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }));
     }).catch(function () { setLive(false, "Sin conexión, reintentando"); });
   }
   function setLive(on, t) { $("live").classList.toggle("on", on); $("live-txt").textContent = t; }
@@ -173,11 +182,13 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
   $("go").onclick = function () {
     cfg.code = $("in-code").value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); cfg.key = $("in-key").value; cfg.total = +$("in-total").value || 0;
     if (!DEMO && (!cfg.code || !cfg.key)) { $("access-msg").textContent = "Escribe el código y la clave."; return; }
+    try { localStorage.setItem("arbol-k", cfg.key); } catch (e) {}
     $("access").hidden = true; $("board").hidden = false; $("title").textContent = DEMO ? "Empresa de demostración" : "Empresa " + cfg.code;
     load(); stop(); timer = setInterval(load, 15000);
   };
   $("print").onclick = function () { window.print(); };
   if (DEMO) { cfg.total = cfg.total || 160; $("go").onclick(); }
+  else if (cfg.code && cfg.key) $("go").onclick();
 
   function seg(el, items, cur, onpick) {
     el.innerHTML = "";
@@ -193,6 +204,29 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     return c;
   }
   function pct(n, d) { return d ? Math.round(n / d * 100) : 0; }
+  function qid(id) { var f; A.partes.forEach(function (p) { p.preguntas.forEach(function (q) { if (q.id === id) f = q; }); }); return f; }
+  function top(list, id, n) {
+    var q = qid(id), f = freq(list, q);
+    return q.opciones.map(function (o) { return { o: o, p: pct(f[o], list.length) }; }).sort(function (a, b) { return b.p - a.p; }).slice(0, n);
+  }
+  function resumen(list) {
+    var items = [
+      ["tronco", "El valor más votado", "valores", 1], ["tronco", "Las dos emociones más votadas", "emociones", 2],
+      ["identidad", "El animal más elegido", "animales", 1], ["tronco", "El hito más relevante", "hitos", 1],
+      ["tronco", "El recurso más valioso", "recursos", 1], ["tronco", "La mayor amenaza", "amenazas", 1],
+      ["hojas", "La frase que más se repite", "frases", 1], ["hojas", "El ritual que más fortalece", "rituales", 1],
+      ["parasitos", "El hábito más perjudicial", "habitos", 1], ["parasitos", "El control más usado", "control", 1]
+    ];
+    var h = '<section class="part"><div class="part-head">' + ICON.hojas + '<div><h2>Lo que dice el árbol</h2><p>La tabulación general de esta vista, con lo más votado en cada parte.</p></div></div><div class="sum">';
+    items.forEach(function (it) {
+      var q = qid(it[2]);
+      h += '<div class="sum-card"><span class="sum-k">' + it[1] + '</span>' + top(list, it[2], it[3]).map(function (t) {
+        var neg = q.todasNeg || (q.neg && q.neg.indexOf(t.o) >= 0);
+        return '<b class="' + (neg ? "neg" : "") + '">' + t.o + '</b><span class="sum-p">' + t.p + ' % de las personas</span>';
+      }).join("") + "</div>";
+    });
+    return h + "</div></section>";
+  }
 
   function render() {
     var meds = Object.keys(A.mediciones).filter(function (m) { return rows.some(function (x) { return x.medicion === m; }); });
@@ -216,7 +250,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 
     if (cur.length < A.minimoGrupo) { $("parts").innerHTML = '<div class="empty">' + (cur.length ? "Este grupo tiene " + cur.length + " respuesta" + (cur.length > 1 ? "s" : "") + ". Se muestra desde " + A.minimoGrupo + ", para proteger el anonimato." : "Todavía no hay respuestas en esta vista. Se actualiza sola cada 15 segundos.") + "</div>"; return; }
     var usePrev = prev && prev.length >= A.minimoGrupo;
-    var h = "";
+    var h = resumen(cur);
     A.partes.forEach(function (p) {
       h += '<section class="part"><div class="part-head">' + ICON[p.id] + '<div><h2>' + p.nombre + '</h2><p>' + p.sub + '</p></div></div><div class="grid">';
       p.preguntas.forEach(function (q) {

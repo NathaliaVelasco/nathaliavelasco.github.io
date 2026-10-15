@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Consola de El Árbol · Simoné</title>
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:wght@400;700&display=swap">
+<style>
+:root { --cream:#F6F0E2; --paper:#FCF9F2; --olive:#363A12; --olive-soft:#5C6132; --rust:#8A3300; --heart:#F2A03D; --magenta:#BE1A82; --line:#DCD3BC; --ok:#2F8A4A; --logo-light:block; --logo-dark:none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --line:#3B3F24; --ok:#6CC58A; --logo-light:none; --logo-dark:block; color-scheme: dark; } }
+:root[data-theme="dark"] { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --line:#3B3F24; --ok:#6CC58A; --logo-light:none; --logo-dark:block; color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--cream); color: var(--olive); font: 16px/1.5 "Lato", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: "Montserrat", Arial, sans-serif; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+header { border-bottom: 1px solid var(--line); padding: 12px 0; }
+header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.logo img { height: 34px; width: auto; max-width: none; display: block; }
+.logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
+.eyebrow { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: var(--rust); }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+label { display: grid; gap: 4px; font-weight: 700; font-size: .9375rem; }
+input { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); width: 100%; }
+.btn { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; padding: 11px 20px; border-radius: 999px; border: 2px solid var(--olive); background: var(--olive); color: var(--cream); cursor: pointer; font-size: .9375rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.btn.ghost { background: transparent; color: var(--olive); }
+.btn.sm { padding: 6px 12px; font-size: .8125rem; border-width: 1.5px; }
+.btn:disabled { opacity: .5; cursor: wait; }
+.msg { color: var(--rust); font-size: .9375rem; min-height: 1.2em; }
+.access { max-width: 440px; margin: 56px auto; display: grid; gap: 12px; }
+.layout { display: grid; grid-template-columns: 360px 1fr; gap: 22px; margin: 28px 0 48px; align-items: start; }
+.form { display: grid; gap: 12px; position: sticky; top: 16px; }
+.new { border: 2px solid var(--heart); }
+.code { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-size: 1.75rem; letter-spacing: .06em; }
+.links { display: grid; gap: 12px; margin-top: 14px; }
+.link { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; border-top: 1px solid var(--line); padding-top: 12px; }
+.link .qr { width: 120px; height: 120px; background: #fff; border-radius: 8px; overflow: hidden; }
+.link .qr img, .link .qr canvas { width: 100% !important; height: 100% !important; }
+.link b { font-family: "Montserrat", Arial, sans-serif; display: block; }
+.link code { font-size: .8125rem; overflow-wrap: anywhere; color: var(--olive-soft); display: block; margin: 4px 0 8px; }
+.link .acts { display: flex; gap: 6px; flex-wrap: wrap; }
+table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: "Montserrat", Arial, sans-serif; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rust); border-bottom: 2px solid var(--olive); }
+td .cd { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; }
+td small { color: var(--olive-soft); display: block; }
+.pill { display: inline-block; font-size: .8125rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--line); }
+.pill.ok { background: var(--ok); color: #fff; }
+.row-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--olive); color: var(--cream); padding: 10px 18px; border-radius: 999px; font-size: .9375rem; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .form { position: static; } table thead { display: none; } table, tbody, tr, td { display: block; } tr { border-bottom: 1px solid var(--line); padding: 8px 0; } td { border: 0; padding: 4px 0; } }
+@media (max-width: 420px) { .link { grid-template-columns: 1fr; } }
+</style>
+<script src="qrcode.js"></script>
+<script src="../preguntas.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="../../" aria-label="Simoné"><img class="l-light" src="../../img/logo.png" alt="Simoné" width="1242" height="309"><img class="l-dark" src="../../img/logo-claro.png" alt="Simoné" width="1242" height="309"></a>
+  <span class="eyebrow">Consola de El Árbol</span>
+</div></header>
+
+<main class="wrap">
+  <section class="card access" id="access">
+    <p class="eyebrow">Solo para el equipo de Simoné</p>
+    <h1 style="font-size:1.5rem">Entrar a la consola</h1>
+    <label>Clave de administración <input id="key" type="password" autocomplete="current-password"></label>
+    <p class="msg" id="access-msg" role="alert"></p>
+    <button class="btn" id="enter">Entrar</button>
+  </section>
+
+  <div class="layout" id="app" hidden>
+    <div class="form">
+      <div class="card" style="display:grid;gap:12px">
+        <p class="eyebrow">Nueva empresa</p>
+        <h2 style="font-size:1.25rem">Crear un código</h2>
+        <label>Nombre de la empresa <input id="f-name" maxlength="80" placeholder="Ej. Liceo de Cervantes"></label>
+        <label>Personas en la empresa <input id="f-n" type="number" min="1" inputmode="numeric" placeholder="Para medir la participación"></label>
+        <label>Contacto <input id="f-contact" maxlength="80" placeholder="Opcional: quién lo coordina"></label>
+        <p class="msg" id="form-msg" role="alert"></p>
+        <button class="btn" id="create">Crear código</button>
+      </div>
+      <div class="card new" id="created" hidden></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+        <h2 style="font-size:1.25rem">Empresas</h2>
+        <button class="btn ghost sm" id="refresh">Actualizar</button>
+      </div>
+      <div id="list"><p style="color:var(--olive-soft)">Cargando…</p></div>
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var A = window.ARBOL, $ = function (id) { return document.getElementById(id); };
+  var ROOT = location.origin.indexOf("http") === 0 ? location.origin : "https://www.experienciasimone.com";
+  var key = ""; try { key = localStorage.getItem("arbol-k") || ""; } catch (e) {}
+  var empresas = [];
+  function api(params) {
+    var q = Object.keys(params).map(function (k) { return k + "=" + encodeURIComponent(params[k]); }).join("&");
+    return fetch(A.endpoint + "?" + q + "&k=" + encodeURIComponent(key)).then(function (r) { return r.json(); });
+  }
+  function toast(t) { var el = $("toast"); el.textContent = t; el.classList.add("on"); setTimeout(function () { el.classList.remove("on"); }, 1800); }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function enlace(code, m) { return ROOT + "/arbol/?e=" + code + (m === "base" ? "" : "&m=" + m); }
+  function tablero(code) { return ROOT + "/arbol/resultados/?e=" + code; }
+
+  function enter() {
+    key = $("key").value || key;
+    if (!key) return;
+    $("enter").disabled = true; $("access-msg").textContent = "";
+    api({ empresas: 1 }).then(function (d) {
+      $("enter").disabled = false;
+      if (!d.ok) { $("access-msg").textContent = "La clave no es correcta."; return; }
+      try { localStorage.setItem("arbol-k", key); } catch (e) {}
+      $("access").hidden = true; $("app").hidden = false; empresas = d.empresas || []; lista();
+    }).catch(function () { $("enter").disabled = false; $("access-msg").textContent = "No hay conexión con la hoja de cálculo. ¿Ya se implementó la nueva versión del código en Apps Script?"; });
+  }
+  $("enter").onclick = enter;
+  $("key").addEventListener("keydown", function (e) { if (e.key === "Enter") enter(); });
+  if (key) { $("key").value = key; enter(); }
+
+  function cargar() { api({ empresas: 1 }).then(function (d) { if (d.ok) { empresas = d.empresas; lista(); } }); }
+  $("refresh").onclick = function () { cargar(); toast("Lista actualizada"); };
+
+  function lista() {
+    if (!empresas.length) { $("list").innerHTML = '<p style="color:var(--olive-soft)">Aún no hay empresas. Crea la primera a la izquierda.</p>'; return; }
+    var h = "<table><thead><tr><th>Empresa</th><th>Participación</th><th></th></tr></thead><tbody>";
+    empresas.forEach(function (e, i) {
+      var r = e.respuestas, part = e.personas ? Math.round(r.base / e.personas * 100) : null;
+      h += "<tr><td><span class='cd'>" + esc(e.codigo) + "</span><small>" + esc(e.nombre) + (e.contacto ? " · " + esc(e.contacto) : "") + "</small><small>Creada " + esc(e.creada) + (e.personas ? " · " + e.personas + " personas" : "") + "</small></td>" +
+        "<td>Base: " + r.base + (part !== null ? " <span class='pill " + (part >= A.meta ? "ok" : "") + "'>" + part + " %</span>" : "") + "<small>6 meses: " + r["6m"] + " · 13 meses: " + r["13m"] + "</small></td>" +
+        "<td><div class='row-acts'><button class='btn ghost sm' data-i='" + i + "'>Enlaces y QR</button><a class='btn sm' href='" + tablero(e.codigo) + "' target='_blank' rel='noopener'>Resultados</a></div></td></tr>";
+    });
+    $("list").innerHTML = h + "</tbody></table>";
+    [].forEach.call($("list").querySelectorAll("[data-i]"), function (b) { b.onclick = function () { mostrar(empresas[+b.dataset.i]); }; });
+  }
+
+  function mostrar(e) {
+    var box = $("created"); box.hidden = false;
+    var h = '<p class="eyebrow">Código de la empresa</p><p class="code">' + esc(e.codigo) + '</p><p>' + esc(e.nombre) + '</p><div class="links">';
+    Object.keys(A.mediciones).forEach(function (m) {
+      h += '<div class="link"><div class="qr" id="qr-' + m + '"></div><div><b>' + A.mediciones[m] + '</b><code>' + enlace(e.codigo, m) + '</code><div class="acts">' +
+        '<button class="btn ghost sm" data-copy="' + enlace(e.codigo, m) + '">Copiar enlace</button><button class="btn ghost sm" data-dl="' + m + '">Descargar QR</button></div></div></div>';
+    });
+    h += '<div class="link" style="grid-template-columns:1fr"><div><b>Tablero de resultados en vivo</b><code>' + tablero(e.codigo) + '</code><div class="acts"><button class="btn ghost sm" data-copy="' + tablero(e.codigo) + '">Copiar enlace</button><a class="btn sm" href="' + tablero(e.codigo) + '" target="_blank" rel="noopener">Abrir</a></div></div></div></div>';
+    box.innerHTML = h;
+    Object.keys(A.mediciones).forEach(function (m) {
+      var qr = qrcode(0, "M"); qr.addData(enlace(e.codigo, m)); qr.make();
+      var n = qr.getModuleCount(), px = 12, pad = 4 * px, cv = document.createElement("canvas");
+      cv.width = cv.height = n * px + pad * 2;
+      var g = cv.getContext("2d"); g.fillStyle = "#ffffff"; g.fillRect(0, 0, cv.width, cv.height); g.fillStyle = "#363A12";
+      for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (qr.isDark(r, c)) g.fillRect(pad + c * px, pad + r * px, px, px);
+      $("qr-" + m).appendChild(cv);
+    });
+    [].forEach.call(box.querySelectorAll("[data-copy]"), function (b) { b.onclick = function () {
+      var t = b.dataset.copy;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { toast("Enlace copiado"); }).catch(function () { prompt("Copia el enlace:", t); });
+    }; });
+    [].forEach.call(box.querySelectorAll("[data-dl]"), function (b) { b.onclick = function () {
+      var c = $("qr-" + b.dataset.dl).querySelector("canvas"); if (!c) return;
+      var a = document.createElement("a"); a.download = "QR-" + e.codigo + "-" + b.dataset.dl + ".png"; a.href = c.toDataURL("image/png"); a.click();
+    }; });
+    box.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  $("create").onclick = function () {
+    var name = $("f-name").value.trim();
+    if (name.length < 2) { $("form-msg").textContent = "Escribe el nombre de la empresa."; return; }
+    $("create").disabled = true; $("form-msg").textContent = "Creando…";
+    api({ crear: 1, empresa: name, personas: $("f-n").value || "", contacto: $("f-contact").value.trim() }).then(function (d) {
+      $("create").disabled = false;
+      if (!d.ok) { $("form-msg").textContent = "No se pudo crear. Revisa la clave."; return; }
+      $("form-msg").textContent = ""; $("f-name").value = $("f-n").value = $("f-contact").value = "";
+      mostrar(d.empresa); cargar();
+    }).catch(function () { $("create").disabled = false; $("form-msg").textContent = "No hay conexión con la hoja de cálculo."; });
+  };
+})();
+</script>
+</body>
+</html>

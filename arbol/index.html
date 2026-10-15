@@ -99,6 +99,7 @@ footer a { color: var(--rust); }
     <p class="lead">Son 12 preguntas en cuatro partes: el tronco, las hojas, los parásitos y los habitantes del árbol. Toma unos 7 minutos.</p>
     <div class="card">
       <p><b>Es anónimo.</b> No te pedimos nombre, correo ni teléfono. Las respuestas se leen siempre en grupo, nunca de forma individual.</p>
+      <p id="empresa-ok" style="margin-top:14px;font-weight:700;display:none"></p>
       <label class="field" id="code-field">Código de tu empresa
         <input type="text" id="code" maxlength="20" autocomplete="off" placeholder="Lo entrega Simoné">
       </label>
@@ -114,7 +115,8 @@ footer a { color: var(--rust); }
   <section class="screen" id="done">
     <p class="eyebrow">Gracias</p>
     <h1>Tu parte del árbol ya está sembrada.</h1>
-    <p class="lead">Tus respuestas se suman a las de tu equipo. Esto es lo que tú viste hoy:</p>
+    <div class="card" style="border-color:var(--heart)"><p><b>Los resultados se compartirán con todo el equipo cuando todos los participantes hayan terminado.</b> Así nadie ve un árbol a medias y cada voz cuenta lo mismo.</p></div>
+    <p class="lead" style="margin-top:18px">Mientras tanto, esto es lo que tú viste hoy:</p>
     <dl class="card summary" id="summary"></dl>
     <p class="msg" id="send-msg" role="status"></p>
   </section>
@@ -132,7 +134,19 @@ footer a { color: var(--rust); }
   var sid = Math.random().toString(36).slice(2) + Date.now().toString(36);
   var $ = function (id) { return document.getElementById(id); };
   var codeIn = $("code");
-  if (codigo) { codeIn.value = codigo; $("code-field").style.display = "none"; }
+  var empresaValida = false;
+  function verificar(c, cb) {
+    fetch(A.endpoint + "?empresa=" + encodeURIComponent(c)).then(function (r) { return r.json(); })
+      .then(function (d) { cb(d.ok ? d.nombre : false); })
+      .catch(function () { cb(null); });
+  }
+  if (codigo) {
+    codeIn.value = codigo; $("code-field").style.display = "none";
+    verificar(codigo, function (n) {
+      if (n) { empresaValida = true; $("empresa-ok").style.display = "block"; $("empresa-ok").textContent = "Empresa: " + n; }
+      else if (n === false) { $("code-field").style.display = ""; $("intro-msg").textContent = "Este enlace no corresponde a una empresa registrada. Revisa el código con Simoné."; }
+    });
+  }
 
   A.grupos.forEach(function (g) {
     var b = document.createElement("button"); b.type = "button"; b.textContent = g; b.setAttribute("aria-pressed", "false");
@@ -208,10 +222,17 @@ footer a { color: var(--rust); }
     var c = codeIn.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
     if (c.length < 3) { $("intro-msg").textContent = "Escribe el código de tu empresa."; return; }
     if (!state.grupo) { $("intro-msg").textContent = "Elige el grupo en el que trabajas."; return; }
-    codigo = c; $("intro-msg").textContent = "";
-    var k = "arbol-" + codigo + "-" + medicion;
+    var k = "arbol-" + c + "-" + medicion;
     try { if (localStorage.getItem(k)) { $("intro-msg").textContent = "Desde este dispositivo ya se respondió esta medición. Gracias."; return; } } catch (e) {}
-    show("p0");
+    if (empresaValida && c === codigo) { show("p0"); return; }
+    $("start").disabled = true; $("intro-msg").textContent = "Verificando el código…";
+    verificar(c, function (n) {
+      $("start").disabled = false;
+      if (n === false) { $("intro-msg").textContent = "No encontramos ese código. Revísalo con Simoné."; return; }
+      codigo = c; empresaValida = !!n; $("intro-msg").textContent = "";
+      if (n) { $("empresa-ok").style.display = "block"; $("empresa-ok").textContent = "Empresa: " + n; }
+      show("p0");
+    });
   };
 
   function enviar() {
