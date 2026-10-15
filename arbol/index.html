@@ -136,6 +136,7 @@ footer a { color: var(--rust); }
   var codeIn = $("code");
   var empresaValida = false;
   function verificar(c, cb) {
+    if (!A.endpoint) { cb(null); return; }
     fetch(A.endpoint + "?empresa=" + encodeURIComponent(c)).then(function (r) { return r.json(); })
       .then(function (d) { cb(d.ok ? d.nombre : false); })
       .catch(function () { cb(null); });
@@ -243,6 +244,7 @@ footer a { color: var(--rust); }
     }); });
     $("summary").innerHTML = dl;
     show("done");
+    if (!A.endpoint) { $("send-msg").textContent = "La herramienta todavía no está conectada: estas respuestas no se guardaron."; return; }
     var payload = { clave: A.clave, tipo: "arbol", id: sid, codigo: codigo, medicion: medicion, grupo: state.grupo, respuestas: state.r };
     fetch(A.endpoint, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) })
       .then(function () { $("send-msg").textContent = "Respuestas enviadas."; try { localStorage.setItem("arbol-" + codigo + "-" + medicion, "1"); } catch (e) {} })

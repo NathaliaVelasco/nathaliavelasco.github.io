@@ -2,8 +2,9 @@
    Preguntas compartidas por el formulario (/arbol/) y el tablero (/arbol/resultados/).
    "neg": opciones que se leen como alerta en el tablero. */
 window.ARBOL = {
-  endpoint: "https://script.google.com/macros/s/AKfycbz5npQIBjEG_xR1iNcVp1ALmjQFo1TV-5YcbyUbVrPegt7WUwTpjg60J0MDrv_aR5oP/exec",
-  clave: "simone-diagnostico-2026",
+  // URL de la aplicación web del programa de la hoja "el arbol radiografia de una organizacion" (cuenta experienciasimone@gmail.com).
+  endpoint: "",
+  clave: "simone-arbol-envio",
   meta: 85,
   minimoGrupo: 5,
   grupos: ["Líderes de área", "Administrativos", "Operativos", "Fuerza comercial"],

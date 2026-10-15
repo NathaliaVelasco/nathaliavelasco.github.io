@@ -115,6 +115,7 @@ td small { color: var(--olive-soft); display: block; }
   function tablero(code) { return ROOT + "/arbol/resultados/?e=" + code; }
 
   function enter() {
+    if (!A.endpoint) { $("access-msg").textContent = "La herramienta todavía no está conectada a la hoja de cálculo."; return; }
     key = $("key").value || key;
     if (!key) return;
     $("enter").disabled = true; $("access-msg").textContent = "";
