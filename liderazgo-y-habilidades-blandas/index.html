@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="canonical" href="https://www.experienciasimone.com/liderazgo-y-habilidades-blandas/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capacitación en liderazgo y habilidades blandas para empresas en Bogotá · Simoné</title>
+<meta name="description" content="Escuela de Liderazgo humanista, Escuela de Habilidades Blandas y talleres de Power Skills para empresas en Bogotá y Colombia. Comunicación, trabajo en equipo e inteligencia emocional con aprendizaje experiencial. Medimos el cambio.">
+<meta property="og:title" content="Capacitación en liderazgo y habilidades blandas para empresas · Simoné">
+<meta property="og:description" content="Para que tus líderes escuchen y tus equipos se entiendan. Programas de 1 a 24 sesiones, presenciales o virtuales, con medición antes y después.">
+<meta property="og:image" content="https://www.experienciasimone.com/img/puerta-equipos.jpg">
+<meta property="og:url" content="https://www.experienciasimone.com/liderazgo-y-habilidades-blandas/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+
+/* Layout: "mesa de taller". Una columna editorial sobre crema; las fotos reales de sesiones son el material,
+   el corazón concéntrico del logo (naranja dentro de magenta dentro de óxido) es el único ornamento. */
+:root {
+  --cream: #F6F0E2;      /* fondo */
+  --paper: #FCF9F2;      /* superficies */
+  --olive: #363A12;      /* tinta de marca */
+  --olive-soft: #5C6132; /* texto secundario */
+  --rust: #8A3300;       /* acento cálido */
+  --heart: #F2A03D;      /* centro del corazón */
+  --magenta: #BE1A82;    /* borde del corazón */
+  --line: #DCD3BC;
+  --band: #363A12;       /* bandas oscuras */
+  --on-band: #F6F0E2;
+  --logo-light: block;
+  --logo-dark: none;
+  --display: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --body: "Lato", "Helvetica Neue", Arial, sans-serif;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --step-3: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+    --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+    --band: #2C3014; --on-band: #EFE9D8; --logo-light: none; --logo-dark: block;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --cream: #1B1D0D; --paper: #24271A; --olive: #EFE9D8; --olive-soft: #C2BEA6;
+  --rust: #E8895A; --heart: #F2A03D; --magenta: #E764B3; --line: #3B3F24;
+  --band: #2C3014; --on-band: #EFE9D8; --logo-light: none; --logo-dark: block;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--cream); color: var(--olive);
+  font-family: var(--body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; }
+.eyebrow {
+  font-family: var(--display); font-weight: 600; font-size: 0.8125rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust);
+}
+.lead { font-size: var(--step-1); max-width: 60ch; color: var(--olive-soft); }
+section { padding-block: clamp(64px, 9vw, 120px); }
+
+/* Botones */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--display); font-weight: 600; font-size: 1rem; letter-spacing: 0.02em;
+  padding: 14px 24px; border-radius: 999px; text-decoration: none;
+  border: 2px solid var(--olive); transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-wa { background: var(--olive); color: var(--cream); }
+.btn-wa:hover { background: var(--rust); border-color: var(--rust); }
+.btn-ghost { background: transparent; color: var(--olive); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+
+/* Encabezado */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--cream) 92%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { flex-shrink: 0; }
+.logo img { height: 44px; width: auto; max-width: none; }
+.logo .l-light { display: var(--logo-light); }
+.logo .l-dark { display: var(--logo-dark); }
+.top nav { display: flex; gap: 22px; white-space: nowrap; font-family: var(--display); font-weight: 500; font-size: 0.9375rem; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { color: var(--rust); }
+.top .btn { padding: 10px 18px; font-size: 0.9375rem; white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 1340px) { .top nav { display: none; } }
+@media (max-width: 420px) { .logo img { height: 30px; } .top .btn span { display: none; } .top .btn { padding: 10px 12px; } }
+
+/* Hero */
+.hero { padding-block: clamp(40px, 6vw, 80px) 0; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 { font-size: clamp(2rem, 1.3rem + 3vw, 3.6rem); font-weight: 600; letter-spacing: -0.015em; }
+.hero h1 em { font-style: normal; color: var(--rust); }
+.hero .measure {
+  font-family: var(--display); font-weight: 700; font-size: var(--step-2);
+  display: flex; align-items: center; gap: 14px;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-photo { position: relative; min-width: 0; }
+.hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 38% center; border-radius: 220px 220px 12px 12px; }
+.tag {
+  position: absolute; left: -12px; bottom: 28px; background: var(--paper); color: var(--olive);
+  font-size: 0.875rem; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
+  max-width: 240px; line-height: 1.4;
+}
+.tag strong { font-family: var(--display); display: block; font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust); }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-photo img { aspect-ratio: 4 / 3; border-radius: 160px 160px 12px 12px; }
+  .tag { left: 12px; }
+}
+
+/* Corazón concéntrico (del logo) */
+.heart { width: 28px; height: 26px; flex: none; }
+
+/* Banda de acuarelas */
+.cards-band { margin-top: clamp(56px, 8vw, 96px); position: relative; }
+.cards-band img { width: 100%; height: clamp(220px, 34vw, 420px); object-fit: cover; object-position: center 60%; }
+.cards-band figcaption { font-size: 0.875rem; color: var(--olive-soft); padding-top: 10px; }
+
+/* Problema */
+.problem { background: var(--band); color: var(--on-band); }
+.problem-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(28px, 6vw, 80px); align-items: start; }
+.problem h2 { color: var(--on-band); }
+.problem .eyebrow { color: var(--heart); }
+.problem-body { display: grid; gap: 20px; font-size: var(--step-1); min-width: 0; }
+.problem-body p:first-child { font-family: var(--display); font-weight: 500; }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 12px; background: color-mix(in srgb, var(--on-band) 25%, transparent); border-radius: 10px; overflow: hidden; }
+.pillar { background: var(--band); padding: 18px 16px; display: grid; gap: 4px; }
+.pillar b { font-family: var(--display); font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heart); }
+.pillar span { font-size: 1rem; line-height: 1.4; }
+@media (max-width: 860px) { .problem-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .pillars { grid-template-columns: 1fr; } }
+
+/* Puertas */
+.doors-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); }
+.doors { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2.4vw, 28px); }
+.door { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.door img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.door-body { padding: 24px 22px 26px; display: grid; gap: 14px; align-content: start; }
+.door .who { font-family: var(--display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
+.door blockquote { margin: 0; font-family: var(--display); font-weight: 600; font-size: 1.375rem; line-height: 1.25; }
+.door ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 1rem; }
+.door li { padding-left: 18px; position: relative; }
+.door li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); }
+.door .start { margin-top: 4px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 0.9375rem; color: var(--olive-soft); }
+.door .start b { color: var(--olive); }
+@media (max-width: 960px) { .doors { grid-template-columns: 1fr; } .door { grid-template-columns: 0.9fr 1.1fr; grid-template-rows: none; } .door img { height: 100%; aspect-ratio: auto; } }
+@media (max-width: 620px) { .door { grid-template-columns: 1fr; } .door img { aspect-ratio: 4 / 3; height: auto; } }
+
+/* Servicios */
+.services { border-top: 1px solid var(--line); }
+.services-head { display: grid; gap: 16px; margin-bottom: clamp(28px, 4vw, 44px); }
+.svc-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--olive); }
+.svc { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: 12px clamp(20px, 4vw, 56px); padding-block: 22px; border-bottom: 1px solid var(--line); }
+.svc h3 { font-size: 1.3125rem; }
+.svc .svc-for { color: var(--olive-soft); font-size: 0.9375rem; margin-top: 6px; }
+.svc ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; align-content: start; }
+.svc li { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.9375rem; line-height: 1.35; }
+.svc li.new { border-color: var(--magenta); }
+@media (max-width: 720px) { .svc { grid-template-columns: 1fr; } }
+
+/* Proceso */
+.process { border-top: 1px solid var(--line); }
+.process-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 6vw, 80px); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; min-width: 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s); font-family: var(--display); font-weight: 700; font-size: 1.5rem; color: var(--rust); line-height: 1.2; }
+.steps h3 { margin-bottom: 4px; }
+.steps p { color: var(--olive-soft); font-size: 1rem; }
+@media (max-width: 860px) { .process-grid { grid-template-columns: 1fr; } }
+
+/* Medición */
+.measure-sec { background: var(--paper); border-block: 1px solid var(--line); }
+.measure-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
+.rings { position: relative; aspect-ratio: 1; max-width: 460px; width: 100%; margin-inline: auto; }
+.rings svg { width: 100%; height: auto; }
+.rings text { font-family: var(--display); font-weight: 600; fill: var(--olive); }
+.metrics { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; min-width: 0; }
+.metrics li { display: grid; grid-template-columns: 14px 1fr; gap: 14px; align-items: start; }
+.metrics i { width: 14px; height: 14px; border-radius: 50%; margin-top: 6px; }
+.metrics b { font-family: var(--display); font-weight: 700; display: block; }
+.metrics span { color: var(--olive-soft); font-size: 1rem; }
+@media (max-width: 860px) { .measure-grid { grid-template-columns: 1fr; } .rings { max-width: 340px; } }
+
+/* Galería */
+.gallery-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; }
+.gallery { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: clamp(120px, 15vw, 200px); gap: 10px; }
+.gallery figure { margin: 0; border-radius: 10px; overflow: hidden; min-width: 0; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.gallery figure:hover img { transform: scale(1.03); }
+@media (prefers-reduced-motion: reduce) { .gallery img, .btn { transition: none; } }
+.g1 { grid-column: span 3; grid-row: span 2; }
+.g2 { grid-column: span 1; grid-row: span 2; }
+.g3 { grid-column: span 2; grid-row: span 1; }
+.g4 { grid-column: span 2; grid-row: span 1; }
+.g5 { grid-column: span 2; grid-row: span 2; }
+.g6 { grid-column: span 2; grid-row: span 2; }
+.g7 { grid-column: span 2; grid-row: span 2; }
+.g8, .g9 { grid-column: span 3; grid-row: span 2; }
+@media (max-width: 760px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
+  .g1 { grid-column: span 2; } .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9 { grid-column: span 1; grid-row: span 1; }
+  .g1 { grid-row: span 2; }
+}
+
+/* Clientes */
+.clients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 32px; }
+.sector { background: var(--cream); padding: 22px 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.sector .eyebrow { font-size: 0.75rem; }
+.sector ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-family: var(--display); font-weight: 600; font-size: 1.0625rem; line-height: 1.3; }
+@media (max-width: 960px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .clients-grid { grid-template-columns: 1fr; } }
+
+/* Testimonios */
+.voices-head { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(24px, 5vw, 64px); align-items: end; }
+.voices-stat { display: flex; gap: 18px; align-items: baseline; border-top: 2px solid var(--rust); padding-top: 16px; }
+.voices-stat b { font-family: var(--display); font-weight: 700; font-size: var(--step-3); color: var(--rust); line-height: 1; }
+.voices-stat span { color: var(--olive-soft); max-width: 30ch; }
+.voice-feature { margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(28px, 4vw, 48px); background: var(--paper); border: 1px solid var(--line); border-radius: 12px 12px 12px 120px; display: grid; gap: 18px; }
+.voice-feature blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 46ch; text-wrap: pretty; }
+.voices { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.voice { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: grid; gap: 16px; align-content: space-between; min-width: 0; }
+.voice blockquote { margin: 0; font-size: 1.0625rem; line-height: 1.55; }
+.voice blockquote::before, .voice-feature blockquote::before { content: "“"; color: var(--magenta); font-family: var(--display); font-weight: 700; margin-right: 2px; }
+.voice blockquote::after, .voice-feature blockquote::after { content: "”"; color: var(--magenta); font-family: var(--display); font-weight: 700; }
+.who-said { font-family: var(--display); font-weight: 600; font-size: 0.9375rem; line-height: 1.35; }
+.who-said small { display: block; font-family: var(--body); font-weight: 400; color: var(--olive-soft); font-size: 0.875rem; margin-top: 2px; }
+.voices-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+@media (max-width: 960px) { .voices { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 860px) { .voices-head { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .voices { grid-template-columns: 1fr; } .voice-feature { border-radius: 12px 12px 12px 64px; } }
+
+/* Nathalia */
+.founder-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
+.founder-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; border-radius: 12px 12px 200px 200px; }
+.founder-copy { display: grid; gap: 20px; min-width: 0; }
+.founder-copy p { max-width: 58ch; }
+.sign { font-family: var(--display); font-weight: 600; }
+.sign small { display: block; font-family: var(--body); font-weight: 400; color: var(--olive-soft); font-size: 0.9375rem; }
+@media (max-width: 860px) { .founder-grid { grid-template-columns: 1fr; } .founder-photo { max-width: 420px; } }
+
+/* Cierre */
+.close { background: var(--band); color: var(--on-band); text-align: left; }
+.close-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
+.close h2 { color: var(--on-band); }
+.close .lead { color: color-mix(in srgb, var(--on-band) 82%, transparent); margin-top: 18px; }
+.close .btn-wa { background: var(--heart); border-color: var(--heart); color: #2A2C0E; margin-top: 28px; }
+.close .btn-wa:hover { background: var(--on-band); border-color: var(--on-band); }
+.contact { display: grid; gap: 16px; font-size: 1rem; }
+.contact div { display: grid; gap: 2px; padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); }
+.contact b { font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heart); }
+.contact a, .contact span { font-size: 1.125rem; text-decoration: none; user-select: all; }
+.contact a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .close-grid { grid-template-columns: 1fr; } }
+
+footer { padding-block: 28px; font-size: 0.875rem; color: var(--olive-soft); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+
+/* Botón flotante en móvil */
+.float-wa {
+  position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+  display: none; width: 56px; height: 56px; border-radius: 50%; align-items: center; justify-content: center;
+  background: var(--olive); color: var(--cream); box-shadow: 0 6px 20px rgb(0 0 0 / 0.22);
+}
+.float-wa svg { width: 28px; height: 28px; }
+@media (max-width: 860px) { .float-wa { display: flex; } }
+
+/* ---- Página de tema ---- */
+.crumbs { font-size: 0.875rem; color: var(--olive-soft); padding-top: 20px; }
+.crumbs a { text-decoration: none; color: var(--rust); }
+.crumbs a:hover { text-decoration: underline; }
+.topic-hero { padding-block: clamp(28px, 4vw, 48px) clamp(48px, 7vw, 88px); }
+.topic-hero h1 { font-size: clamp(2rem, 1.3rem + 2.8vw, 3.3rem); font-weight: 600; letter-spacing: -0.015em; }
+.topic-hero h1 em { font-style: normal; color: var(--rust); }
+.topic-hero .hero-photo img { aspect-ratio: 5 / 4; border-radius: 12px 12px 12px 160px; object-position: center; }
+.pain { font-family: var(--display); font-weight: 600; font-size: var(--step-2); line-height: 1.3; border-left: 4px solid var(--magenta); padding-left: 18px; max-width: 30ch; }
+
+.see { background: var(--band); color: var(--on-band); }
+.see h2 { color: var(--on-band); }
+.see .eyebrow { color: var(--heart); }
+.see-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(28px, 6vw, 80px); align-items: start; }
+.see-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; min-width: 0; }
+.see-list li { padding-block: 16px; border-bottom: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); font-size: var(--step-1); line-height: 1.45; }
+.see-list li:first-child { padding-top: 0; }
+.see-list b { font-family: var(--display); font-weight: 600; color: var(--heart); }
+@media (max-width: 860px) { .see-grid { grid-template-columns: 1fr; } }
+
+.pick-head { display: grid; gap: 16px; margin-bottom: clamp(24px, 4vw, 40px); }
+.pick { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.pick th, .pick td { text-align: left; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.pick thead th { font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); border-bottom: 2px solid var(--olive); font-weight: 600; }
+.pick tbody th { font-family: var(--display); font-weight: 700; font-size: 1.0625rem; }
+.pick tbody th a { text-decoration: none; }
+.pick tbody th a:hover { color: var(--rust); }
+.pick td { color: var(--olive-soft); }
+@media (max-width: 760px) {
+  .pick thead { display: none; }
+  .pick, .pick tbody, .pick tr, .pick th, .pick td { display: block; width: 100%; }
+  .pick tr { padding-block: 16px; border-bottom: 1px solid var(--line); }
+  .pick th, .pick td { border: 0; padding: 3px 0; }
+  .pick td::before { content: attr(data-l) ": "; font-weight: 700; color: var(--olive); }
+}
+
+.prog { border-top: 1px solid var(--line); }
+.prog-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.prog-intro { display: grid; gap: 18px; position: sticky; top: 96px; }
+.prog-intro h2 { font-size: var(--step-2); font-weight: 700; }
+.prog-intro .line { font-family: var(--display); font-weight: 500; font-size: var(--step-1); color: var(--rust); line-height: 1.35; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 0; }
+.facts div { background: var(--paper); padding: 14px 16px; min-width: 0; }
+.facts dt { font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); font-weight: 600; }
+.facts dd { margin: 4px 0 0; font-family: var(--display); font-weight: 600; font-size: 1.0625rem; line-height: 1.3; }
+.prog-body { display: grid; gap: 26px; min-width: 0; }
+.prog-body h3 { font-size: 1.0625rem; margin-bottom: 8px; }
+.prog-body p { max-width: 62ch; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.9375rem; line-height: 1.35; }
+.uses { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.uses li { padding-left: 18px; position: relative; }
+.uses li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); }
+@media (max-width: 860px) { .prog-grid { grid-template-columns: 1fr; } .prog-intro { position: static; } }
+@media (max-width: 420px) { .facts { grid-template-columns: 1fr; } }
+
+.method { background: var(--paper); border-block: 1px solid var(--line); }
+.method-head { display: grid; gap: 16px; margin-bottom: clamp(28px, 4vw, 44px); }
+.moves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 28px); }
+.moves li { border-top: 3px solid var(--rust); padding-top: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.moves li:nth-child(2) { border-color: var(--magenta); }
+.moves li:nth-child(3) { border-color: var(--heart); }
+.moves b { font-family: var(--display); font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--olive-soft); font-weight: 600; }
+.moves h3 { font-size: var(--step-1); }
+.moves p { color: var(--olive-soft); font-size: 1rem; }
+.method-photos { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; margin-top: clamp(32px, 5vw, 52px); }
+.method-photos img { width: 100%; height: clamp(160px, 22vw, 280px); object-fit: cover; border-radius: 10px; }
+@media (max-width: 860px) { .moves { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .method-photos { grid-template-columns: 1fr 1fr; } .method-photos img:first-child { grid-column: span 2; } }
+
+.proof-clients { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--display); font-weight: 600; }
+.proof-clients span { color: var(--olive-soft); font-family: var(--body); font-weight: 400; }
+
+.faq-list { margin-top: clamp(24px, 4vw, 40px); border-top: 2px solid var(--olive); max-width: 820px; }
+.faq-list details { border-bottom: 1px solid var(--line); padding-block: 4px; }
+.faq-list summary { cursor: pointer; list-style: none; font-family: var(--display); font-weight: 600; font-size: 1.125rem; padding: 16px 36px 16px 0; position: relative; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-size: 1.5rem; color: var(--rust); font-weight: 500; }
+.faq-list details[open] summary::after { content: "–"; }
+.faq-list details p { padding: 0 0 18px; color: var(--olive-soft); max-width: 64ch; }
+.faq-list a { color: var(--rust); }
+
+.close .btn-ghost { color: var(--on-band); border-color: color-mix(in srgb, var(--on-band) 60%, transparent); margin-top: 28px; }
+.close .btn-ghost:hover { border-color: var(--on-band); }
+.close .cta-row .btn-wa { margin-top: 28px; }
+.related { display: grid; gap: 10px; }
+.related a { font-size: 1.0625rem; }
+</style>
+
+<script data-goatcounter="https://experienciasimone.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>function gcEvento(p,t){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:p,title:t,event:true})}catch(e){}}document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(a)gcEvento("clic-whatsapp-liderazgo","Clic en WhatsApp desde liderazgo")});</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "name": "Capacitación en liderazgo y habilidades blandas para empresas", "serviceType": "Capacitación empresarial", "url": "https://www.experienciasimone.com/liderazgo-y-habilidades-blandas/", "provider": {"@type": "ProfessionalService", "@id": "https://www.experienciasimone.com/#simone", "name": "Simoné", "url": "https://www.experienciasimone.com/"}, "areaServed": [{"@type": "City", "name": "Bogotá"}, {"@type": "Country", "name": "Colombia"}], "description": "Escuela de Liderazgo humanista, Escuela de Habilidades Blandas y talleres de Power Skills con aprendizaje experiencial y arte, con medición antes y después.", "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Formatos", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Escuela de Liderazgo · Modelo humanista", "description": "De 12 a 24 sesiones de 2 a 3 horas, cada 8 a 15 días, para grupos de 6 a 30 líderes."}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Escuela de Habilidades Blandas", "description": "6 sesiones de 4 horas, una al mes, para cualquier perfil de la compañía."}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Talleres de Power Skills", "description": "Sesión única de 2 a 6 horas para 12 a 125 personas: comunicación, servicio y trabajo en equipo."}}]}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Los talleres son presenciales o virtuales?", "acceptedAnswer": {"@type": "Answer", "text": "Los dos. Las experiencias se diseñan para hacerse en la sede de tu empresa, en un lugar externo o en línea, y los materiales llegan a cada participante."}}, {"@type": "Question", "name": "¿Trabajan solo en Bogotá?", "acceptedAnswer": {"@type": "Answer", "text": "Nuestra base está en Bogotá y trabajamos con empresas en otras ciudades de Colombia, como Cartagena. Las sesiones virtuales llegan a cualquier lugar."}}, {"@type": "Question", "name": "¿Los participantes necesitan saber de arte?", "acceptedAnswer": {"@type": "Answer", "text": "No. Nadie tiene que saber pintar ni dibujar. El arte es la herramienta para que el equipo vea y converse lo que normalmente no se dice; lo importante es lo que cada persona descubre, no lo bonito que quede."}}, {"@type": "Question", "name": "¿Se adapta a los valores y retos de mi empresa?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Antes de empezar escuchamos qué quieres que cambie y cocreamos la experiencia con el lenguaje, los valores y los retos reales de tu empresa."}}, {"@type": "Question", "name": "¿Cómo se mide el resultado?", "acceptedAnswer": {"@type": "Answer", "text": "Cada proceso incluye medición de conocimiento e impacto. En la Escuela de Liderazgo, el líder y su equipo evalúan las conductas de liderazgo antes y después, y al final recibes un informe con resultados y recomendaciones."}}, {"@type": "Question", "name": "¿Cuál formato le conviene a mi empresa?", "acceptedAnswer": {"@type": "Answer", "text": "Depende del tamaño del reto. Un taller de Power Skills sirve para un momento puntual o como primer paso; la Escuela de Habilidades Blandas, para un cambio sostenido en todo el equipo; la Escuela de Liderazgo, para transformar cómo lideran tus jefes. Si no lo tienes claro, el diagnóstico gratuito te ayuda a decidir."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.experienciasimone.com/"}, {"@type": "ListItem", "position": 2, "name": "Liderazgo y habilidades blandas", "item": "https://www.experienciasimone.com/liderazgo-y-habilidades-blandas/"}]}]}</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.13-1.35A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.05.8.82-2.97-.2-.31a8.2 8.2 0 1 1 6.91 3.81Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22a7.4 7.4 0 0 1-1.37-1.7c-.14-.25 0-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.66.31c-.23.25-.86.84-.86 2.05s.88 2.38 1 2.55c.12.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29Z"/></symbol>
+    <symbol id="hrt" viewBox="0 0 28 26"><path fill="var(--rust)" d="M14 26 1.9 14.1A7.4 7.4 0 0 1 14 3.6 7.4 7.4 0 0 1 26.1 14.1Z"/><path fill="var(--magenta)" d="M14 22.2 4.4 12.8a5 5 0 0 1 9.6-5.2 5 5 0 0 1 9.6 5.2Z"/><path fill="var(--heart)" d="M14 18 7.2 11.4a3 3 0 0 1 6.8-3.5 3 3 0 0 1 6.8 3.5Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../" aria-label="Simoné, ir a la página principal">
+      <img class="l-light" src="../img/logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+      <img class="l-dark" src="../img/logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#formatos">Formatos</a>
+      <a href="#escuela-de-liderazgo">Escuela de Liderazgo</a>
+      <a href="#escuela-de-habilidades-blandas">Habilidades Blandas</a>
+      <a href="#power-skills">Power Skills</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="../diagnostico/?origen=pagina-liderazgo">Diagnóstico</a>
+    </nav>
+    <a class="btn btn-wa wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#wa"/></svg><span>Agenda por WhatsApp</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Ruta"><a href="../">Inicio</a> › <a href="../#que-hacemos">Qué hacemos</a> › Liderazgo y habilidades blandas</nav>
+  </div>
+
+  <section class="topic-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Capacitación en liderazgo y habilidades blandas · Bogotá y Colombia</p>
+        <h1>Talleres de liderazgo y habilidades blandas para que tus equipos <em>se comuniquen de verdad</em>.</h1>
+        <p class="pain">“Mis líderes y mis equipos no se comunican.”</p>
+        <p class="lead">Si esa frase suena a tu empresa, aquí empieza la conversación. Diseñamos programas de liderazgo, comunicación asertiva, inteligencia emocional y trabajo en equipo donde la gente aprende haciendo, con arte, y medimos lo que cambia.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="../diagnostico/?origen=pagina-liderazgo">Haz el diagnóstico gratis</a>
+          <a class="btn btn-ghost wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Escríbenos</a>
+        </div>
+      </div>
+      <figure class="hero-photo" style="margin:0">
+        <img src="../img/puerta-equipos.jpg" alt="Un equipo de trabajo sonríe alrededor de una mesa durante un taller de habilidades blandas de Simoné" width="1100" height="733">
+      </figure>
+    </div>
+  </section>
+
+  <section class="see">
+    <div class="wrap see-grid">
+      <div style="display:grid;gap:16px">
+        <p class="eyebrow">Lo que vemos en las empresas</p>
+        <h2>Muchas empresas ascienden a su mejor técnico y le entregan un equipo sin manual.</h2>
+      </div>
+      <ul class="see-list">
+        <li><b>Líderes que mandan y controlan</b>, pero no logran que su equipo se comprometa.</li>
+        <li><b>Áreas que chocan</b> porque cada una mira la empresa desde su propia ventana.</li>
+        <li><b>Malentendidos que cuestan</b>: reprocesos, conflictos que nadie nombra y gente buena que se va.</li>
+        <li><b>Capacitaciones que se olvidan</b> el lunes siguiente, porque lo que solo se escucha, se olvida.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="formatos">
+    <div class="wrap">
+      <div class="pick-head">
+        <p class="eyebrow">Tres formas de trabajar</p>
+        <h2>Elige según el tamaño de tu reto.</h2>
+        <p class="lead">Una sola sesión para un momento especial, un proceso de seis meses para todo el equipo o una escuela completa para tus líderes. Todas se diseñan con el lenguaje y los retos de tu empresa, presenciales o virtuales.</p>
+      </div>
+      <table class="pick">
+        <thead><tr><th scope="col">Formato</th><th scope="col">Sesiones</th><th scope="col">Frecuencia</th><th scope="col">Grupo</th><th scope="col">Para quién</th></tr></thead>
+        <tbody>
+          <tr><th scope="row"><a href="#escuela-de-liderazgo">Escuela de Liderazgo</a></th><td data-l="Sesiones">12 a 24, de 2 a 3 horas</td><td data-l="Frecuencia">Cada 8 a 15 días</td><td data-l="Grupo">6 a 30 líderes</td><td data-l="Para quién">Gerentes, directores y jefes</td></tr>
+          <tr><th scope="row"><a href="#escuela-de-habilidades-blandas">Escuela de Habilidades Blandas</a></th><td data-l="Sesiones">6, de 4 horas</td><td data-l="Frecuencia">Una al mes</td><td data-l="Grupo">Equipos de cualquier área</td><td data-l="Para quién">Cualquier perfil de la compañía</td></tr>
+          <tr><th scope="row"><a href="#power-skills">Talleres de Power Skills</a></th><td data-l="Sesiones">1, de 2 a 6 horas</td><td data-l="Frecuencia">Sesión única</td><td data-l="Grupo">12 a 125 personas</td><td data-l="Para quién">Encuentros, congresos y lanzamientos</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="prog" id="escuela-de-liderazgo">
+    <div class="wrap prog-grid">
+      <div class="prog-intro">
+        <p class="eyebrow">Programa · Modelo humanista</p>
+        <h2>Escuela de Liderazgo</h2>
+        <p class="line">Para que las áreas dejen de chocar y los líderes entiendan cómo afectan a sus equipos.</p>
+        <dl class="facts">
+          <div><dt>Sesiones</dt><dd>12 a 24</dd></div>
+          <div><dt>Duración</dt><dd>2 a 3 horas cada una</dd></div>
+          <div><dt>Frecuencia</dt><dd>Cada 8 a 15 días</dd></div>
+          <div><dt>Grupo</dt><dd>6 a 30 líderes</dd></div>
+        </dl>
+      </div>
+      <div class="prog-body">
+        <div><h3>Para quién</h3><p>Gerentes, directores y jefes, en especial quienes llegaron al cargo por ser excelentes en lo técnico y hoy tienen que guiar personas.</p></div>
+        <div><h3>Cómo funciona</h3><p>Encuentros vivenciales en los que los retos reales de la empresa se trabajan a través del arte. Los líderes miran de frente su manera de comunicar, de dar retroalimentación y de mover a su equipo, y con rutinas de pensamiento convierten lo que descubren en acuerdos concretos para el lunes.</p></div>
+        <div><h3>Qué se trabaja</h3>
+          <ul class="chips"><li>Autoconciencia y reflexión</li><li>Gestión basada en la confianza</li><li>Comunicación transparente</li><li>Retroalimentación</li><li>Delegación y empoderamiento</li><li>Pensamiento sistémico</li><li>Habilidades emocionales y sociales</li><li>Coherencia y compromiso</li><li>Inclusión y diversidad</li></ul>
+        </div>
+        <div><h3>Qué cambia</h3><p>Líderes que escuchan, dan retroalimentación y entienden su impacto. Equipos más comprometidos y menos rotación.</p></div>
+        <div><h3>Qué medimos</h3><p>Las conductas de liderazgo, evaluadas por el propio líder y por su equipo, antes y después del programa.</p></div>
+        <div><h3>Qué incluye</h3><p>Todos los materiales, memorias de los temas trabajados, cápsulas de conocimiento para seguir aprendiendo entre sesiones, registros e informe de resultados.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prog" id="escuela-de-habilidades-blandas">
+    <div class="wrap prog-grid">
+      <div class="prog-intro">
+        <p class="eyebrow">Programa · Todas las áreas</p>
+        <h2>Escuela de Habilidades Blandas</h2>
+        <p class="line">Para que los valores de la empresa se noten en cada conversación del día a día.</p>
+        <dl class="facts">
+          <div><dt>Sesiones</dt><dd>6</dd></div>
+          <div><dt>Duración</dt><dd>4 horas cada una</dd></div>
+          <div><dt>Frecuencia</dt><dd>Una al mes</dd></div>
+          <div><dt>Para quién</dt><dd>Cualquier perfil</dd></div>
+        </dl>
+      </div>
+      <div class="prog-body">
+        <div><h3>Para quién</h3><p>Equipos de cualquier área y nivel de la compañía: operación, servicio, comercial, administrativo y mandos medios.</p></div>
+        <div><h3>Cómo funciona</h3><p>Una sesión al mes durante seis meses. Cada encuentro convierte un concepto que suele quedarse en la teoría, como la empatía o la escucha, en una experiencia que el equipo vive con las manos y luego traduce a su trabajo. El ritmo mensual le da tiempo a cada aprendizaje de echar raíz antes del siguiente.</p></div>
+        <div><h3>Qué se trabaja</h3>
+          <ul class="chips"><li>Comunicación asertiva y escucha activa</li><li>Adaptabilidad y gestión del cambio</li><li>Inteligencia emocional</li><li>Trabajo en equipo y colaboración</li><li>Resolución de conflictos</li><li>Organización y gestión del tiempo</li><li>Autoconocimiento</li><li>Creatividad y atención al detalle</li><li>Servicio y experiencia del cliente</li></ul>
+        </div>
+        <div><h3>Qué cambia</h3><p>Menos fricciones y malentendidos entre personas y áreas. La inteligencia social se vuelve un motor de productividad: equipos más unidos, menos rotación y procesos que fluyen con más agilidad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prog" id="power-skills">
+    <div class="wrap prog-grid">
+      <div class="prog-intro">
+        <p class="eyebrow">Experiencia focalizada · Sesión única</p>
+        <h2>Talleres de Power Skills</h2>
+        <p class="line">Comunicación, servicio y trabajo en equipo, en una sola sesión de alto impacto.</p>
+        <dl class="facts">
+          <div><dt>Sesiones</dt><dd>1</dd></div>
+          <div><dt>Duración</dt><dd>2 a 6 horas</dd></div>
+          <div><dt>Grupo</dt><dd>12 a 125 personas</dd></div>
+          <div><dt>Modalidad</dt><dd>Presencial o virtual</dd></div>
+        </dl>
+      </div>
+      <div class="prog-body">
+        <div><h3>Para qué sirve</h3><p>Para una necesidad específica que no da espera, o para un momento en el que toda la gente está reunida y conviene que viva algo que recuerde.</p></div>
+        <div><h3>Momentos en los que funciona</h3>
+          <ul class="uses"><li>Encuentros corporativos y jornadas de integración</li><li>Congresos y convenciones</li><li>Reuniones de lanzamiento</li><li>Presentación de nuevos protocolos o procesos en la compañía</li></ul>
+        </div>
+        <div><h3>Temas</h3>
+          <ul class="chips"><li>Comunicación</li><li>Servicio</li><li>Trabajo en equipo</li></ul>
+        </div>
+        <div><h3>Un buen primer paso</h3><p>Si nunca has trabajado con Simoné, un taller de Power Skills le muestra a tu equipo y a tu gerencia cómo se siente aprender así, antes de decidir un programa más largo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="method" id="metodo">
+    <div class="wrap">
+      <div class="method-head">
+        <p class="eyebrow">Cómo es una sesión · Método El Borde Visible™</p>
+        <h2>Nadie tiene que saber pintar. Todos tienen algo que decir.</h2>
+        <p class="lead">El arte no es el tema: es el puente. Hace visible lo que en una charla se queda en el aire, y eso que se ve se puede conversar, acordar y medir.</p>
+      </div>
+      <ol class="moves">
+        <li><b>Acción · Dewey</b><h3>Se aprende haciendo</h3><p>El equipo enfrenta un reto real de su empresa con las manos ocupadas: un retrato, un mapa, un juego, una pieza colectiva.</p></li>
+        <li><b>Expresión · Arte</b><h3>Lo que no se dice, se ve</h3><p>La obra muestra cómo se comunica el equipo, dónde se atasca y qué siente. Lo invisible queda sobre la mesa.</p></li>
+        <li><b>Estructura · Harvard Project Zero</b><h3>Lo que se ve, se acuerda</h3><p>Rutinas de pensamiento convierten lo descubierto en acuerdos concretos que el equipo se lleva a su trabajo.</p></li>
+      </ol>
+      <p style="margin-top:32px;font-family:var(--display);font-weight:600">Algunas experiencias de nuestro repertorio</p>
+      <ul class="chips" style="margin-top:12px"><li>Retratos dirigidos</li><li>Pájaros: encontrando la palabra justa</li><li>Seis sombreros para pensar</li><li>El árbol, radiografía de una organización</li><li>Mapa de Johari</li><li>Los tres músicos</li><li>El viaje del cliente</li><li>El espejo: confianza</li></ul>
+      <div class="method-photos">
+        <img src="../img/galeria-6.jpg" alt="Dos participantes pintan juntas un paisaje en un mismo papel durante un taller de trabajo en equipo" width="1200" height="800" loading="lazy">
+        <img src="../img/galeria-3.jpg" alt="Dos participantes muestran las siluetas de papel que dibujaron en una sesión de comunicación" width="1200" height="800" loading="lazy">
+        <img src="../img/galeria-1.jpg" alt="Una mediadora de Simoné acompaña a un participante mientras pinta en acuarela" width="1200" height="800" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios">
+    <div class="wrap">
+      <div class="voices-head">
+        <div style="display:grid;gap:14px">
+          <p class="eyebrow">Lo que dicen los líderes</p>
+          <h2>Liderar desde un lugar más consciente.</h2>
+        </div>
+        <p class="voices-stat"><b>143</b><span>personas respondieron nuestra encuesta después de su experiencia. Las 143 recomendarían a Simoné.</span></p>
+      </div>
+      <figure class="voice-feature">
+        <blockquote>En lo personal, aprendí a escucharme con mayor compasión y claridad; y en lo profesional, a liderar desde un lugar más consciente y empático.</blockquote>
+        <figcaption class="who-said">Joaquín Berrocal<small>Cámara de Comercio de Cartagena</small></figcaption>
+      </figure>
+      <ul class="voices">
+        <li class="voice">
+          <blockquote>La importancia de identificar nuestro lado humanista en la forma de liderar a nuestros grupos de trabajo.</blockquote>
+          <p class="who-said">Libia del Socorro Quintero<small>Nueva EPS · Líderes asumiendo desafíos</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Cada persona tiene visiones diferentes de la organización y sus desafíos. Lo interesante es armonizarlo todo para, desde la individualidad, construir en conjunto.</blockquote>
+          <p class="who-said">Lina María Acero<small>Sociedad Entorno y Compañía</small></p>
+        </li>
+        <li class="voice">
+          <blockquote>Nos ayuda a reconocernos, valorar lo que nos rodea y motivarnos para el trabajo en equipo.</blockquote>
+          <p class="who-said">Diana María Álvarez<small>Productos Alimenticios Doria</small></p>
+        </li>
+      </ul>
+      <p class="proof-clients"><span>También han confiado en nosotros:</span> Nueva EPS · Cámara de Comercio de Cartagena · Fundación Santa Fe de Bogotá · BNP Paribas · Bancoldex · Doria</p>
+    </div>
+  </section>
+
+  <section id="preguntas" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2 style="margin-top:14px">Lo que nos preguntan antes de empezar.</h2>
+      <div class="faq-list">
+        <details>
+          <summary>¿Los talleres son presenciales o virtuales?</summary>
+          <p>Los dos. Las experiencias se diseñan para hacerse en la sede de tu empresa, en un lugar externo o en línea, y los materiales llegan a cada participante.</p>
+        </details>
+        <details>
+          <summary>¿Trabajan solo en Bogotá?</summary>
+          <p>Nuestra base está en Bogotá y trabajamos con empresas en otras ciudades de Colombia, como Cartagena. Las sesiones virtuales llegan a cualquier lugar.</p>
+        </details>
+        <details>
+          <summary>¿Los participantes necesitan saber de arte?</summary>
+          <p>No. Nadie tiene que saber pintar ni dibujar. El arte es la herramienta para que el equipo vea y converse lo que normalmente no se dice; lo importante es lo que cada persona descubre, no lo bonito que quede.</p>
+        </details>
+        <details>
+          <summary>¿Se adapta a los valores y retos de mi empresa?</summary>
+          <p>Sí. Antes de empezar escuchamos qué quieres que cambie y cocreamos la experiencia con el lenguaje, los valores y los retos reales de tu empresa.</p>
+        </details>
+        <details>
+          <summary>¿Cómo se mide el resultado?</summary>
+          <p>Cada proceso incluye medición de conocimiento e impacto. En la Escuela de Liderazgo, el líder y su equipo evalúan las conductas de liderazgo antes y después, y al final recibes un informe con resultados y recomendaciones.</p>
+        </details>
+        <details>
+          <summary>¿Cuál formato le conviene a mi empresa?</summary>
+          <p>Depende del tamaño del reto. Un taller de Power Skills sirve para un momento puntual o como primer paso; la Escuela de Habilidades Blandas, para un cambio sostenido en todo el equipo; la Escuela de Liderazgo, para transformar cómo lideran tus jefes. Si no lo tienes claro, el <a href="../diagnostico/?origen=pagina-liderazgo">diagnóstico gratuito</a> te ayuda a decidir.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" id="contacto">
+    <div class="wrap close-grid">
+      <div>
+        <p class="eyebrow" style="color:var(--heart)">Por dónde empezar</p>
+        <h2 style="margin-top:14px">¿No sabes cuál formato necesita tu equipo?</h2>
+        <p class="lead">Haz el diagnóstico en 5 minutos y recibe un informe con tu punto de partida. O escríbenos y en 30 minutos de conversación te decimos con honestidad qué te sirve.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="../diagnostico/?origen=pagina-liderazgo">Haz el diagnóstico gratis</a>
+          <a class="btn btn-ghost wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Agenda por WhatsApp</a>
+        </div>
+      </div>
+      <div class="contact">
+        <div><b>WhatsApp</b><a class="wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener">+57 321 773 8039</a></div>
+        <div><b>Correo</b><span>experienciasimone@gmail.com</span></div>
+        <div class="related"><b>Más de Simoné</b><a href="../#que-hacemos">Bienestar, sostenibilidad y marca</a><a href="../burnout/">Test de burnout gratis</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Simoné · Desarrollo humano a través del arte · Colombia</span>
+    <span>Todas las fotos son de sesiones reales. · <a href="../privacidad/">Tratamiento de datos</a></span>
+  </div>
+</footer>
+
+<a class="float-wa wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg aria-hidden="true"><use href="#wa"/></svg>
+</a>
+
+<script>
+  (function () {
+    var msg = encodeURIComponent("Hola Simoné, vi la página de liderazgo y habilidades blandas y quiero conversar sobre un programa para mi equipo.");
+    document.querySelectorAll(".wa-link").forEach(function (a) { a.href = "https://wa.me/573217738039?text=" + msg; });
+  })();
+</script>
+</body>
+</html>
