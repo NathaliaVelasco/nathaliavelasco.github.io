@@ -423,6 +423,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
 .benefits p { color: var(--olive-soft); font-size: 1rem; }
 @media (max-width: 960px) { .benefits { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .benefits { grid-template-columns: 1fr; } }
+.method-photos.four { grid-template-columns: 0.7fr 1.25fr 0.95fr 1.25fr; }
+.method-photos.four img { height: clamp(220px, 26vw, 360px); }
+.method-photos.four img:nth-child(1) { object-position: 35% 55%; }
+.method-photos.four img:nth-child(4) { object-position: 60% center; }
+@media (max-width: 760px) { .method-photos.four { grid-template-columns: 1fr 1fr; } .method-photos.four img, .method-photos.four img:first-child { grid-column: auto; height: 200px; } }
 </style>
 
 <script data-goatcounter="https://experienciasimone.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -676,10 +681,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
         <div><b>Arte y emoción</b><ul><li>Gestión emocional: constelaciones con pintura</li><li>Bailes sobre papel, al estilo Pollock</li><li>Moldeando la gratitud: escultura en arcilla</li><li>Corazones fuertes: terrarios y jardinería</li></ul></div>
         <div><b>Mente y agilidad</b><ul><li>Gimnasia cerebral: observación y memoria</li><li>La carrera de la oruga</li><li>Higiene del sueño: soñar completo</li><li>La libertad de escoger: el equipaje emocional</li></ul></div>
       </div>
-      <div class="method-photos">
-        <img src="../img/galeria-5.jpg" alt="Participantes pintan en acuarela durante una actividad de bienestar laboral" width="1200" height="800" loading="lazy">
-        <img src="../img/galeria-2.jpg" alt="Siluetas de papel de colores y tarjetas pintadas en una sesión de gestión emocional" width="667" height="1000" loading="lazy">
-        <img src="../img/galeria-6.jpg" alt="Dos personas pintan juntas un paisaje en un mismo papel" width="1200" height="800" loading="lazy">
+      <div class="method-photos four">
+        <img src="../img/bien-mandala.jpg" alt="Una participante arma un mandala con arena de colores durante una sesión de gestión emocional" width="787" height="1400" loading="lazy">
+        <img src="../img/bien-abeja.jpg" alt="Manos que colorean una abeja de papel en un taller de bienestar laboral" width="1400" height="933" loading="lazy">
+        <img src="../img/bien-equipo.jpg" alt="Un equipo arma junto un rompecabezas de fotografías sobre la mesa" width="1235" height="1400" loading="lazy">
+        <img src="../img/bien-expresion.jpg" alt="Dos participantes en un ejercicio de expresión corporal con los ojos cerrados" width="960" height="640" loading="lazy">
       </div>
     </div>
   </section>
@@ -706,7 +712,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
       </div>
       <figure class="voice-feature">
         <blockquote>Estamos en la capacidad de escoger nuestra actitud y nuestra conducta. Debo trabajar en mis emociones para garantizar un mejor presente en cada área de mi vida.</blockquote>
-        <figcaption class="who-said">Juliana Natalia Pérez<small>Calidad · Líderes Gestores de Cambio</small></figcaption>
+        <figcaption class="who-said">Juliana Natalia Pérez<small>Calidad · Prosear-Increar</small></figcaption>
       </figure>
       <ul class="voices">
         <li class="voice">
@@ -719,22 +725,22 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
         </li>
         <li class="voice">
           <blockquote>Hay mecanismos que nos permiten enriquecernos como personas, conocernos mejor, aprender a fluir. La música e ir haciendo puntos me relajó, y lo disfruté.</blockquote>
-          <p class="who-said">Sandra Lorena Cárdenas<small>Seguros Generales · Líderes Gestores de Cambio</small></p>
+          <p class="who-said">Sandra Lorena Cárdenas<small>Seguros Generales · Prosear-Increar</small></p>
         </li>
         <li class="voice">
           <blockquote>Conocerme más a fondo, saber realmente qué quiero en mi vida y qué necesito. Esta experiencia fue maravillosa y gratificante.</blockquote>
-          <p class="who-said">Sharon Granados<small>Servicio al Cliente · Líderes Gestores de Cambio</small></p>
+          <p class="who-said">Sharon Granados<small>Servicio al Cliente · Prosear-Increar</small></p>
         </li>
         <li class="voice">
           <blockquote>Talleres que hacen pensar en la persona desde el interior, desde los sentimientos.</blockquote>
-          <p class="who-said">Fernando Contreras<small>Análisis · Líderes Gestores de Cambio</small></p>
+          <p class="who-said">Fernando Contreras<small>Análisis · Prosear-Increar</small></p>
         </li>
         <li class="voice">
           <blockquote>Las fortalezas de cada uno y lo importante de cuidar la salud mental.</blockquote>
-          <p class="who-said">Yenyfer Casallas<small>ARL · Líderes Gestores de Cambio</small></p>
+          <p class="who-said">Yenyfer Casallas<small>Área ARL · Prosear-Increar</small></p>
         </li>
       </ul>
-      <p class="proof-clients"><span>También han confiado en nosotros:</span> Prosear · Centro Mayor · Fundación Santa Fe de Bogotá · Nueva EPS · Doria · Darnel · Imprenta Nacional</p>
+      <p class="proof-clients"><span>También han confiado en nosotros:</span> Prosear-Increar · Centro Mayor · Fundación Santa Fe de Bogotá · Nueva EPS · Doria · Darnel · Imprenta Nacional</p>
     </div>
   </section>
 
