@@ -47,6 +47,13 @@ h2 { font-size: 1.5rem; margin: 6px 0 4px; }
 .chip { font: inherit; font-size: .9375rem; line-height: 1.3; padding: 9px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); cursor: pointer; text-align: left; }
 .chip[aria-pressed="true"] { background: var(--olive); color: var(--cream); border-color: var(--olive); }
 .chip:disabled { opacity: .45; cursor: not-allowed; }
+.animals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 560px) { .animals { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.chip.animal { border-radius: 14px; padding: 8px 8px 10px; display: grid; gap: 2px; text-align: center; background: #fff; color: #363A12; }
+.chip.animal img { width: 100%; height: auto; aspect-ratio: 393 / 282; object-fit: contain; display: block; margin-bottom: 4px; }
+.chip.animal b { font-family: "Montserrat", Arial, sans-serif; font-size: .9375rem; }
+.chip.animal span { font-size: .8125rem; color: #5C6132; line-height: 1.3; }
+.chip.animal[aria-pressed="true"] { background: #fff; color: #363A12; border-color: var(--rust); box-shadow: 0 0 0 3px var(--rust); }
 .scale { display: flex; gap: 6px; flex-wrap: wrap; }
 .scale button { font: inherit; font-weight: 700; width: 46px; height: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); cursor: pointer; }
 .scale button[aria-pressed="true"] { background: var(--rust); color: #fff; border-color: var(--rust); }
@@ -68,7 +75,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 footer a { color: var(--rust); }
 </style>
 <script data-goatcounter="https://experienciasimone.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-<script src="preguntas.js?v=2"></script>
+<script src="preguntas.js?v=3"></script>
 </head>
 <body>
 <header>
@@ -119,6 +126,13 @@ footer a { color: var(--rust); }
     <p class="lead" style="margin-top:18px">Mientras tanto, esto es lo que tú viste hoy:</p>
     <dl class="card summary" id="summary"></dl>
     <p class="msg" id="send-msg" role="status"></p>
+    <div class="nav"><span></span><button class="btn" id="cerrar">Cerrar</button></div>
+  </section>
+
+  <section class="screen" id="bye">
+    <p class="eyebrow">Listo</p>
+    <h1>Gracias por sembrar tu parte.</h1>
+    <p class="lead">Tus respuestas ya quedaron guardadas. Puedes cerrar esta pestaña o volver a lo que estabas haciendo.</p>
   </section>
 </main>
 
@@ -174,7 +188,8 @@ footer a { color: var(--rust); }
         for (var v = 1; v <= q.escala; v++) h += '<button type="button" aria-pressed="false" data-v="' + v + '" aria-label="' + v + ' de ' + q.escala + '">' + v + '</button>';
         h += '</div><div class="scale-ends" style="max-width:' + (q.escala * 52) + 'px"><span>' + q.extremos[0] + '</span><span>' + q.extremos[1] + '</span></div>';
       } else {
-        h += '<div class="chips">' + q.opciones.map(function (o) { return '<button type="button" class="chip" aria-pressed="false">' + o + '</button>'; }).join("") + '</div>';
+        if (q.imagenes) h += '<div class="animals">' + q.opciones.map(function (o, i) { var t = o.split(" · "); return '<button type="button" class="chip animal" aria-pressed="false" data-o="' + o + '"><img src="img/animal-' + q.imagenes[i] + '.jpg" alt="" width="393" height="282" loading="lazy"><b>' + t[0] + '</b><span>' + (t[1] || "") + '</span></button>'; }).join("") + '</div>';
+        else h += '<div class="chips">' + q.opciones.map(function (o) { return '<button type="button" class="chip" aria-pressed="false" data-o="' + o + '">' + o + '</button>'; }).join("") + '</div>';
         h += '<p class="count" style="margin-top:10px"><span>0</span> de ' + q.max + '</p>';
       }
       h += '</div>';
@@ -194,12 +209,12 @@ footer a { color: var(--rust); }
         var chips = box.querySelectorAll(".chip");
         [].forEach.call(chips, function (c) {
           c.onclick = function () {
-            var sel = state.r[q.id], o = c.textContent, i = sel.indexOf(o);
-            if (i >= 0) sel.splice(i, 1); else if (sel.length < q.max) sel.push(o);
+            var sel = state.r[q.id], o = c.dataset.o, i = sel.indexOf(o);
+            if (i >= 0) sel.splice(i, 1); else if (q.max === 1) { sel.length = 0; sel.push(o); } else if (sel.length < q.max) sel.push(o);
             [].forEach.call(chips, function (x) {
-              var on = sel.indexOf(x.textContent) >= 0;
+              var on = sel.indexOf(x.dataset.o) >= 0;
               x.setAttribute("aria-pressed", on ? "true" : "false");
-              x.disabled = !on && sel.length >= q.max;
+              x.disabled = q.max > 1 && !on && sel.length >= q.max;
             });
             box.querySelector(".count span").textContent = sel.length;
             sec.querySelector(".msg").textContent = "";
@@ -235,6 +250,8 @@ footer a { color: var(--rust); }
       show("p0");
     });
   };
+
+  $("cerrar").onclick = function () { show("bye"); try { window.close(); } catch (e) {} };
 
   function enviar() {
     var dl = "";

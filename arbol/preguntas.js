@@ -49,7 +49,8 @@ window.ARBOL = {
         neg: ["Vigilancia estricta (cámaras, reportes)", "Despidos continuos y poco justificados"] }
     ]},
     { id: "identidad", nombre: "Los habitantes", sub: "Cómo somos y cómo me siento en el equipo", preguntas: [
-      { id: "animales", titulo: "Representación animal", texto: "Elige 3 animales que representen las actitudes y comportamientos de tu equipo.", max: 3, opciones: [
+      { id: "animales", titulo: "Representación animal", texto: "Elige el animal con el que te sientes representado en las actitudes y comportamientos de tu equipo.", max: 1,
+        imagenes: ["aguila", "hormiga", "buho", "camaleon", "oso", "ardilla", "abeja", "zorro"], opciones: [
         "Águila · visión estratégica", "Hormiga · persistencia y fuerza", "Búho · observación y análisis", "Camaleón · adaptación rápida",
         "Oso · protección y liderazgo fuerte", "Ardilla · planificación de recursos", "Abeja · jerarquía y disciplina", "Zorro · astucia e inteligencia"] },
       { id: "escucha", titulo: "Pertenencia", texto: "¿Con qué frecuencia sientes que tu opinión es escuchada y que encajas de verdad con los valores y las personas de este grupo?", escala: 5, extremos: ["Nunca", "Siempre"] },

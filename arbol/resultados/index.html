@@ -58,7 +58,8 @@ input, select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 
 .part-head p { color: var(--olive-soft); font-size: .9375rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
 .q { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
-.q h3 { font-size: 1.0625rem; margin-bottom: 10px; }
+.q h3 { font-size: 1.0625rem; margin-bottom: 12px; }
+.q h3 .rk { font-size: .75rem; color: var(--olive-soft); font-weight: 600; letter-spacing: .06em; }
 .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .bars li { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 4px 10px; align-items: center; font-size: .875rem; }
 .bars .lbl { overflow-wrap: anywhere; }
@@ -81,6 +82,33 @@ input, select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 
 .sum-card b { font-family: "Montserrat", Arial, sans-serif; font-size: 1.125rem; line-height: 1.25; margin-top: 6px; }
 .sum-card b.neg { color: #FFB59A; }
 .sum-card .sum-p { font-size: .8125rem; opacity: .8; }
+.dn { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.donut { width: 104px; height: 104px; flex: none; transform: rotate(0deg); }
+.dn-k { display: block; font-family: "Montserrat", Arial, sans-serif; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rust); font-weight: 600; }
+.dn b { display: block; font-family: "Montserrat", Arial, sans-serif; font-size: 1.0625rem; line-height: 1.25; margin: 2px 0; }
+.dn b.neg { color: var(--bar-neg); }
+.dn-p { font-size: .8125rem; color: var(--olive-soft); }
+.rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.rank li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 3px 8px; align-items: center; font-size: .875rem; }
+.rank .pos { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-size: .75rem; background: var(--c); color: #fff; }
+.rank li:nth-child(n+6) .pos { color: var(--olive); }
+.rank .lbl { overflow-wrap: anywhere; }
+.rank li.neg .lbl::after { content: " · alerta"; color: var(--bar-neg); font-size: .75rem; font-weight: 700; }
+.rank .pct { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.rank .track { grid-column: 2 / -1; height: 6px; border-radius: 4px; background: color-mix(in srgb, var(--line) 70%, transparent); position: relative; }
+.rank .fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--bar); }
+.rank li.neg .fill { background: var(--bar-neg); }
+.rank .prev { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--olive); }
+.rank .delta { font-size: .6875rem; margin-left: 6px; color: var(--olive-soft); }
+.rank .delta.up { color: #2F8A4A; } .rank .delta.down { color: var(--bar-neg); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.bx { background: #fff; color: #363A12; border: 1px solid var(--line); border-radius: 12px; padding: 6px 6px 8px; text-align: center; display: grid; gap: 1px; }
+.bx.lead { border: 2px solid var(--rust); box-shadow: 0 0 0 2px var(--rust); }
+.bx img { width: 100%; max-height: 110px; aspect-ratio: 393 / 282; object-fit: contain; }
+.bx b { font-family: "Montserrat", Arial, sans-serif; font-size: .8125rem; }
+.bx-p { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-size: 1.125rem; }
+.bx-d { font-size: .6875rem; color: #5C6132; }
+.q.wide { grid-column: 1 / -1; }
 .empty { padding: 30px; text-align: center; color: var(--olive-soft); background: var(--paper); border: 1px dashed var(--line); border-radius: 14px; }
 .legend { font-size: .8125rem; color: var(--olive-soft); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
 .legend i { display: inline-block; width: 12px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
@@ -89,7 +117,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr; } }
 @media print { .filters, .live, #access, .noprint { display: none !important; } body { background: #fff; } .q, .kpi { break-inside: avoid; } }
 </style>
-<script src="../preguntas.js?v=2"></script>
+<script src="../preguntas.js?v=3"></script>
 </head>
 <body>
 <header>
@@ -135,6 +163,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 <script>
 (function () {
   var A = window.ARBOL, $ = function (id) { return document.getElementById(id); };
+  var COL = ["var(--olive)", "var(--rust)", "var(--heart)", "var(--magenta)", "var(--leaf)"];
   var qs = new URLSearchParams(location.search);
   var DEMO = qs.get("demo") === "1";
   var cfg = { code: (qs.get("e") || "").toUpperCase(), key: qs.get("k") || "", total: +qs.get("n") || 0 };
@@ -204,6 +233,32 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     return c;
   }
   function pct(n, d) { return d ? Math.round(n / d * 100) : 0; }
+  function esNeg(q, o) { return q.todasNeg || (q.neg && q.neg.indexOf(o) >= 0); }
+  function dona(q, items, f) {
+    var tot = 0; q.opciones.forEach(function (o) { tot += f[o]; });
+    if (!tot) return "";
+    var segs = items.slice(0, 5).map(function (it, i) { return { o: it.o, v: f[it.o] / tot * 100, c: COL[i] }; });
+    var resto = 100 - segs.reduce(function (a, b) { return a + b.v; }, 0);
+    if (resto > 0.5) segs.push({ o: "Otras", v: resto, c: "var(--line)" });
+    var off = 25, svg = '<svg viewBox="0 0 42 42" class="donut" aria-hidden="true"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--line)" stroke-width="7"/>';
+    segs.forEach(function (sg) { svg += '<circle cx="21" cy="21" r="15.915" fill="none" stroke="' + sg.c + '" stroke-width="7" stroke-dasharray="' + sg.v.toFixed(2) + ' ' + (100 - sg.v).toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '"/>'; off -= sg.v; });
+    svg += '</svg>';
+    var lead = items[0];
+    return '<div class="dn">' + svg + '<div><span class="dn-k">Primer lugar</span><b class="' + (esNeg(q, lead.o) ? "neg" : "") + '">' + lead.o + '</b><span class="dn-p">' + lead.p + ' % de las personas</span></div></div>';
+  }
+  function cajones(q, items) {
+    return '<div class="boxes">' + items.map(function (it, i) {
+      var idx = q.opciones.indexOf(it.o), t = it.o.split(" · ");
+      return '<div class="bx' + (i === 0 && it.p ? " lead" : "") + '"><img src="../img/animal-' + q.imagenes[idx] + '.jpg" alt=""><b>' + t[0] + '</b><span class="bx-p">' + it.p + ' %</span>' + (it.pp !== null ? '<span class="bx-d">' + (it.p - it.pp > 0 ? "+" : "") + (it.p - it.pp) + ' pts</span>' : "") + '</div>';
+    }).join("") + '</div>';
+  }
+  function ranking(q, items) {
+    return '<ol class="rank">' + items.map(function (it, i) {
+      var neg = esNeg(q, it.o), c = i < 5 && !q.imagenes ? COL[i] : "var(--line)";
+      var dl = it.pp === null ? "" : '<span class="delta ' + (it.p - it.pp > 0 ? "up" : it.p - it.pp < 0 ? "down" : "") + '">' + (it.p - it.pp > 0 ? "▲ +" : it.p - it.pp < 0 ? "▼ " : "= ") + (it.p - it.pp) + '</span>';
+      return '<li class="' + (neg ? "neg" : "") + '"><span class="pos" style="--c:' + c + '">' + (i + 1) + '</span><span class="lbl">' + it.o + '</span><span class="pct">' + it.p + '%' + dl + '</span><span class="track"><span class="fill" style="width:' + it.p + '%"></span>' + (it.pp !== null ? '<span class="prev" style="left:calc(' + it.pp + '% - 1px)" title="Antes: ' + it.pp + '%"></span>' : "") + '</span></li>';
+    }).join("") + '</ol>';
+  }
   function qid(id) { var f; A.partes.forEach(function (p) { p.preguntas.forEach(function (q) { if (q.id === id) f = q; }); }); return f; }
   function top(list, id, n) {
     var q = qid(id), f = freq(list, q);
@@ -254,7 +309,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     A.partes.forEach(function (p) {
       h += '<section class="part"><div class="part-head">' + ICON[p.id] + '<div><h2>' + p.nombre + '</h2><p>' + p.sub + '</p></div></div><div class="grid">';
       p.preguntas.forEach(function (q) {
-        h += '<div class="q"><h3>' + q.titulo + '</h3>';
+        h += '<div class="q' + (q.imagenes ? " wide" : "") + '"><h3>' + q.titulo + (q.escala ? "" : ' <small class="rk">· Ranking</small>') + '</h3>';
         if (q.escala) {
           var vals = cur.map(function (x) { return x.r[q.id]; }).filter(Boolean), d = [], mx = 0;
           for (var i = 1; i <= q.escala; i++) { d[i] = vals.filter(function (v) { return v === i; }).length; mx = Math.max(mx, d[i]); }
@@ -264,11 +319,8 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
         } else {
           var f = freq(cur, q), fp = usePrev ? freq(prev, q) : null;
           var items = q.opciones.map(function (o) { return { o: o, p: pct(f[o], cur.length), pp: fp ? pct(fp[o], prev.length) : null }; }).sort(function (a, b) { return b.p - a.p; });
-          h += '<ul class="bars">' + items.map(function (it) {
-            var neg = q.todasNeg || (q.neg && q.neg.indexOf(it.o) >= 0);
-            var dl = it.pp === null ? "" : '<span class="delta">' + (it.p - it.pp > 0 ? "+" : "") + (it.p - it.pp) + "</span>";
-            return '<li class="' + (neg ? "neg" : "") + '"><span class="lbl">' + it.o + '</span><span class="pct">' + it.p + "%" + '</span><span class="track"><span class="fill" style="width:' + it.p + '%"></span>' + (it.pp !== null ? '<span class="prev" style="left:calc(' + it.pp + '% - 1px)" title="Antes: ' + it.pp + '%"></span>' : "") + '</span>' + (dl ? '<span style="grid-column:1/-1;margin-top:-4px">' + dl.replace('class="delta">', 'class="delta">Cambio: ') + ' puntos</span>' : "") + "</li>";
-          }).join("") + "</ul>";
+          h += q.imagenes ? cajones(q, items) : dona(q, items, f) ;
+          h += ranking(q, items);
         }
         h += "</div>";
       });
