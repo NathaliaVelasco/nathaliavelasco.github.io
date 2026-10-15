@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /equilibrio/
+Disallow: /arbol/
 Sitemap: https://www.experienciasimone.com/sitemap.xml

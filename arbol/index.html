@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>El Árbol · Radiografía de una organización · Simoné</title>
+<meta name="description" content="Herramienta anónima de Simoné para medir el clima y la cultura de una organización.">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:wght@400;700&display=swap">
+<style>
+:root { --cream:#F6F0E2; --paper:#FCF9F2; --olive:#363A12; --olive-soft:#5C6132; --rust:#8A3300; --heart:#F2A03D; --magenta:#BE1A82; --line:#DCD3BC; --leaf:#6E8B2E; --bark:#7A5230; --logo-light:block; --logo-dark:none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --magenta:#E764B3; --line:#3B3F24; --leaf:#9DBB55; --bark:#B07B4F; --logo-light:none; --logo-dark:block; color-scheme: dark; } }
+:root[data-theme="dark"] { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --magenta:#E764B3; --line:#3B3F24; --leaf:#9DBB55; --bark:#B07B4F; --logo-light:none; --logo-dark:block; color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--cream); color: var(--olive); font: 17px/1.55 "Lato", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: "Montserrat", Arial, sans-serif; line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+header { padding: 14px 0; border-bottom: 1px solid var(--line); }
+header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.logo img { height: 34px; width: auto; max-width: none; display: block; }
+.logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
+.anon { font-size: .8125rem; color: var(--olive-soft); display: flex; gap: 6px; align-items: center; }
+.tree-box { display: flex; justify-content: center; padding: 18px 0 4px; }
+.tree { width: 180px; height: 150px; }
+.tree .stage { opacity: 0; transform-origin: 50% 100%; transition: opacity .6s ease, transform .6s ease; transform: scale(.85); }
+.tree .stage.on { opacity: 1; transform: scale(1); }
+@media (prefers-reduced-motion: reduce) { .tree .stage { transition: none; } }
+.progress { display: flex; gap: 6px; justify-content: center; margin: 6px 0 22px; }
+.progress span { width: 34px; height: 5px; border-radius: 4px; background: var(--line); }
+.progress span.on { background: var(--rust); }
+.screen { display: none; padding-bottom: 48px; }
+.screen.on { display: block; }
+.eyebrow { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: var(--rust); }
+h1 { font-size: clamp(1.6rem, 1.2rem + 2vw, 2.2rem); margin: 8px 0 12px; }
+h2 { font-size: 1.5rem; margin: 6px 0 4px; }
+.lead { color: var(--olive-soft); font-size: 1.0625rem; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 20px 18px; margin-top: 18px; }
+.q h3 { font-size: 1.125rem; }
+.q .hint { color: var(--olive-soft); font-size: .9375rem; margin: 4px 0 12px; }
+.q .count { font-family: "Montserrat", Arial, sans-serif; font-size: .8125rem; color: var(--rust); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-size: .9375rem; line-height: 1.3; padding: 9px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); cursor: pointer; text-align: left; }
+.chip[aria-pressed="true"] { background: var(--olive); color: var(--cream); border-color: var(--olive); }
+.chip:disabled { opacity: .45; cursor: not-allowed; }
+.scale { display: flex; gap: 6px; flex-wrap: wrap; }
+.scale button { font: inherit; font-weight: 700; width: 46px; height: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); cursor: pointer; }
+.scale button[aria-pressed="true"] { background: var(--rust); color: #fff; border-color: var(--rust); }
+.scale-ends { display: flex; justify-content: space-between; font-size: .8125rem; color: var(--olive-soft); margin-top: 6px; max-width: 560px; }
+.groups { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.groups button { font: inherit; font-weight: 700; padding: 16px 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); cursor: pointer; }
+.groups button[aria-pressed="true"] { background: var(--olive); color: var(--cream); border-color: var(--olive); }
+label.field { display: grid; gap: 6px; font-weight: 700; font-size: .9375rem; margin-top: 14px; }
+input[type=text] { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); text-transform: uppercase; letter-spacing: .08em; }
+.btn { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; font-size: 1rem; padding: 14px 26px; border-radius: 999px; border: 2px solid var(--olive); background: var(--olive); color: var(--cream); cursor: pointer; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--olive); }
+.nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.msg { color: var(--rust); font-size: .9375rem; margin-top: 10px; min-height: 1.2em; }
+:focus-visible { outline: 3px solid var(--magenta); outline-offset: 2px; }
+.summary dt { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rust); margin-top: 14px; }
+.summary dd { margin: 4px 0 0; }
+footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padding: 24px 16px 40px; }
+footer a { color: var(--rust); }
+</style>
+<script data-goatcounter="https://experienciasimone.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script src="preguntas.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="../" aria-label="Simoné">
+      <img class="l-light" src="../img/logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+      <img class="l-dark" src="../img/logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
+    </a>
+    <span class="anon"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm-3 8V7a3 3 0 0 1 6 0v3Z"/></svg>Anónimo</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tree-box" aria-hidden="true">
+    <svg class="tree" viewBox="0 0 180 150">
+      <g class="stage on" id="s0"><ellipse cx="90" cy="142" rx="70" ry="6" fill="var(--line)"/><path d="M90 138c-10 4-22 3-30 8M90 138c10 4 22 3 30 8M90 138c0 4-4 8-6 10" stroke="var(--bark)" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+      <g class="stage" id="s1"><path d="M82 140c3-20 2-40 0-62h16c-2 22-3 42 0 62Z" fill="var(--bark)"/><path d="M89 82c-8-10-20-14-30-14M91 82c8-10 20-14 30-14M90 80c0-12 0-20 0-28" stroke="var(--bark)" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <g class="stage" id="s2"><circle cx="58" cy="62" r="22" fill="var(--leaf)"/><circle cx="122" cy="62" r="22" fill="var(--leaf)"/><circle cx="90" cy="44" r="30" fill="var(--leaf)" opacity=".92"/><circle cx="72" cy="38" r="16" fill="var(--leaf)" opacity=".85"/><circle cx="110" cy="40" r="16" fill="var(--leaf)" opacity=".85"/></g>
+      <g class="stage" id="s3"><path d="M84 132c6-4-4-10 2-14s-4-10 2-14" stroke="var(--magenta)" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="66" cy="70" r="3" fill="var(--magenta)"/><circle cx="116" cy="56" r="3" fill="var(--magenta)"/></g>
+      <g class="stage" id="s4"><circle cx="70" cy="50" r="5" fill="var(--heart)"/><circle cx="104" cy="34" r="5" fill="var(--rust)"/><circle cx="118" cy="66" r="5" fill="var(--heart)"/><path d="M134 24l6-4 6 4M38 30l6-4 6 4" stroke="var(--olive)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+    </svg>
+  </div>
+  <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+  <section class="screen on" id="intro">
+    <p class="eyebrow">El Árbol · Radiografía de una organización</p>
+    <h1>Así crece tu organización, vista por quienes la viven.</h1>
+    <p class="lead">Son 12 preguntas en cuatro partes: el tronco, las hojas, los parásitos y los habitantes del árbol. Toma unos 7 minutos.</p>
+    <div class="card">
+      <p><b>Es anónimo.</b> No te pedimos nombre, correo ni teléfono. Las respuestas se leen siempre en grupo, nunca de forma individual.</p>
+      <label class="field" id="code-field">Código de tu empresa
+        <input type="text" id="code" maxlength="20" autocomplete="off" placeholder="Lo entrega Simoné">
+      </label>
+      <p style="font-weight:700;font-size:.9375rem;margin-top:18px">¿En qué grupo trabajas?</p>
+      <div class="groups" id="groups"></div>
+      <p class="msg" id="intro-msg" role="alert"></p>
+    </div>
+    <div class="nav"><span></span><button class="btn" id="start">Empezar</button></div>
+  </section>
+
+  <div id="parts"></div>
+
+  <section class="screen" id="done">
+    <p class="eyebrow">Gracias</p>
+    <h1>Tu parte del árbol ya está sembrada.</h1>
+    <p class="lead">Tus respuestas se suman a las de tu equipo. Esto es lo que tú viste hoy:</p>
+    <dl class="card summary" id="summary"></dl>
+    <p class="msg" id="send-msg" role="status"></p>
+  </section>
+</main>
+
+<footer>Simoné · Desarrollo humano a través del arte · <a href="../privacidad/">Tratamiento de datos</a></footer>
+
+<script>
+(function () {
+  var A = window.ARBOL, P = A.partes;
+  var qs = new URLSearchParams(location.search);
+  var codigo = (qs.get("e") || "").toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 20);
+  var medicion = A.mediciones[qs.get("m")] ? qs.get("m") : "base";
+  var state = { grupo: "", r: {} };
+  var sid = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  var $ = function (id) { return document.getElementById(id); };
+  var codeIn = $("code");
+  if (codigo) { codeIn.value = codigo; $("code-field").style.display = "none"; }
+
+  A.grupos.forEach(function (g) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = g; b.setAttribute("aria-pressed", "false");
+    b.onclick = function () { state.grupo = g; [].forEach.call($("groups").children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); };
+    $("groups").appendChild(b);
+  });
+
+  function stage(n) {
+    for (var i = 1; i <= 4; i++) $("s" + i).classList.toggle("on", i <= n);
+    [].forEach.call(document.querySelectorAll(".progress span"), function (s, i) { s.classList.toggle("on", i < n); });
+  }
+  function show(id) {
+    [].forEach.call(document.querySelectorAll(".screen"), function (s) { s.classList.toggle("on", s.id === id); });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  P.forEach(function (parte, pi) {
+    var sec = document.createElement("section"); sec.className = "screen"; sec.id = "p" + pi;
+    var h = '<p class="eyebrow">Parte ' + (pi + 1) + ' de 4</p><h2>' + parte.nombre + '</h2><p class="lead">' + parte.sub + '</p>';
+    parte.preguntas.forEach(function (q) {
+      h += '<div class="card q" data-q="' + q.id + '"><h3>' + q.titulo + '</h3><p class="hint">' + q.texto + '</p>';
+      if (q.escala) {
+        h += '<div class="scale">';
+        for (var v = 1; v <= q.escala; v++) h += '<button type="button" aria-pressed="false" data-v="' + v + '" aria-label="' + v + ' de ' + q.escala + '">' + v + '</button>';
+        h += '</div><div class="scale-ends" style="max-width:' + (q.escala * 52) + 'px"><span>' + q.extremos[0] + '</span><span>' + q.extremos[1] + '</span></div>';
+      } else {
+        h += '<div class="chips">' + q.opciones.map(function (o) { return '<button type="button" class="chip" aria-pressed="false">' + o + '</button>'; }).join("") + '</div>';
+        h += '<p class="count" style="margin-top:10px"><span>0</span> de ' + q.max + '</p>';
+      }
+      h += '</div>';
+    });
+    h += '<p class="msg" role="alert"></p><div class="nav"><button class="btn ghost" data-back>Atrás</button><button class="btn" data-next>' + (pi === P.length - 1 ? "Enviar" : "Siguiente") + '</button></div>';
+    sec.innerHTML = h;
+    $("parts").appendChild(sec);
+
+    parte.preguntas.forEach(function (q) {
+      var box = sec.querySelector('[data-q="' + q.id + '"]');
+      if (q.escala) {
+        [].forEach.call(box.querySelectorAll(".scale button"), function (b) {
+          b.onclick = function () { state.r[q.id] = +b.dataset.v; [].forEach.call(box.querySelectorAll(".scale button"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); };
+        });
+      } else {
+        state.r[q.id] = [];
+        var chips = box.querySelectorAll(".chip");
+        [].forEach.call(chips, function (c) {
+          c.onclick = function () {
+            var sel = state.r[q.id], o = c.textContent, i = sel.indexOf(o);
+            if (i >= 0) sel.splice(i, 1); else if (sel.length < q.max) sel.push(o);
+            [].forEach.call(chips, function (x) {
+              var on = sel.indexOf(x.textContent) >= 0;
+              x.setAttribute("aria-pressed", on ? "true" : "false");
+              x.disabled = !on && sel.length >= q.max;
+            });
+            box.querySelector(".count span").textContent = sel.length;
+            sec.querySelector(".msg").textContent = "";
+          };
+        });
+      }
+    });
+
+    sec.querySelector("[data-back]").onclick = function () { stage(pi); show(pi === 0 ? "intro" : "p" + (pi - 1)); };
+    sec.querySelector("[data-next]").onclick = function () {
+      var falta = parte.preguntas.filter(function (q) { return q.escala ? !state.r[q.id] : !state.r[q.id].length; });
+      var msg = sec.querySelector(".msg");
+      if (falta.length) { msg.textContent = "Falta responder: " + falta.map(function (q) { return q.titulo; }).join(", ") + "."; return; }
+      msg.textContent = "";
+      stage(pi + 1);
+      if (pi < P.length - 1) show("p" + (pi + 1)); else enviar();
+    };
+  });
+
+  $("start").onclick = function () {
+    var c = codeIn.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+    if (c.length < 3) { $("intro-msg").textContent = "Escribe el código de tu empresa."; return; }
+    if (!state.grupo) { $("intro-msg").textContent = "Elige el grupo en el que trabajas."; return; }
+    codigo = c; $("intro-msg").textContent = "";
+    var k = "arbol-" + codigo + "-" + medicion;
+    try { if (localStorage.getItem(k)) { $("intro-msg").textContent = "Desde este dispositivo ya se respondió esta medición. Gracias."; return; } } catch (e) {}
+    show("p0");
+  };
+
+  function enviar() {
+    var dl = "";
+    P.forEach(function (p) { p.preguntas.forEach(function (q) {
+      var v = state.r[q.id];
+      dl += "<dt>" + q.titulo + "</dt><dd>" + (q.escala ? v + " de " + q.escala : v.join(" · ")) + "</dd>";
+    }); });
+    $("summary").innerHTML = dl;
+    show("done");
+    var payload = { clave: A.clave, tipo: "arbol", id: sid, codigo: codigo, medicion: medicion, grupo: state.grupo, respuestas: state.r };
+    fetch(A.endpoint, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) })
+      .then(function () { $("send-msg").textContent = "Respuestas enviadas."; try { localStorage.setItem("arbol-" + codigo + "-" + medicion, "1"); } catch (e) {} })
+      .catch(function () { $("send-msg").textContent = "No pudimos enviar tus respuestas. Revisa tu conexión y vuelve a intentarlo."; });
+    try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: "arbol-respuesta", title: "Árbol: respuesta enviada", event: true }); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Resultados de El Árbol · Simoné</title>
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Lato:wght@400;700&display=swap">
+<style>
+:root { --cream:#F6F0E2; --paper:#FCF9F2; --olive:#363A12; --olive-soft:#5C6132; --rust:#8A3300; --heart:#F2A03D; --magenta:#BE1A82; --line:#DCD3BC; --leaf:#6E8B2E; --bark:#7A5230; --bar:#6E8B2E; --bar-neg:#B4472A; --logo-light:block; --logo-dark:none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --magenta:#E764B3; --line:#3B3F24; --leaf:#9DBB55; --bar:#9DBB55; --bar-neg:#E8895A; --logo-light:none; --logo-dark:block; color-scheme: dark; } }
+:root[data-theme="dark"] { --cream:#1B1D0D; --paper:#24271A; --olive:#EFE9D8; --olive-soft:#C2BEA6; --rust:#E8895A; --magenta:#E764B3; --line:#3B3F24; --leaf:#9DBB55; --bar:#9DBB55; --bar-neg:#E8895A; --logo-light:none; --logo-dark:block; color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--cream); color: var(--olive); font: 16px/1.5 "Lato", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: "Montserrat", Arial, sans-serif; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+header { border-bottom: 1px solid var(--line); padding: 12px 0; }
+header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.logo img { height: 34px; width: auto; max-width: none; display: block; }
+.logo .l-light { display: var(--logo-light); } .logo .l-dark { display: var(--logo-dark); }
+.live { display: inline-flex; align-items: center; gap: 8px; font-family: "Montserrat", Arial, sans-serif; font-size: .8125rem; font-weight: 600; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.live.on .dot { background: #3BA55C; animation: pulse 2s infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .live.on .dot { animation: none; } }
+.eyebrow { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: var(--rust); }
+.access { max-width: 520px; margin: 48px auto; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 12px; }
+.access label { display: grid; gap: 4px; font-weight: 700; font-size: .9375rem; }
+input, select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--cream); color: var(--olive); }
+.btn { font-family: "Montserrat", Arial, sans-serif; font-weight: 600; padding: 12px 22px; border-radius: 999px; border: 2px solid var(--olive); background: var(--olive); color: var(--cream); cursor: pointer; font-size: .9375rem; }
+.btn.ghost { background: transparent; color: var(--olive); }
+.msg { color: var(--rust); font-size: .9375rem; min-height: 1.2em; }
+.top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: end; margin: 26px 0 18px; }
+.top h1 { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem); margin-top: 6px; }
+.filters { display: grid; gap: 10px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { font: inherit; font-size: .875rem; font-weight: 700; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--olive); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--olive); color: var(--cream); border-color: var(--olive); }
+.seg button small { font-weight: 400; opacity: .8; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: .875rem; }
+.kpis { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.kpi { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.kpi b { font-family: "Montserrat", Arial, sans-serif; font-size: 2rem; line-height: 1; }
+.kpi span { color: var(--olive-soft); font-size: .875rem; }
+.meter { height: 12px; border-radius: 999px; background: var(--line); position: relative; overflow: visible; margin-top: 6px; }
+.meter i { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--rust); }
+.meter i.ok { background: #3BA55C; }
+.meter em { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--olive); }
+.part { margin-top: 30px; }
+.part-head { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--olive); margin-bottom: 14px; }
+.part-head svg { width: 36px; height: 36px; flex: none; }
+.part-head h2 { font-size: 1.375rem; }
+.part-head p { color: var(--olive-soft); font-size: .9375rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
+.q { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+.q h3 { font-size: 1.0625rem; margin-bottom: 10px; }
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.bars li { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 4px 10px; align-items: center; font-size: .875rem; }
+.bars .lbl { overflow-wrap: anywhere; }
+.bars .pct { text-align: right; font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bars .track { grid-column: 1 / -1; height: 9px; border-radius: 6px; background: color-mix(in srgb, var(--line) 70%, transparent); position: relative; }
+.bars .fill { position: absolute; inset: 0 auto 0 0; border-radius: 6px; background: var(--bar); transition: width .5s ease; }
+.bars li.neg .fill { background: var(--bar-neg); }
+.bars li.neg .lbl::after { content: " · alerta"; color: var(--bar-neg); font-size: .75rem; font-weight: 700; }
+.bars .prev { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--olive); }
+.bars .delta { font-size: .75rem; color: var(--olive-soft); margin-left: 4px; }
+.scale-big { display: flex; align-items: baseline; gap: 8px; }
+.scale-big b { font-family: "Montserrat", Arial, sans-serif; font-size: 2.4rem; line-height: 1; }
+.dist { display: flex; align-items: flex-end; gap: 4px; height: 70px; margin-top: 12px; }
+.dist div { flex: 1; background: var(--leaf); border-radius: 4px 4px 0 0; min-height: 2px; position: relative; }
+.dist-l { display: flex; gap: 4px; font-size: .75rem; color: var(--olive-soft); }
+.dist-l span { flex: 1; text-align: center; }
+.empty { padding: 30px; text-align: center; color: var(--olive-soft); background: var(--paper); border: 1px dashed var(--line); border-radius: 14px; }
+.legend { font-size: .8125rem; color: var(--olive-soft); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+.legend i { display: inline-block; width: 12px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padding: 30px 16px; }
+@media (max-width: 900px) { .top { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 420px) { .grid { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr; } }
+@media print { .filters, .live, #access, .noprint { display: none !important; } body { background: #fff; } .q, .kpi { break-inside: avoid; } }
+</style>
+<script src="../preguntas.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="../../" aria-label="Simoné">
+      <img class="l-light" src="../../img/logo.png" alt="Simoné" width="1242" height="309">
+      <img class="l-dark" src="../../img/logo-claro.png" alt="Simoné" width="1242" height="309">
+    </a>
+    <span class="live" id="live"><span class="dot"></span><span id="live-txt">Sin conexión</span></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="access" id="access">
+    <p class="eyebrow">El Árbol · Resultados en vivo</p>
+    <h1 style="font-size:1.5rem">Ver los resultados de una empresa</h1>
+    <label>Código de la empresa <input id="in-code" autocomplete="off" style="text-transform:uppercase"></label>
+    <label>Clave de resultados <input id="in-key" type="password" autocomplete="off"></label>
+    <label>Personas en la empresa <input id="in-total" type="number" min="1" inputmode="numeric" placeholder="Para calcular la participación"></label>
+    <p class="msg" id="access-msg" role="alert"></p>
+    <button class="btn" id="go">Ver resultados</button>
+  </section>
+
+  <div id="board" hidden>
+    <div class="top">
+      <div>
+        <p class="eyebrow">El Árbol · Radiografía de una organización</p>
+        <h1 id="title">Resultados</h1>
+      </div>
+      <div class="filters">
+        <div class="seg" id="f-med" aria-label="Medición"></div>
+        <div class="seg" id="f-grp" aria-label="Grupo"></div>
+        <div class="row noprint"><label for="f-cmp">Comparar con</label><select id="f-cmp"></select>
+          <button class="btn ghost" id="print" style="padding:6px 14px">Imprimir o guardar PDF</button></div>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div id="parts"></div>
+  </div>
+</main>
+<footer>Las respuestas son anónimas. Un grupo con menos de 5 respuestas no se muestra, para proteger a quienes participaron.</footer>
+
+<script>
+(function () {
+  var A = window.ARBOL, $ = function (id) { return document.getElementById(id); };
+  var qs = new URLSearchParams(location.search);
+  var DEMO = qs.get("demo") === "1";
+  var cfg = { code: (qs.get("e") || "").toUpperCase(), key: qs.get("k") || "", total: +qs.get("n") || 0 };
+  var rows = [], view = { med: "base", grp: "Todos", cmp: "" }, timer = null;
+  $("in-code").value = cfg.code; $("in-total").value = cfg.total || "";
+
+  var ICON = {
+    tronco: '<svg viewBox="0 0 36 36"><path d="M15 34c1-8 1-16 0-22h6c-1 6-1 14 0 22Z" fill="var(--bark)"/><path d="M18 14c-3-4-8-6-12-6M18 14c3-4 8-6 12-6" stroke="var(--bark)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+    hojas: '<svg viewBox="0 0 36 36"><circle cx="11" cy="16" r="8" fill="var(--leaf)"/><circle cx="25" cy="16" r="8" fill="var(--leaf)"/><circle cx="18" cy="10" r="9" fill="var(--leaf)" opacity=".9"/><path d="M18 34V18" stroke="var(--bark)" stroke-width="3"/></svg>',
+    parasitos: '<svg viewBox="0 0 36 36"><path d="M15 34c1-8 1-16 0-22h6c-1 6-1 14 0 22Z" fill="var(--bark)"/><path d="M14 32c5-3-3-7 2-10s-3-7 2-10" stroke="var(--magenta)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>',
+    identidad: '<svg viewBox="0 0 36 36"><circle cx="18" cy="14" r="10" fill="var(--leaf)"/><circle cx="13" cy="12" r="3" fill="var(--heart)"/><circle cx="23" cy="16" r="3" fill="var(--rust)"/><path d="M18 34V22" stroke="var(--bark)" stroke-width="3"/></svg>'
+  };
+
+  function demoRows() {
+    var out = [], rnd = function (a) { return a[Math.floor(Math.random() * a.length)]; };
+    ["base", "6m"].forEach(function (m, mi) {
+      for (var i = 0; i < (mi ? 120 : 150); i++) {
+        var r = {};
+        A.partes.forEach(function (p) { p.preguntas.forEach(function (q) {
+          if (q.escala) { r[q.id] = Math.max(1, Math.min(q.escala, Math.round(q.escala * (0.45 + mi * 0.15) + (Math.random() - 0.5) * q.escala * 0.6))); return; }
+          var pool = q.opciones.slice(), pick = [];
+          while (pick.length < q.max) { var o = rnd(pool); if (q.neg && q.neg.indexOf(o) >= 0 && mi && Math.random() < .5) continue; pool.splice(pool.indexOf(o), 1); pick.push(o); }
+          r[q.id] = pick;
+        }); });
+        out.push({ medicion: m, grupo: rnd(A.grupos.concat(["Operativos", "Operativos"])), r: r });
+      }
+    });
+    return out;
+  }
+
+  function load() {
+    if (DEMO) { if (!rows.length) rows = demoRows(); render(); setLive(true, "Demostración"); return; }
+    var url = A.endpoint + "?arbol=" + encodeURIComponent(cfg.code) + "&k=" + encodeURIComponent(cfg.key);
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { stop(); $("board").hidden = true; $("access").hidden = false; $("access-msg").textContent = "El código o la clave no son correctos."; return; }
+      rows = d.filas || []; render(); setLive(true, "En vivo · " + new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }));
+    }).catch(function () { setLive(false, "Sin conexión, reintentando"); });
+  }
+  function setLive(on, t) { $("live").classList.toggle("on", on); $("live-txt").textContent = t; }
+  function stop() { if (timer) clearInterval(timer); timer = null; }
+
+  $("go").onclick = function () {
+    cfg.code = $("in-code").value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); cfg.key = $("in-key").value; cfg.total = +$("in-total").value || 0;
+    if (!DEMO && (!cfg.code || !cfg.key)) { $("access-msg").textContent = "Escribe el código y la clave."; return; }
+    $("access").hidden = true; $("board").hidden = false; $("title").textContent = DEMO ? "Empresa de demostración" : "Empresa " + cfg.code;
+    load(); stop(); timer = setInterval(load, 15000);
+  };
+  $("print").onclick = function () { window.print(); };
+  if (DEMO) { cfg.total = cfg.total || 160; $("go").onclick(); }
+
+  function seg(el, items, cur, onpick) {
+    el.innerHTML = "";
+    items.forEach(function (it) {
+      var b = document.createElement("button"); b.type = "button"; b.innerHTML = it.label; b.setAttribute("aria-pressed", it.v === cur ? "true" : "false");
+      b.onclick = function () { onpick(it.v); render(); }; el.appendChild(b);
+    });
+  }
+  function subset(med, grp) { return rows.filter(function (x) { return x.medicion === med && (grp === "Todos" || x.grupo === grp); }); }
+  function freq(list, q) {
+    var c = {}; q.opciones.forEach(function (o) { c[o] = 0; });
+    list.forEach(function (x) { (x.r[q.id] || []).forEach(function (o) { if (o in c) c[o]++; }); });
+    return c;
+  }
+  function pct(n, d) { return d ? Math.round(n / d * 100) : 0; }
+
+  function render() {
+    var meds = Object.keys(A.mediciones).filter(function (m) { return rows.some(function (x) { return x.medicion === m; }); });
+    if (meds.length && meds.indexOf(view.med) < 0) view.med = meds[0];
+    seg($("f-med"), (meds.length ? meds : ["base"]).map(function (m) { return { v: m, label: A.mediciones[m] }; }), view.med, function (v) { view.med = v; if (view.cmp === v) view.cmp = ""; });
+    var all = subset(view.med, "Todos");
+    seg($("f-grp"), ["Todos"].concat(A.grupos).map(function (g) { var n = g === "Todos" ? all.length : all.filter(function (x) { return x.grupo === g; }).length; return { v: g, label: g + " <small>" + n + "</small>" }; }), view.grp, function (v) { view.grp = v; });
+    var sel = $("f-cmp"); sel.innerHTML = '<option value="">Ninguna</option>' + meds.filter(function (m) { return m !== view.med; }).map(function (m) { return '<option value="' + m + '"' + (view.cmp === m ? " selected" : "") + ">" + A.mediciones[m] + "</option>"; }).join("");
+    sel.onchange = function () { view.cmp = sel.value; render(); };
+
+    var cur = subset(view.med, view.grp), prev = view.cmp ? subset(view.cmp, view.grp) : null;
+    var part = pct(all.length, cfg.total), ok = part >= A.meta;
+    var esc = A.partes[3].preguntas[1], val = A.partes[3].preguntas[2];
+    var avg = function (l, id) { var v = l.map(function (x) { return x.r[id]; }).filter(Boolean); return v.length ? (v.reduce(function (a, b) { return a + b; }, 0) / v.length) : 0; };
+    $("kpis").innerHTML =
+      '<div class="kpi"><span>Participación de la empresa</span><b>' + (cfg.total ? part + " %" : all.length) + '</b><span>' + all.length + (cfg.total ? " de " + cfg.total + " personas · meta " + A.meta + " %" : " respuestas") + '</span>' +
+      (cfg.total ? '<div class="meter"><i class="' + (ok ? "ok" : "") + '" style="width:' + Math.min(100, part) + '%"></i><em style="left:' + A.meta + '%"></em></div>' : "") + '</div>' +
+      '<div class="kpi"><span>Respuestas en esta vista</span><b>' + cur.length + '</b><span>' + view.grp + '</span></div>' +
+      '<div class="kpi"><span>Pertenencia (1 a 5)</span><b>' + (cur.length >= A.minimoGrupo ? avg(cur, esc.id).toFixed(1) : "–") + '</b><span>' + (prev && prev.length >= A.minimoGrupo ? "Antes: " + avg(prev, esc.id).toFixed(1) : "Me escuchan y encajo") + '</span></div>' +
+      '<div class="kpi"><span>Reconocimiento (1 a 10)</span><b>' + (cur.length >= A.minimoGrupo ? avg(cur, val.id).toFixed(1) : "–") + '</b><span>' + (prev && prev.length >= A.minimoGrupo ? "Antes: " + avg(prev, val.id).toFixed(1) : "Mi trabajo es valorado") + '</span></div>';
+
+    if (cur.length < A.minimoGrupo) { $("parts").innerHTML = '<div class="empty">' + (cur.length ? "Este grupo tiene " + cur.length + " respuesta" + (cur.length > 1 ? "s" : "") + ". Se muestra desde " + A.minimoGrupo + ", para proteger el anonimato." : "Todavía no hay respuestas en esta vista. Se actualiza sola cada 15 segundos.") + "</div>"; return; }
+    var usePrev = prev && prev.length >= A.minimoGrupo;
+    var h = "";
+    A.partes.forEach(function (p) {
+      h += '<section class="part"><div class="part-head">' + ICON[p.id] + '<div><h2>' + p.nombre + '</h2><p>' + p.sub + '</p></div></div><div class="grid">';
+      p.preguntas.forEach(function (q) {
+        h += '<div class="q"><h3>' + q.titulo + '</h3>';
+        if (q.escala) {
+          var vals = cur.map(function (x) { return x.r[q.id]; }).filter(Boolean), d = [], mx = 0;
+          for (var i = 1; i <= q.escala; i++) { d[i] = vals.filter(function (v) { return v === i; }).length; mx = Math.max(mx, d[i]); }
+          h += '<div class="scale-big"><b>' + avg(cur, q.id).toFixed(1) + '</b><span>de ' + q.escala + (usePrev ? ' · antes ' + avg(prev, q.id).toFixed(1) : "") + '</span></div><div class="dist">';
+          for (i = 1; i <= q.escala; i++) h += '<div title="' + d[i] + ' personas" style="height:' + (mx ? d[i] / mx * 100 : 0) + '%"></div>';
+          h += '</div><div class="dist-l">'; for (i = 1; i <= q.escala; i++) h += "<span>" + i + "</span>"; h += "</div>";
+        } else {
+          var f = freq(cur, q), fp = usePrev ? freq(prev, q) : null;
+          var items = q.opciones.map(function (o) { return { o: o, p: pct(f[o], cur.length), pp: fp ? pct(fp[o], prev.length) : null }; }).sort(function (a, b) { return b.p - a.p; });
+          h += '<ul class="bars">' + items.map(function (it) {
+            var neg = q.todasNeg || (q.neg && q.neg.indexOf(it.o) >= 0);
+            var dl = it.pp === null ? "" : '<span class="delta">' + (it.p - it.pp > 0 ? "+" : "") + (it.p - it.pp) + "</span>";
+            return '<li class="' + (neg ? "neg" : "") + '"><span class="lbl">' + it.o + '</span><span class="pct">' + it.p + "%" + '</span><span class="track"><span class="fill" style="width:' + it.p + '%"></span>' + (it.pp !== null ? '<span class="prev" style="left:calc(' + it.pp + '% - 1px)" title="Antes: ' + it.pp + '%"></span>' : "") + '</span>' + (dl ? '<span style="grid-column:1/-1;margin-top:-4px">' + dl.replace('class="delta">', 'class="delta">Cambio: ') + ' puntos</span>' : "") + "</li>";
+          }).join("") + "</ul>";
+        }
+        h += "</div>";
+      });
+      h += "</div></section>";
+    });
+    h += '<p class="legend"><span><i style="background:var(--bar)"></i>Porcentaje de personas que la eligieron</span><span><i style="background:var(--bar-neg)"></i>Señal de alerta</span>' + (usePrev ? '<span><i style="background:var(--olive);width:3px"></i>Medición anterior</span>' : "") + "</p>";
+    $("parts").innerHTML = h;
+  }
+})();
+</script>
+</body>
+</html>
