@@ -357,10 +357,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
 .moves b { font-family: var(--display); font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--olive-soft); font-weight: 600; }
 .moves h3 { font-size: var(--step-1); }
 .moves p { color: var(--olive-soft); font-size: 1rem; }
-.method-photos { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; margin-top: clamp(32px, 5vw, 52px); }
-.method-photos img { width: 100%; height: clamp(160px, 22vw, 280px); object-fit: cover; border-radius: 10px; }
+.method-photos { display: grid; grid-template-columns: 1.5fr 0.75fr 1.15fr; gap: 10px; margin-top: clamp(32px, 5vw, 52px); }
+.method-photos img { width: 100%; height: clamp(200px, 28vw, 380px); object-fit: cover; border-radius: 10px; }
+.method-photos img:nth-child(2) { object-position: center 40%; }
+.method-photos img:nth-child(3) { object-position: 45% center; }
 @media (max-width: 860px) { .moves { grid-template-columns: 1fr; } }
-@media (max-width: 620px) { .method-photos { grid-template-columns: 1fr 1fr; } .method-photos img:first-child { grid-column: span 2; } }
+@media (max-width: 620px) { .method-photos { grid-template-columns: 1fr 1fr; } .method-photos img:first-child { grid-column: span 2; height: 240px; } .method-photos img { height: 220px; } }
 
 .proof-clients { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--display); font-weight: 600; }
 .proof-clients span { color: var(--olive-soft); font-family: var(--body); font-weight: 400; }
@@ -560,9 +562,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
       <p style="margin-top:32px;font-family:var(--display);font-weight:600">Algunas experiencias de nuestro repertorio</p>
       <ul class="chips" style="margin-top:12px"><li>Retratos dirigidos</li><li>Pájaros: encontrando la palabra justa</li><li>Seis sombreros para pensar</li><li>El árbol, radiografía de una organización</li><li>Mapa de Johari</li><li>Los tres músicos</li><li>El viaje del cliente</li><li>El espejo: confianza</li></ul>
       <div class="method-photos">
-        <img src="../img/galeria-6.jpg" alt="Dos participantes pintan juntas un paisaje en un mismo papel durante un taller de trabajo en equipo" width="1200" height="800" loading="lazy">
-        <img src="../img/galeria-3.jpg" alt="Dos participantes muestran las siluetas de papel que dibujaron en una sesión de comunicación" width="1200" height="800" loading="lazy">
-        <img src="../img/galeria-1.jpg" alt="Una mediadora de Simoné acompaña a un participante mientras pinta en acuarela" width="1200" height="800" loading="lazy">
+        <img src="../img/lid-arboles.jpg" alt="Un grupo de líderes sonríe mostrando los árboles que pintaron en acuarela durante un taller de Simoné" width="1400" height="1028" loading="lazy">
+        <img src="../img/lid-mediadora.jpg" alt="Una mediadora de Simoné abre la sesión frente a un grupo sentado en mesas en forma de U" width="1050" height="1400" loading="lazy">
+        <img src="../img/lid-siluetas.jpg" alt="Dos participantes muestran sonrientes las siluetas de papel que dibujaron sobre sí mismos" width="1400" height="933" loading="lazy">
       </div>
     </div>
   </section>
