@@ -296,6 +296,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
 .crumbs { font-size: 0.875rem; color: var(--olive-soft); padding-top: 20px; }
 .crumbs a { text-decoration: none; color: var(--rust); }
 .crumbs a:hover { text-decoration: underline; }
+.crumbs-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding-top: 20px; }
+.crumbs-row .crumbs { padding-top: 0; }
+.btn-back { padding: 8px 18px; font-size: 0.9375rem; border-width: 1.5px; }
+.btn-back:hover { color: var(--rust); border-color: var(--rust); }
+.close .back-btn { margin-top: 14px; padding: 10px 20px; font-size: 0.9375rem; }
 .topic-hero { padding-block: clamp(28px, 4vw, 48px) clamp(48px, 7vw, 88px); }
 .topic-hero h1 { font-size: clamp(2rem, 1.3rem + 2.8vw, 3.3rem); font-weight: 600; letter-spacing: -0.015em; }
 .topic-hero h1 em { font-style: normal; color: var(--rust); }
@@ -417,7 +422,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
 
 <main>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Ruta"><a href="../">Inicio</a> › <a href="../#que-hacemos">Qué hacemos</a> › Liderazgo y habilidades blandas</nav>
+    <div class="crumbs-row">
+      <nav class="crumbs" aria-label="Ruta"><a href="../">Inicio</a> › <a href="../#que-hacemos">Qué hacemos</a> › Liderazgo y habilidades blandas</nav>
+      <a class="btn btn-ghost btn-back" href="../"><span aria-hidden="true">←</span> Volver al inicio</a>
+    </div>
   </div>
 
   <section class="topic-hero">
@@ -643,6 +651,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
           <a class="btn btn-wa" href="../diagnostico/?origen=pagina-liderazgo">Haz el diagnóstico gratis</a>
           <a class="btn btn-ghost wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Agenda por WhatsApp</a>
         </div>
+        <a class="btn btn-ghost back-btn" href="../"><span aria-hidden="true">←</span> Volver al inicio</a>
       </div>
       <div class="contact">
         <div><b>WhatsApp</b><a class="wa-link" href="https://wa.me/573217738039" target="_blank" rel="noopener">+57 321 773 8039</a></div>
