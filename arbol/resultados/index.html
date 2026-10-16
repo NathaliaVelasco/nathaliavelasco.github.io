@@ -109,6 +109,26 @@ input, select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 
 .bx-p { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-size: 1.125rem; }
 .bx-d { font-size: .6875rem; color: #5C6132; }
 .q.wide { grid-column: 1 / -1; }
+.forest { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.forest-chart, .forest-read { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; gap: 18px; align-items: center; min-width: 0; }
+.forest-read { display: grid; gap: 8px; align-content: start; }
+.forest-read h3 { font-size: 1.375rem; }
+.forest-read .note { font-size: .875rem; color: var(--olive-soft); }
+.donut.big { width: 150px; height: 150px; }
+.forest-leg { display: grid; gap: 8px; flex: 1; min-width: 0; }
+.forest-leg div { display: grid; grid-template-columns: 12px 1fr auto; gap: 0 8px; align-items: baseline; }
+.forest-leg i { width: 12px; height: 12px; border-radius: 3px; }
+.forest-leg span { grid-column: 2; font-size: .8125rem; color: var(--olive-soft); }
+.forest-leg em { font-style: normal; font-family: "Montserrat", Arial, sans-serif; font-weight: 700; grid-row: 1; grid-column: 3; }
+.climate { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cl { background: var(--paper); border: 1px solid var(--line); border-left: 6px solid #2F8A4A; border-radius: 14px; padding: 16px; display: grid; gap: 4px; }
+.cl.warn { border-left-color: var(--bar-neg); }
+.cl b { font-family: "Montserrat", Arial, sans-serif; font-size: 1.75rem; }
+.cl p { font-size: .9375rem; color: var(--olive-soft); }
+.dweller { display: grid; grid-template-columns: 220px 1fr; gap: 20px; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.dweller img { width: 100%; background: #fff; border-radius: 10px; }
+.dweller h3 { font-size: 1.375rem; margin: 4px 0 8px; }
+@media (max-width: 860px) { .forest, .climate { grid-template-columns: 1fr; } .forest-chart { flex-direction: column; } .dweller { grid-template-columns: 1fr; } }
 .empty { padding: 30px; text-align: center; color: var(--olive-soft); background: var(--paper); border: 1px dashed var(--line); border-radius: 14px; }
 .legend { font-size: .8125rem; color: var(--olive-soft); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
 .legend i { display: inline-block; width: 12px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
@@ -117,7 +137,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr; } }
 @media print { .filters, .live, #access, .noprint { display: none !important; } body { background: #fff; } .q, .kpi { break-inside: avoid; } }
 </style>
-<script src="../preguntas.js?v=4"></script>
+<script src="../preguntas.js?v=5"></script>
 </head>
 <body>
 <header>
@@ -264,6 +284,44 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
     var q = qid(id), f = freq(list, q);
     return q.opciones.map(function (o) { return { o: o, p: pct(f[o], list.length) }; }).sort(function (a, b) { return b.p - a.p; }).slice(0, n);
   }
+  function bosque(list) {
+    var AQ = A.arquetipos; if (!AQ) return "";
+    var cnt = {}, tot = 0;
+    AQ.arboles.forEach(function (t) { cnt[t.id] = 0; });
+    list.forEach(function (x) { Object.keys(AQ.mapa).forEach(function (q) { (x.r[q] || []).forEach(function (o) { var t = AQ.mapa[q][o]; if (t) { cnt[t]++; tot++; } }); }); });
+    if (!tot) return "";
+    var arr = AQ.arboles.map(function (t) { return { t: t, p: Math.round(cnt[t.id] / tot * 100) }; }).sort(function (a, b) { return b.p - a.p; });
+    var col = { palma: "var(--rust)", ceiba: "var(--leaf)", guayacan: "var(--heart)", roble: "var(--bark)" };
+    var off = 25, svg = '<svg viewBox="0 0 42 42" class="donut big" aria-hidden="true"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--line)" stroke-width="7"/>';
+    arr.forEach(function (a) { var v = cnt[a.t.id] / tot * 100; svg += '<circle cx="21" cy="21" r="15.915" fill="none" stroke="' + col[a.t.id] + '" stroke-width="7" stroke-dasharray="' + v.toFixed(2) + ' ' + (100 - v).toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '"/>'; off -= v; });
+    svg += "</svg>";
+    var top = arr[0], seg = arr[1];
+    var h = '<section class="part"><div class="part-head">' + ICON.tronco + '<div><h2>El bosque de la organización</h2><p>Cómo se reparte su cultura entre los cuatro árboles nativos.</p></div></div>';
+    h += '<div class="forest"><div class="forest-chart">' + svg + '<div class="forest-leg">' + arr.map(function (a) { return '<div><i style="background:' + col[a.t.id] + '"></i><b>' + a.t.nombre + '</b><span>' + a.t.sub + '</span><em>' + a.p + ' %</em></div>'; }).join("") + '</div></div>';
+    h += '<div class="forest-read"><span class="dn-k">Árbol predominante</span><h3>' + top.t.nombre + ' · ' + top.p + ' %</h3><p><b>Su fuerza:</b> ' + top.t.fuerza + '</p><p><b>Su riesgo:</b> ' + top.t.riesgo + '</p>' +
+      (top.p > 40 ? '<p class="note">Con más del 40 %, este árbol marca el carácter de toda la organización.</p>' : '<p class="note">Ningún árbol supera el 40 %: es un bosque mixto, donde conviven varias culturas. Le sigue de cerca ' + seg.t.nombre + ' (' + seg.p + ' %).</p>') + '</div></div></section>';
+    return h;
+  }
+  function clima(list) {
+    var emo = qid("emociones"), sel = 0, al = 0;
+    list.forEach(function (x) { (x.r.emociones || []).forEach(function (o) { sel++; if (emo.neg.indexOf(o) >= 0) al++; }); });
+    var pa = sel ? Math.round(al / sel * 100) : 0;
+    var avg = function (id) { var v = list.map(function (x) { return x.r[id]; }).filter(Boolean); return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : 0; };
+    var pe = avg("escucha"), re = avg("valorado");
+    var card = function (ok, k, v, msgOk, msgNo) { return '<div class="cl ' + (ok ? "ok" : "warn") + '"><span class="dn-k">' + k + '</span><b>' + v + '</b><p>' + (ok ? msgOk : msgNo) + '</p></div>'; };
+    var h = '<section class="part"><div class="part-head">' + ICON.parasitos + '<div><h2>El clima del árbol</h2><p>Tres señales para saber si el ecosistema está sano.</p></div></div><div class="climate">';
+    h += card(pa <= 30, "Emociones de alerta", pa + " %", "Las emociones de alerta están por debajo del 30 %: el clima emocional es sano.", "Más del 30 % de las emociones son de alerta: el árbol sufre estrés hídrico, por falta de escucha o exceso de presión.");
+    h += card(pe >= 3, "Pertenencia", pe.toFixed(1) + " de 5", "Las personas sienten que su voz cuenta y que encajan en el grupo.", "Por debajo de 3,0: las personas no se sienten vistas ni parte del propósito.");
+    h += card(re >= 6, "Reconocimiento", re.toFixed(1) + " de 10", "Las personas sienten que su trabajo es valorado.", "Por debajo de 6,0: el esfuerzo diario no se está reconociendo.");
+    return h + "</div></section>";
+  }
+  function habitante(list) {
+    var q = qid("animales"), AQ = A.arquetipos; if (!AQ) return "";
+    var it = top(list, "animales", 1)[0]; if (!it || !it.p) return "";
+    var idx = q.opciones.indexOf(it.o), t = it.o.split(" · ");
+    return '<section class="part"><div class="part-head">' + ICON.identidad + '<div><h2>El habitante del árbol</h2><p>El animal con el que más personas se sienten representadas.</p></div></div>' +
+      '<div class="dweller"><img src="../img/animal-' + q.imagenes[idx] + '.jpg?v=2" alt=""><div><span class="dn-k">' + it.p + ' % de las personas</span><h3>' + t[0] + ' · ' + t[1] + '</h3><p>' + AQ.animales[it.o] + '</p></div></div></section>';
+  }
   function resumen(list) {
     var items = [
       ["tronco", "El valor más votado", "valores", 1], ["tronco", "Las dos emociones más votadas", "emociones", 2],
@@ -327,6 +385,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
       h += "</div></section>";
     });
     h += '<p class="legend"><span><i style="background:var(--bar)"></i>Porcentaje de personas que la eligieron</span><span><i style="background:var(--bar-neg)"></i>Señal de alerta</span>' + (usePrev ? '<span><i style="background:var(--olive);width:3px"></i>Medición anterior</span>' : "") + "</p>";
+    h += bosque(cur) + clima(cur) + habitante(cur);
     $("parts").innerHTML = h;
   }
 })();

@@ -58,3 +58,56 @@ window.ARBOL = {
     ]}
   ]
 };
+
+/* Bosque de arquetipos · cada opción suma a un árbol nativo.
+   Las emociones no suman a ningún árbol: miden el clima. Los animales tampoco: tienen su propia lectura. */
+window.ARBOL.arquetipos = {
+  arboles: [
+    { id: "palma", nombre: "Palma de cera", sub: "Resiliencia y altura",
+      fuerza: "Una organización que se mantiene en pie ante las crisis, con metas claras y un tronco firme.",
+      riesgo: "Puede volverse vertical y distante: las decisiones se quedan en la cima y la gente de la base deja de sentirse parte." },
+    { id: "ceiba", nombre: "Ceiba", sub: "Comunidad y refugio",
+      fuerza: "Un tejido humano cálido y leal, donde la colaboración y el cuidado mutuo son el centro.",
+      riesgo: "El exceso de familiaridad puede evitar las conversaciones difíciles y convertir el «somos una familia» en presión informal." },
+    { id: "guayacan", nombre: "Guayacán", sub: "Transformación e innovación",
+      fuerza: "Un entorno vibrante y creativo que se adapta rápido al mercado y florece en los momentos de alta intensidad.",
+      riesgo: "Sin pausas ni procesos claros, los ciclos de alta exigencia se vuelven desgaste: presión constante, ansiedad y agotamiento." },
+    { id: "roble", nombre: "Roble andino", sub: "Estructura y raíz profunda",
+      fuerza: "Orden, procesos estables y una trayectoria que da seguridad y previsibilidad.",
+      riesgo: "El control y la costumbre pueden frenar la agilidad, la empatía entre áreas y la voz de los equipos operativos." }
+  ],
+  mapa: {
+    hitos: { "Expansión y crecimiento": "guayacan", "Superación de una crisis": "palma", "Cambio de liderazgo": "palma",
+      "Lanzamiento de un producto o servicio innovador": "guayacan", "Fusión o adquisición clave": "palma",
+      "Implementación de una política ambiental": "roble", "Reconocimiento público o premio importante": "roble",
+      "Fortalecimiento comercial": "guayacan", "Reestructuración del organigrama": "palma" },
+    valores: { "Honestidad": "roble", "Responsabilidad": "roble", "Responsabilidad social": "ceiba", "Calidad y excelencia": "roble",
+      "Respeto y diversidad": "ceiba", "Trabajo en equipo": "ceiba", "Innovación": "guayacan", "Compromiso": "palma",
+      "Transparencia e integridad": "roble", "Solidaridad": "ceiba", "Profesionalismo": "palma", "Adaptabilidad": "guayacan" },
+    recursos: { "Talento y relaciones humanas": "ceiba", "Tecnología avanzada": "guayacan", "Infraestructura física": "roble",
+      "Procesos eficientes": "roble", "Presupuesto sólido": "palma", "Red de contactos y aliados": "ceiba", "Gestión empresarial y de liderazgo": "palma" },
+    frases: { "«Póngase la camiseta»": "ceiba", "«Todo es para ayer»": "guayacan", "«Siempre se ha hecho así»": "roble",
+      "«Aquí se trabaja bajo presión»": "guayacan", "«Somos una familia»": "ceiba", "«Innovar o morir»": "guayacan",
+      "«El que manda, manda, aunque mande mal»": "palma", "«Árbol que nace torcido nunca endereza»": "roble",
+      "«Todo se puede lograr»": "palma", "«Solo basta con soñarlo para poder crearlo»": "guayacan", "«Nada es imposible»": "palma",
+      "«Aquí trabajamos como un verdadero equipo»": "ceiba", "«El cliente siempre tiene la razón»": "roble" },
+    rituales: { "Reuniones semanales de coordinación": "roble", "Celebración de metas cumplidas": "palma",
+      "Aprendizaje y capacitación continua": "guayacan", "Retroalimentación constructiva": "roble",
+      "Actividades de integración": "ceiba", "Programas de bienestar perfilados": "ceiba" },
+    habitos: { "Chismes o rumores": "ceiba", "Impuntualidad crónica": "guayacan", "Falta de empatía entre áreas": "roble",
+      "Procesos obsoletos o desorganización": "guayacan", "Comunicación agresiva o pasivo-agresiva": "palma",
+      "Resistencia al cambio": "roble", "Falta de comunicación interna": "palma", "Liderazgos autoritarios": "palma" },
+    control: { "Evaluación de desempeño formal": "roble", "Seguimiento diario de tareas": "guayacan", "Retroalimentación 360°": "ceiba",
+      "Vigilancia estricta (cámaras, reportes)": "roble", "Sanciones disciplinarias": "palma", "Despidos continuos y poco justificados": "palma" }
+  },
+  animales: {
+    "Águila · visión estratégica": "El equipo se ve a sí mismo mirando lejos: planea, anticipa y piensa en el largo plazo. Vale la pena preguntar si esa visión baja hasta el día a día.",
+    "Hormiga · persistencia y fuerza": "El equipo se reconoce en el trabajo constante y silencioso. Sostiene la operación, pero puede sentir que su esfuerzo no se ve.",
+    "Búho · observación y análisis": "El equipo se mueve con cautela: observa, analiza y decide con datos. Aporta criterio, aunque a veces le cuesta actuar rápido.",
+    "Camaleón · adaptación rápida": "El equipo sobrevive cambiando de color: se adapta a todo. Es una fortaleza, y también una señal de que el entorno cambia más de lo que el equipo puede asimilar.",
+    "Oso · protección y liderazgo fuerte": "El equipo busca o encarna un liderazgo que protege. Hay cuidado, y también el riesgo de depender de una sola figura fuerte.",
+    "Ardilla · planificación de recursos": "El equipo administra con prudencia el tiempo y los recursos. Hay orden, aunque puede aparecer la sensación de escasez.",
+    "Abeja · jerarquía y disciplina": "El equipo funciona con roles claros y disciplina. La estructura da seguridad; el reto es que no apague la iniciativa propia.",
+    "Zorro · astucia e inteligencia": "El equipo resuelve con ingenio y lectura rápida de las situaciones. Vale la pena mirar si esa astucia nace de la confianza o de la necesidad de protegerse."
+  }
+};
