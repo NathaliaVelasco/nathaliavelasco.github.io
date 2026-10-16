@@ -117,7 +117,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr; } }
 @media print { .filters, .live, #access, .noprint { display: none !important; } body { background: #fff; } .q, .kpi { break-inside: avoid; } }
 </style>
-<script src="../preguntas.js?v=3"></script>
+<script src="../preguntas.js?v=4"></script>
 </head>
 <body>
 <header>
@@ -249,7 +249,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
   function cajones(q, items) {
     return '<div class="boxes">' + items.map(function (it, i) {
       var idx = q.opciones.indexOf(it.o), t = it.o.split(" · ");
-      return '<div class="bx' + (i === 0 && it.p ? " lead" : "") + '"><img src="../img/animal-' + q.imagenes[idx] + '.jpg" alt=""><b>' + t[0] + '</b><span class="bx-p">' + it.p + ' %</span>' + (it.pp !== null ? '<span class="bx-d">' + (it.p - it.pp > 0 ? "+" : "") + (it.p - it.pp) + ' pts</span>' : "") + '</div>';
+      return '<div class="bx' + (i === 0 && it.p ? " lead" : "") + '"><img src="../img/animal-' + q.imagenes[idx] + '.jpg?v=2" alt=""><b>' + t[0] + '</b><span class="bx-p">' + it.p + ' %</span>' + (it.pp !== null ? '<span class="bx-d">' + (it.p - it.pp > 0 ? "+" : "") + (it.p - it.pp) + ' pts</span>' : "") + '</div>';
     }).join("") + '</div>';
   }
   function ranking(q, items) {

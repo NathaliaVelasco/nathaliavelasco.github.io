@@ -75,7 +75,7 @@ footer { text-align: center; font-size: .8125rem; color: var(--olive-soft); padd
 footer a { color: var(--rust); }
 </style>
 <script data-goatcounter="https://experienciasimone.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-<script src="preguntas.js?v=3"></script>
+<script src="preguntas.js?v=4"></script>
 </head>
 <body>
 <header>
@@ -188,7 +188,7 @@ footer a { color: var(--rust); }
         for (var v = 1; v <= q.escala; v++) h += '<button type="button" aria-pressed="false" data-v="' + v + '" aria-label="' + v + ' de ' + q.escala + '">' + v + '</button>';
         h += '</div><div class="scale-ends" style="max-width:' + (q.escala * 52) + 'px"><span>' + q.extremos[0] + '</span><span>' + q.extremos[1] + '</span></div>';
       } else {
-        if (q.imagenes) h += '<div class="animals">' + q.opciones.map(function (o, i) { var t = o.split(" · "); return '<button type="button" class="chip animal" aria-pressed="false" data-o="' + o + '"><img src="img/animal-' + q.imagenes[i] + '.jpg" alt="" width="393" height="282" loading="lazy"><b>' + t[0] + '</b><span>' + (t[1] || "") + '</span></button>'; }).join("") + '</div>';
+        if (q.imagenes) h += '<div class="animals">' + q.opciones.map(function (o, i) { var t = o.split(" · "); return '<button type="button" class="chip animal" aria-pressed="false" data-o="' + o + '"><img src="img/animal-' + q.imagenes[i] + '.jpg?v=2" alt="" width="393" height="282" loading="lazy"><b>' + t[0] + '</b><span>' + (t[1] || "") + '</span></button>'; }).join("") + '</div>';
         else h += '<div class="chips">' + q.opciones.map(function (o) { return '<button type="button" class="chip" aria-pressed="false" data-o="' + o + '">' + o + '</button>'; }).join("") + '</div>';
         h += '<p class="count" style="margin-top:10px"><span>0</span> de ' + q.max + '</p>';
       }
