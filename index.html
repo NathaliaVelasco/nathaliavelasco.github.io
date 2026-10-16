@@ -177,16 +177,15 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 /* Servicios */
 .services { border-top: 1px solid var(--line); }
 .services-head { display: grid; gap: 16px; margin-bottom: clamp(28px, 4vw, 44px); }
-.svc-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--olive); }
-.svc { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr); gap: 12px clamp(20px, 4vw, 56px); padding-block: 22px; border-bottom: 1px solid var(--line); }
-.svc h3 { font-size: 1.3125rem; }
-.svc .svc-for { color: var(--olive-soft); font-size: 0.9375rem; margin-top: 6px; }
-.svc ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; align-content: start; }
-.svc li { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.9375rem; line-height: 1.35; }
-.svc li.new { border-color: var(--magenta); }
-.svc li a { text-decoration: none; }
-.svc li a:hover { color: var(--rust); }
-@media (max-width: 720px) { .svc { grid-template-columns: 1fr; } }
+.svc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.svc-card { display: grid; align-content: start; gap: 8px; height: 100%; padding: 18px 16px 20px; background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--olive); border-radius: 12px; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
+.svc-card:hover { border-color: var(--rust); transform: translateY(-2px); }
+.svc-n { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1; color: var(--rust); }
+.svc-card h3 { font-size: 1.0625rem; line-height: 1.25; }
+.svc-k { font-size: 0.875rem; line-height: 1.4; color: var(--olive-soft); margin: 0; }
+@media (max-width: 960px) { .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .svc-grid li:last-child { grid-column: 1 / -1; } .svc-card { padding: 14px 14px 16px; } }
+section[id] { scroll-margin-top: 80px; }
 
 /* Proceso */
 .process { border-top: 1px solid var(--line); }
@@ -447,29 +446,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space
       <div class="services-head">
         <p class="eyebrow">Nuestros servicios</p>
         <h2>Cinco formas de trabajar con Simoné.</h2>
-        <p class="lead">Desde una sesión de un día hasta un acompañamiento de seis meses. Todas se diseñan con el ADN de tu empresa e incluyen medición.</p>
+        <p class="lead">De una sesión de un día a un acompañamiento de seis meses. Todas incluyen medición.</p>
       </div>
-      <ul class="svc-list">
-        <li class="svc">
-          <div><h3>Consultorías estratégicas</h3><p class="svc-for">Acompañamiento de varios meses para clima, cultura y liderazgo.</p></div>
-          <ul><li><a href="bienestar-laboral/#mapa-de-navegacion" target="_blank" rel="noopener">Clima y cultura organizacional · Mapa de Navegación</a></li><li><a href="bienestar-laboral/#equilibrio-total" target="_blank" rel="noopener">Prevención del agotamiento laboral · Equilibrio Total</a></li><li>Mentorías individuales para líderes</li></ul>
-        </li>
-        <li class="svc">
-          <div><h3>Programas y escuelas de formación</h3><p class="svc-for">Procesos por módulos con El Borde Visible.</p></div>
-          <ul><li><a href="liderazgo-y-habilidades-blandas/#escuela-de-liderazgo" target="_blank" rel="noopener">Escuela de Liderazgo · modelo humanista</a></li><li><a href="liderazgo-y-habilidades-blandas/#escuela-de-habilidades-blandas" target="_blank" rel="noopener">Escuela de Habilidades Blandas</a></li><li><a href="bienestar-laboral/#escuela-de-ecologia-emocional" target="_blank" rel="noopener">Escuela de Ecología Emocional</a></li></ul>
-        </li>
-        <li class="svc">
-          <div><h3>Campañas educativas</h3><p class="svc-for">Temas complejos convertidos en aprendizaje que se vive y se recuerda.</p></div>
-          <ul><li><a href="semana-de-la-salud-y-sostenibilidad/#formatos" target="_blank" rel="noopener">Semanas de la sostenibilidad y de la salud</a></li><li class="new"><a href="semana-de-la-salud-y-sostenibilidad/#formatos" target="_blank" rel="noopener">Juegos didácticos personalizados</a></li><li><a href="semana-de-la-salud-y-sostenibilidad/#salud" target="_blank" rel="noopener">Promoción y prevención en salud física y mental</a></li><li><a href="semana-de-la-salud-y-sostenibilidad/#sostenibilidad" target="_blank" rel="noopener">Formación ambiental y ODS con Land Art</a></li></ul>
-        </li>
-        <li class="svc">
-          <div><h3>Experiencias focalizadas</h3><p class="svc-for">Sesiones de alto impacto para un reto concreto.</p></div>
-          <ul><li><a href="liderazgo-y-habilidades-blandas/#power-skills" target="_blank" rel="noopener">Power Skills: comunicación, servicio y trabajo en equipo</a></li><li>Educación ambiental y sostenibilidad</li></ul>
-        </li>
-        <li class="svc">
-          <div><h3>Activaciones de marca y eventos</h3><p class="svc-for">Experiencias con arte para clientes, colaboradores y proveedores.</p></div>
-          <ul><li><a href="activaciones-de-marca/#activaciones" target="_blank" rel="noopener">Experiencias para clientes y aliados</a></li><li><a href="activaciones-de-marca/#congresos" target="_blank" rel="noopener">Eventos con el ADN de tu marca</a></li><li><a href="activaciones-de-marca/#agencias-btl" target="_blank" rel="noopener">Aliados pedagógicos de agencias BTL</a></li></ul>
-        </li>
+      <ul class="svc-grid">
+        <li><a class="svc-card" href="bienestar-laboral/#mapa-de-navegacion" target="_blank" rel="noopener"><span class="svc-n">01</span><h3>Consultorías estratégicas</h3><p class="svc-k">Clima · Cultura · Agotamiento · Mentorías</p></a></li>
+        <li><a class="svc-card" href="liderazgo-y-habilidades-blandas/#escuela-de-liderazgo" target="_blank" rel="noopener"><span class="svc-n">02</span><h3>Programas y escuelas de formación</h3><p class="svc-k">Liderazgo · Habilidades blandas · Ecología emocional · Módulos</p></a></li>
+        <li><a class="svc-card" href="semana-de-la-salud-y-sostenibilidad/#formatos" target="_blank" rel="noopener"><span class="svc-n">03</span><h3>Campañas educativas</h3><p class="svc-k">Salud · Sostenibilidad · Juegos · ODS</p></a></li>
+        <li><a class="svc-card" href="liderazgo-y-habilidades-blandas/#power-skills" target="_blank" rel="noopener"><span class="svc-n">04</span><h3>Experiencias focalizadas</h3><p class="svc-k">Power Skills · Comunicación · Servicio · Equipo</p></a></li>
+        <li><a class="svc-card" href="activaciones-de-marca/" target="_blank" rel="noopener"><span class="svc-n">05</span><h3>Activaciones de marca y eventos</h3><p class="svc-k">Clientes · Eventos · Congresos · Agencias BTL</p></a></li>
       </ul>
     </div>
   </section>

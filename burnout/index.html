@@ -44,6 +44,8 @@ img { max-width: 100%; display: block; }
 :focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; border-radius: 6px; }
 .wrap { max-width: 720px; margin-inline: auto; padding-inline: 16px; }
 header.top { border-bottom: 1px solid var(--line); }
+.back { font-family: var(--display); font-size: 0.875rem; font-weight: 600; color: var(--rust); text-decoration: none; border: 1.5px solid var(--line); border-radius: 999px; padding: 7px 14px; white-space: nowrap; }
+.back:hover { border-color: var(--rust); }
 header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
 .logo { flex-shrink: 0; }
 .logo img { height: 44px; width: auto; max-width: none; }
@@ -138,7 +140,7 @@ footer .wrap { display: grid; gap: 6px; }
       <img class="l-light" src="logo.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
       <img class="l-dark" src="logo-claro.png" alt="Simoné · Desarrollo humano a través del arte" width="1242" height="309">
     </a>
-    <span class="meta">Equilibrio laboral</span>
+    <a class="back" href="https://www.experienciasimone.com/#que-hacemos"><span aria-hidden="true">←</span> Volver al inicio</a>
   </div>
 </header>
 
