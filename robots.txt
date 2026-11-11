@@ -2,4 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /equilibrio/
 Disallow: /arbol/
+Disallow: /eco-eficiencia-360/
 Sitemap: https://www.experienciasimone.com/sitemap.xml

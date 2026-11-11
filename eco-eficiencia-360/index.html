@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECO EFICIENCIA 360 · Imprenta Nacional de Colombia</title>
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="ECO EFICIENCIA 360">
+<meta property="og:description" content="Jornada de formación ambiental · Imprenta Nacional de Colombia">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Mundo visual: tinta de imprenta + teal del logo; cada módulo con su color de señal */
+  --paper:#f6f7f7; --card:#ffffff; --ink:#1a1a1a; --muted:#5a6266; --line:#e0e4e4;
+  --teal:#1a9a9b; --teal-soft:#e3f3f3;
+  --amber:#c98a00; --amber-soft:#fbf1d9;
+  --red:#c2362b; --red-soft:#fbe6e3;
+  --ok:#1d7a45; --ok-soft:#e1f2e7; --bad:#b3261e; --bad-soft:#fbe4e1;
+  --display:"Jost", "Century Gothic", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  /* Identidad Imprenta Nacional: negro + verde azulado del logo, diagonal de la N como recurso. Layout: cabecera con logo, menú de 3 botones grandes, una sección visible a la vez, cierre con 3 preguntas */
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header.top{background:var(--card);border-bottom:6px solid var(--ink);position:relative;overflow:hidden}
+header.top::after{content:"";position:absolute;right:0;top:0;bottom:0;width:180px;background:var(--ink);clip-path:polygon(55% 0,100% 0,100% 100%,0 100%);opacity:.95}
+header.top::before{content:"";position:absolute;right:120px;top:14px;width:34px;height:34px;border-radius:50%;background:var(--teal);z-index:1}
+header.top .wrap{display:flex;align-items:center;gap:18px;padding-top:18px;padding-bottom:18px}
+header.top img{height:86px;width:auto}
+.brand small{display:block;color:var(--teal);font-family:var(--display);font-size:14px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.brand .slogan{display:block;font-size:15px;color:var(--muted);font-style:italic;margin-top:2px}
+.brand h1{font-family:var(--display);font-weight:400;letter-spacing:.02em;text-transform:uppercase;font-size:clamp(24px,4vw,34px);margin:0;line-height:1.1;text-wrap:balance}
+.brand h1 span{color:var(--teal);font-weight:600}
+.progress{margin-left:auto;margin-right:190px;text-align:right;font-size:14px;color:var(--muted);min-width:120px;position:relative;z-index:2}
+.progress b{display:block;font-family:var(--display);font-weight:600;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+nav.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px}
+nav.menu a{display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;border-radius:4px;background:var(--card);border:2px solid var(--line);color:var(--ink);text-decoration:none;position:relative;transition:transform .15s,border-color .15s}
+nav.menu a:hover{transform:translateY(-2px)}
+nav.menu a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+nav.menu .num{font-family:var(--display);font-weight:600;font-size:15px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff}
+nav.menu .t{font-family:var(--display);font-weight:500;font-size:19px;line-height:1.2}
+nav.menu .d{font-size:14px;color:var(--muted)}
+nav.menu .st{font-size:13px;font-weight:700;color:var(--muted)}
+nav.menu a[data-k="politica"] .num{background:var(--teal)}
+nav.menu a[data-k="energia"] .num{background:var(--amber)}
+nav.menu a[data-k="respel"] .num{background:var(--red)}
+nav.menu a.on[data-k="politica"]{border-color:var(--teal);background:var(--teal-soft)}
+nav.menu a.on[data-k="energia"]{border-color:var(--amber);background:var(--amber-soft)}
+nav.menu a.on[data-k="respel"]{border-color:var(--red);background:var(--red-soft)}
+
+section.mod{display:none;padding:18px 0 40px}
+section.mod.on{display:block}
+.mod{--c:var(--teal);--cs:var(--teal-soft)}
+#energia{--c:var(--amber);--cs:var(--amber-soft)}
+#respel{--c:var(--red);--cs:var(--red-soft)}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.mod h2{font-family:var(--display);font-weight:500;font-size:clamp(26px,4vw,36px);line-height:1.12;margin:4px 0 10px;text-wrap:balance}
+.mod h3{font-family:var(--display);font-weight:500;font-size:23px;margin:36px 0 12px;text-wrap:balance;display:flex;align-items:center;gap:10px}
+.mod h3::before{content:"";width:14px;height:18px;background:var(--ink);clip-path:polygon(0 0,100% 100%,0 100%);flex:0 0 auto}
+.lead{font-size:19px;max-width:68ch;margin:0 0 6px}
+.doc{font-size:14px;color:var(--muted)}
+p{max-width:68ch}
+
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.card h4{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 8px}
+.card ul,.card ol{margin:0;padding-left:20px}
+.card li{margin:4px 0}
+.pillar{border-top:5px solid var(--c)}
+.kw{display:inline-block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.05em;padding:2px 9px;border-radius:999px;background:var(--cs);color:var(--ink);margin-right:6px;border:1px solid var(--c)}
+.commit{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.commit .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.commit div{font-size:16px}
+.att{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.att .card b{display:block;font-family:var(--display);font-size:16px;letter-spacing:.02em;color:var(--c);margin-bottom:4px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stat{background:var(--cs);border-radius:4px;border-left:5px solid var(--c);padding:14px 16px}
+.stat b{display:block;font-family:var(--display);font-weight:600;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:15px;color:var(--ink)}
+.tips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tip{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:12px 14px}
+.tip strong{display:block}
+.steps{counter-reset:s;display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;display:grid;place-items:center}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.flow .card{position:relative}
+.flow .card small{display:block;color:var(--c);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.never{background:var(--bad-soft);border:1px solid #f0c3bd;border-radius:12px;padding:14px 18px}
+.never ul{margin:6px 0 0;padding-left:20px}
+table{border-collapse:collapse;width:100%;font-size:15px;background:var(--card)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--cs);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+/* Quiz */
+.quiz{margin-top:38px;background:var(--card);border:2px solid var(--ink);border-top:8px solid var(--c);border-radius:4px;padding:20px 22px}
+.quiz h3{margin-top:0}
+.q{padding:16px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q p.qt{font-weight:700;font-size:18px;margin:0 0 10px}
+.opts{display:grid;gap:8px}
+.opts button{font:inherit;font-size:16px;text-align:left;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.opts button:hover:not(:disabled){border-color:var(--c)}
+.opts button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.opts button .l{flex:0 0 24px;height:24px;border-radius:6px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--ok-soft);border-color:var(--ok)}
+.opts button.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.fb{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-soft)}
+.fb.no{background:var(--bad-soft)}
+.qfoot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.score{font-family:var(--display);font-weight:600;font-size:20px;font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-weight:700;font-size:15px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn.solid{background:var(--ink);color:#fff}
+.btn:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+
+footer{background:var(--ink);font-size:14px;color:#c9cfd0}
+footer .slogan{display:block;font-family:var(--display);font-size:20px;font-weight:300;color:#fff;margin-bottom:8px}
+footer .slogan b{color:var(--teal);font-weight:500}
+footer .wrap{padding-top:18px;padding-bottom:24px}
+
+@media (max-width:760px){
+  nav.menu,.g3,.att,.stats,.flow{grid-template-columns:1fr}
+  .g2,.tips{grid-template-columns:1fr}
+  header.top img{height:48px}
+  .progress{display:none}
+  header.top::after{width:70px}
+  header.top::before{right:40px;width:22px;height:22px}
+  .brand .slogan{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAIICAMAAABQEsmlAAAAolBMVEX///8dHRsAjJAAAAD6+vqMjIwFBQB5eXkbGxkTExAsLCvl5eUZGRYVFRMAiY1fX1+7u7rt7e3z8/M5OTcAgoZRUVDR0dCSkpKsrKy0tLRBQUDExMTf398NDQrk8vK329zW5+jJ4uMynJ9cpamjo6Ofz9GDvb8nkZVLn6Pv+PdjrrFISEdsbGuDg4IlJSOamplDqaysztCOzM1vu72Zw8R2srXThdsOAAAgAElEQVR4nO2d6WKiOhiGiSCCggsqbtDajtZat+lM5/5v7WQBZUlCUATi8T0/TqdVljx8+ZaERFGe+h9qC/WCtd1e8XWtI58G7JtxbmjJ/G23fP3++fj4+PsV6OPn+/X1Jd9BnElPNo0nGqtFpu7NrSqqtz9fn++bbrfbaDS6RPCHRmPz/vn1Z5njQDPTN+WS2mICODRZfypS2vLP78aItH1a8PejUePv91LwUrS9D+SSzgbQPHYKa2aGtsv11zuj7SMajd6//rwJOYW+b1TdpPnEA6A2C2xriravX++N7OYPLGHzJeIRnJ5adZPmExcAuKcJvKw/BVs/ZND4/MlGsFDlMgEuAHVSbJtHtFzDjl+89QMGo806C4HW06tu01ziArDndwqElh/v+ZufmMHmY8k/dt+yqm7UPOJ3QT4zSL1FL+vNdc0fIOB3RE5LKi/AB2DOveLb/+0rT9dPQ/DrlRcR9YFMJsAHANRT0c2//bu5qfkxgsYXxwicvUxeIAOAfSzWC2hvm9GtzU+s4JXdOS6OEplABgCgH4psf9j73/z4BwQaH0wjcPYSeYEsAGa7QC+w/GoU1P5Iv5as88iUC2QBAAXmAq9FPf5E3fc31pl28niBTACWXZAX2K5vC34oBLprRjTkqtJ4gUwARXmB7UeR3U9AYPNDJyBRLpANwB4WYgIfRT//mED3g05g0bYrblhRZQMA/uH2obHtvzs0P9LoL5WA05LFCwgAMNs3m8Dd2h8SoOdkblsSLyAAAHqBGytC24+7tT/shqg2oMmSC4gAsMGNucA92x/qg3ZO74EAALV1U/u/3rX5G93RmnbWsRwEhAAA9RYTeCs2/6LplXJa15IiEBIDwP5Utpafd2//7ueScv0HKQIhMQD2cHFt+2+/Cil/ZhCghUKLoQwmIAYAmFfnAuu7P/+YwJ/0mZ2WDHOERAFcmw4viy9AUDWiFOakGBcQBHBtIPTyXk77Q8yUTkiGXEAUgHVdIHTnDCBK4CN9I64E4wKiAIC6v6L938oyACja6IAEJiAMwPLze4Ht3/Lav9H9ly5JuPUvigoDgJ/MHQi9luSBAwLpdEw71D4QEgdg5c8F7p+CxQC8U0yg9rmAOADg5y2KrktIwaKi1IS0Q929QA4Adt5xgfvXgOLqvqdD0UXdxwVyAADst2moWpfb/IjAT/oq6j46nAeApeYxgZevkg0AFeXSJuAe6+0F8gDIlwu8bspu/wa1Ll1zL5ALQJ5cQCsvCb6ImgvU2wRyAYBeQDgXWJaYBEdESYfrbQL5ABhH4Vyg7BiUqEsZH653OpwPAPCFTaAaA6AlY/XOBXICEH5fYFuJATSobrjW6XBOAMJe4G9FAEaUPqjWFaG8ACy7LwSg3DLQRd1PyjQtr8YmkBcAzAVE0uG3KpIAoiXlcmrsBXIDMISGxr4rMgBoAt+UyxnUd2gsNwCg97JN4I6TcTMBfNEuiHEvNVB+AIaR7QVeflUHgOYEoBcwS25YUeUHAPR9ZiBUwmw4pja0N8e0Zl0DoSsA2O3MdLiSQlygLnWqrjuvqQlcAQD4mSZQznQ4BgDKoAC6mwcCYIMsL/BTJQBKRRTKq+nQ2DUAgJoRCFUYBDEm6iq1DYSuAgBUvhd4+V0lgPcl9aIG9Xx3+DoA/pgLYFn2cHwMwIYOoKYmcB0AYM+4ACpsfwiAsYKBt6tjKHolAH/PXHEXAaiqFo21ob2whG5oYtewIHElAKvNM4FqATRo1SAkd1fDUPRKAPyZom/VAqBmYkjNGr41di0AQ+WYwGtNAXRqOC5wLQDg79i5wHdNASin+gVCVwPg5QIVA/jDfDQGx9p5gesBcMYFagughrnA9QCAyfQCdfUB0AvULhC6AYDfY+UC9QWgneq2vP0NAKwjywQqDkMZiRiWVzcTuAEA9AIME6g4EeMBUCY18wK3AAAqY1yg4lrQkgegbl7gJgD+jp4Ol7U+AR0AoxwdalUvE7gJACsdLm2BgmsADIa1KoreBAB6AaoJVPB2UgTAr4xNNurlBW4DAHyqCWiVDknSx4QvGtRqjtCtAMbUQKjSQXnqrIioauUFbgRg+FPad8t/QzUiTh5G1BnXyAvcCICRC5SwTh9TrAGxiFY1Ghq7FYBBHR1+qW5qIu1d4aTqlA7fCgDmAhQT2FYXBtFnRyc0rY8XuBmA4a8oX65ubiJ9amhCTn0CoZsBAH9OOcKdF8vlAVgKAKjR0NjtAIBKMYHKcmHaiikUDY51CYQKAGDPKV6gKidAe1ObplldxgUKAGBYFBOoakyGsm4ZVZ1eTUygAADA76W3vdXusWOJQPtvBHeh16agHiZQBAALUNLhat7UFu2BYC4wrkcgVAQA4I/TJvBWjQUsRQHUJRcoBAAtEKqkJJ1Zio7eXz0WUSkGgA3SR6mkIMeal0tTPYqixQCgmUAFr6qK1IEuGtRiw8OCAJi7tBcof82y7KGAmKZmDV5aKggAoOQCy7JfFhbMgs8a1CEXKAqAOU6v4fGv7JVzhWPQQHXIBYoCYNjpXOBlVO7a0bQ9HLga1CAXKAoA8IfpilC5XmCUJwQiqkEgVBgA2s7PpS6a0v2dMRuCpupHh4sDYFvpOULf5bW/yFhwWv3KTaA4ALRcoMShyczpQFQ5lecCBQIwd+lAqLR35jOm5DI1syoOhAoEAMwTpSBREoArPDDWoFexCRQKgJILlNQJCc2FoGpa8dBYkQAMnTI0Vsoi3tTdPMVUdTpcJABgDtMVoTJmyXWvioACzR4IAC0XKMMNCM0FYsnpVRqKFgvApKTD991RHmlE2cUwh/qVrupaLACgnihHuvOWwt2vm9pf0SoNhAoGYM4pXkB5+bwjgXyjMDRVmg4XDADoNC9wz9GxPMPADFXqBYoGYNN3fl7eqyxXQPsrygJUNzRWNAAYCFEPuLxPL9T9vby9/ZXBvrpQtHAAPmV0GBN4vwOB0c39P9HsgSwAqE368e5QlGCt0ZpbTnU7PxcPwGwzdnjYfhT7An238XFNBZqqxQMBoKfD+Ig/RRLodjkLM+VWZeMCdwBgs0xA0V43hTmC7ua7wPavzgTuAACoLeZ9vnwVM2292/1aFtj8FXqBewBg5AJY23UR5enu5qew7j9QVTs/3wOAYdNzAaK3m40APv6M5aFv0GBfzRyhewAA5py34eH2+/2WGVvd7vu66McfqX+spCh6FwDMXCAQCkivRACb/09BwX/yfqsZGrsPANugp8NnLT8+r0HQ7X7eqfmh3Erc8H0A8AKhQC8/nznNAH768+duzQ81roLAnQCIbHi4XH81xJ1Bd9T4er1n88NAyK8gELoTAKDzvUBwirc/0B8LMOjC5v94LTLxoqmSXOBeAHi5QExvfz83XdjCDAz4D5vPO8SdFFWRC9wLADAPopufb9++/32+b1BbRznAn2EHtfn89e/77R5hJ0VOq/xA6H4ARE0AafuyfF3//Pt6f0edPVZ38/vXv5/16/KlpNZHqsAE7gaAPkGCJ03bLqHeiJaw5bV79/oplf++wP0AADUjF6ij3NLnCN0TwL7UtitEWumB0B0BWCCHF6iLFkbJXuCOAIAqHAjVR86+5KGxewKw2hKagHss1wTuCQD4EpqAdijXC9wVgC2jCZScC9wVAPQCpUfyN0trleoF7gvAsiQ0AReUuZLTfQHImQu0yvQCdwZg6TKagF2iF7gzAIGhsfqp1HT43gDkzAVKHBq7NwBoAhIGQiXu/Hx3APaRve1tbeWWt/Pz3QFwzlBfaYfSTOD+AOy2jCZQWkXo/gCkzAWU0nKBEgAYqoSBkFfW0FgJAJ4mwFMZAAxDRi/QLme6ehkAgL9nbX5eX2mTciZIlALAkjIQmpeSC5QCAPgtGYfGSjGBcgDImQ6XsrJ0OQCAOi617YpRKYFQSQCAjLlAxy7BC5QFQB/LVxFSCm0BVsOUBMAAMnqBEvb8LAuAnLlA84EAWEfazs81lze/O4HSAMhpAvcfFygPgOVLGAi5d399vjwAMBd4BkJplQgAqBIGQoN7F0XLBKD35KsI3d0EygRgWP1S264QeXc2gTIByBkI3dkESgVgGc9cIKlSAQBVQhNQTncdFygXgOE/TSChcgHIGQhN7ukFSgZgqOk9P2uvzj0DoZIBAH38NIF4g5QMAKgSeoFO+35DY6UD8J9eIKbSAVB3e6u7OvdbxqZ0ANAEJFzGZmXcqyxdPgALSBgIeXfb/Lx8ANAEJEyH7+YFKgAAZMwFnHsFQlUA8IcSDo2d7tQaVQCQ0gQG7fsEQpUAMHcSeoGVfpdAqBIAhiWhCdwpF6gEAPApm5/XXdrqLtPVqwHwzAXOqgYA0McSeoG7BEIVAZAyEHLuselqVQAs9ZkLYFUFIP/a3jXQYFd8IFQZAH8sZVG08E6oMgAGWMnXCd0hF6gMgJS5gDK1i84FqgNg+E8TAFUCAP5cwlxg9UAAgCrh6PCg6BcnqwRgWxJOkOgX3CpVApAyF3AK9gKVAjB3EuYC02LHBSoFAEwJTaDgQKhiADsJc4FZoSZQLQApvUCn0J2fKwZgziU0gWmRBaGKAUhpAoMivUDVAMyhjIFQgS1TNQApTUCZF2cClQOw2xJ6gQLT4coBAH9SatsVImdc2DI21QOQMxDyi8oFqgcA1KZ84wKDfVFeoAYAzLmEKznNitrhoQYADF/CQMgpKh2uAQBgtiXMBYoKhOoAAHqBUtuuGBX0vkAtABi2hIFQv5hNTmoBAOiHUtuuEDm9QtqnHgBsOQOhIt7bqwcAYP5vc4G6ANhJaAL9IlZ1rQkAKQMhrYhxgboAsI3/aS5QFwBy7vZWQFG0NgAMXcJcYHH75ue1AQBzAfkCIWd/swnUB4CUuUD/5vf26gMA+FLmAreaQI0AmG0JTWBx67hAjQAAVUIvoN2aDtcJgC1jUXRxY1G0TgCkzAW0/W3NVCsAliWjF7gtEKoVAEm9wE3tVC8AtpSB0E3pcL0ASGkCzk3b3tYMgCXjnp+LW5a0rBkAoDKvp75yWjfkAnUDYMm4+fkt6XDdAEATKLXtCpF2wwSJ2gEwVAnTYff6dLh2AKRMh5XrA6H6AZBz83NwbSBUPwCcS6qvrs8FagjAljEQcodXmkANAUi556dzuHIdoToCkNIErs0F6ghAzkDoylyglgCAKmFR1LsuF6gnAH9catsVo+sCoXoCMAwZvcBVe37WE4CkgdA1RdGaArDbEprAVblATQHA65JvScurxgXqCsCWsyKUPxeoKwCg/k8CodoC+L/kAvUFoMtoAvnbrL4ADFvCzc/zB0L1BSBlLqAd8r4vUGMAloy5wCLv6/M1BgDU/8POz3UGANR+qW1XiPJ6gVoD0Hultl0xytlstQZgyGgCXr4JErUGANNh+SpCOU2g3gAMX0YTyBUI1RsAzAXkMwEtVyBUcwCGJWU6nGNorOYAYCAkXy6gTR4IgGFKaALeXNwL1B0A8CXc/DyPF6g9ADlNQHxorPYA5BwXEB8aqz8AoEpoAo4v6gUkAGDuHtkLSADAMKalNl4h8naCU1QkAAD8nnxLWmoTwc3PZQBgWVKagJgXkAEANAH5vIDo0JgUAAwpAyGxOUJSAADmsdS2K0YHofaTA4CUGx46QpucSAJAys3PTyK7vUkCwAAr+d7e9kSWt5cEgJy5wMnMNgFZABi2jLnAPHtkRhYAQJdwXECZZM8UlQYAUFeltl0hGmSPDssDwD7K54YF0mF5AEhpAp1hViAkEQApc4FpViAkEQBgy2gCWbmATAD8sYQmsMpoRZkAyOkFxvxASCoAZlvCJS1X/D5IKgBSFkU7/NFhuQCYw4fzAnIBkNILOHOeCUgGwJxLaAJTXkNKBgDok1LbrhANeF5ANgDmXMJAiJcOywZAzkCoxzYB6QBIaQIzwDQB6QAYvoxegG0C0gEA/lBCE2AHQvIBkNILKDarIiQhAMuWMBfosxpTQgBS7vPjjBnj8zICsKUMhBjL28sIwLBO8o3Ps3IBGQHAQEjCJS37R2ouICUAoDflM4EBfXRYTgDmUcJAaEZtTzkBSBkIKdQ5QpICkHLDwxntpSVJAQD9UGrbFaJBj5ILyArAnksYCNFyAVkBAHMiYSC0T3sBeQHImA5PrZQXkBYAUA/ymYCWToflBSBlILRItam8AKTMBbRxslElBmAbEprANJkLSAxAUi+QyAVkBmDLWRSN5wIyAwCmhEVRZx9vVqkB2EcJTWAWX0pLagBAldAEtHg6LDcAC0hoAv2YCcgNQM5cILb5ueQAbFvCXCA2LiA5ADlzgWggJDsAoy2hF1jol1xAdgBAl9AEnMja3tIDsKU0gfbZBKQHAPyDfPv8RIbG5AdgylgRWpynyckPAKj7UtuuEF0CoQcAYMk4NOY+EAApTUAJh8YeAYBhS7jhoRtsePgIAIDfki8QclokEHoIAFIOjS3a2AQeAoCc6TDJBR4DgG0sSm28QrTA0+QeA4CcgRAeF3gQAIYqoRdw0bjAgwAAaq/UtitGKB1+FAAGkNALuDAQehQAwJQxFzj4jwPAbktoAouh9TAA4KMknwloLfVxABiqjCYA1IcBAFQ5d35+HABAxlzAeygAe/kqQsqeB8CSS7Ytoxdg1hG1idGWTMe9fFtdOX2m2bqzvmxayBeJKhJe8lNPPfXUU0899dRTTz311FNPPfXUU0899dRTT9VEWl1HJ1+2VV9BKVr+fKzhnW6/1+tv2t9ffsgfXtbr9Q/R9+tbCO3yy5+f17cX8kvtbU1+f/nbUnmBJ0i36HK9fsUfWK/X4bHWS3KUj7c73G799Lrpvi9hS7x3u5tXyt//jhrdX/D/b41u4/cX1G/4w+bXB25MbdPt/v77hX8Nv//5Dx9h+9HodrujqP4oS/jRj5SxvW7ef+MPdLvwsCP8pQa5jOXm5353XSNdADS6/9J/foHtQgDAJgoeyZf1F2yrP1sMYLQOP7r82Iy6Xy8EwFfyaYcAGt114pfKa/cz+Gk96n7GvvNn9P5yy43JoigA9ENC391GCgD616/uCLZxDAD87Wd39HvJAZCysddGFEC0wbfQJGkW+XA6A9g0Go3UE7r96sKGSANQXj5Rj5IAgPqp7m/Ye9MBQAKfiYeaDeAVdn1fdY0PitQZwG/Yi/9KGj3so39GNADK26i7eUsCgM3YGH0zAHz+ggS+EsdnAviCptdYXntXEukM4GsN3Wgy8PgYvTIAoC7iIwUA/fZTYQBA3dwo7lmZAN42n5vG6OOGG5NFZwC/XmDj/Y0b/ctnY/tBB6D8gwaTAqD9GzU2SwYA2NwwgIp17EwAP6PvD/jh/0EqcAGw/dPtJgKPb/gMcgC8b5MA4DdgE7MAKGvYrXwuo2dnAHj53GyRQ/kfuOEIgGUj2aF8wTZnAfiLcKUAvHIBbP8l3AALwCv8FAwA/g9uOAJAg3f8Hv3bsgHbkQUAfvgz1QXBTzc2b0wAygtyA38iZ6cD0D5G8Fw/FKf0eIoAgI3ciBn9P/gvjQEAudt/VCf8zsgDcFOjhDpyDgaAtwZKypbvtOT50RQFgIL7SAfxsoFNwgIA+5rGKzUM/WBFQeQTMLG7uAEGgI8Rrkt9dFOJw+MpCgAZfSQbfkVhIAMAZuWkErENMgBWHoD/r32gmkf4VwaAwFO/JoOmR1QMAGzAxqUm+tV9YwFYfuL+OQFg/T4awd/iLijZdYQA0FcvRSE6gNcR4YfT7aJutK6KAdj+jWTDb7g7ugBoNNbLN6z1ZjRq/FqGxbiXtyX87wO2fneDqqQQQGPzO6q/2wsAXHYaBZjpAD67AWpokd1H74NiAFCqdDZ6HIlEAXRRlRmpsfn8hYv7BAA8RHfU+Pz89fWDGw4D+BXVRxQA6lm6myX5kQbgbRP+tIzHTA+pOABcYCB/QLmQEu+C1q+B3l62uIsJuqA1bNHfy5ct+SXpgpYvEW2VKAAUqwZOggZA+7mUIGAf1Ljv/VeuOAAYeDQaxEO+EhIRAOmgPPQB791oJZUXhmK9oEobPjoNwMuv0SUehVHVg7vhBIBtaPTbX6SXEAKwhZ3TpXSZCQB7V0yMBmDd/X354PvDZ8MJAMoX9KTo/28NUpgTAqB8NyJtng0A+Rp8WgqA7ddo/bIM9a/boAwTPZKSAN4aJFP9CExfDICDovuw0iwAAGVsaAiSAmDZ6L5ftOlShokeSkkAqAT2T4OdShCOigEIEwNyCAEA0NJQzkwB8DH6+hPRLxgYP3RROgkAdsHoF69hgiUIADbludWFALygfOw7DWAbKVQgoeLRQ7vhFACUqf4ov4NAXRgAji1J+CgEgJQt/m6SANajv7Gvbn8/eEUuBWD7AQOP127YDMIANNgJdcNETAAActyoMBf8KwAAe8DE/DDoLRqP3AelAOBs+P1cMhYGgKdEkF5EDACymRSAt8174ptb6Cwe2Q2nASh4ilBo9eIAlJ8u6YREAWzRiRIAPtID8TAwTn31gUQBgIr65wpMDgBowBEVU0UB4BGXOICXz1GquwkD4wcVBYAGA4/o6KAoAOXtHUdQwgDQyeMAvkdfqQ+9/HroojQFgPJ3dIk78gDAVbkvDOD32zKit6VGBbD9GMUAwCw4/axrjz0w9toYYQCbyNTYt0jkDQGMMIDRqEEBMIo7yM8RJIJarNvYRATjGCoA+HSHswDWo9H7y8vok7KQ1NtmlJ7W+zB6Wa9f0SDK+vUSbG+jM/nf4AfQ7/6sv9PR4HodzOYPv/kH/kZ5W6ekbdfUfvzlb/ADelNAeftDmwWhva7Xjz87IiqtxLj7cfuWp5566qmnnnrqqf+FNKJiDlXEUaTVIvftO567mJ4OrdZhcpou3MG17afB48xWq+mhuZotXK9EDO5tCykPkDqiC+t24Gd5B9vl22+z0z+1hrp6Ubt3mHZSjefgixywL1Lzpq25fzmMPT6sXObHtazDpT/N4emMuWuJk3NxGO3HSE2xq3F28LOcjy6OebaZ6kzHR131Iw2n6roKdq0ERW3aQxoz9w1YHOaG6tvnA5nwR3/Y6jOudNDE93wQu0oPttCes5Wxq5443+608Lk4y40PfdM0fZ13kIsGqLnYx9Kaalt4d4VBs62btukf562p18FyJ/OjD89gx9taa+roItUZ/UBuz9ZN37fb41N/4XUWq+buaPu27ZvzFfXJ7fRUdM/choscfqjqvF1Ex+qcg8fboXOpQ3a/MbTQpgi2L7Qm/0A1DA4Ab+f7YneldFawowD+sXeKX9pgtT/6tq62Ir/WJnhDUpXavXkHVbV8YzyJ3sCgD3sk24A3TrOCTg/vr2kfhfpLd27ztnEdqID1ZODLG6NzmZkAgL4T2TA8A8DUN8wez0eE0hY92PyGOp6lDzbo74EJ1N6lQTkAnP5ctYA6PyWvXnMPbR0AH7TS1xMAAP5Y5J7duckDsFKBPma7CGEAQBXZHooPwBmbwG6LPFanoW8AXz3QL2vQP6rAH54PxAYwOLR9yHHvUlrAWexU+Jir6f670zPxLRs+c1+RiPgAOnsTWDabjzgAwz9lXw0fwEI9wmbK3vPXQY8/0IfsXs/p6bZph5bNBODN4YFsdcU6ShNaR5RkoNAC4CEnWdeaBaA/NNA9M78tDkCoS+QD6JlHtNVdll17aH9XQ+dFFop2Otr2cUZYsgC4JnrE21P2YU42/KavJnzxBQAQ2JSMC8BpHfntmwMA8HnenIgLwGsDdDUqp0Hwx/Dt63u+r9BOluHPyX0zACyG8ECGzTNc7QTgV00zbiMRAGa2G+ACcOdH7EGZbjgPAIG9YrkAVuoRXY0/5B7C2fnIaDNv3DlA77bHfokOwJ37eE8rrutyJraBjDv2UEQACGwOygWwUtv42WXurBUAaGcAsAMCzYyL4QEY9HwMgL/XoDNWMaTsdGGw8wEJ1akAvKGO7kzNOIrTQuezregjigEY5MEzMrMBHgCn7WMAFjP9CQFwEjEL2K0xeSSsIyeiReIB6B8NDIC77/hgrwpH4AvdMlT05NAADHqkYTP7cG2n4+410kIQgAEOuyAUoqcXF/EALFTQ5ntzIQtQp/0jeR7MHf/J5ADQDjo4HtH+9faQ2b3APtnAlytUK4MPr9rU6ACaaJ9w4GeHXIqL7VuNFAOQBfj9GeoKsTXyvREPAHwK2hZJKRgHIQDsLABKuJ+h3uN2iRwA7tC2xnt8Tz69AqAgK0GN4e/EKk+uYeFbpwDoW5bA80I00Q30oF+6VwQAus1DcM8qf184DgAPWPq+hyzMMBl9hygAYtGZboADYApzp9MCm4DfY9yRc/Sp8SRDsP9WWx4NwIC4UVMgjIftjdvAuuwBGgBwgns2TG4GxClFnKCJ9hcqzw2LAoA+zQ+6RJ4bYAOALtNqdzpjE7sSRs9MnjnxzTj7pNKbAqA1deyy2H1dTDNg4V4iPG0A4HzPNveJYFtAZ2f6uw4M67BbYxiJKABlcSROyZxzzJoNoA8fsT0yd9xU9K4ZbW4Pmw0IF0w10lWlALhDfK1qS+wwA9wIhhVmAyEAZda2AzfAuSQ2gNnR8qGPOqkcNywOQFnpgVNidSAKDwCMbpCNuyY6iEl9NJGbRsfPvSd5EkBgAEAVMwB0a8RRBp8/A9BOJrlnlTPIwQTgtHQblVOg98P3TD1EDgAkQkRFAnZlgwmgY9k+voLg2aRlw94cXagBMjLltJIAOm1yEuHBnwEO8qzwzKgYR3JX7ez62N6ECQAaNK79DvbEs1H73RwAzgmiwS4mMAEgd4TvYUpcEu2JmuA/2dkFj6SSAIKQTdSXn78RZs1nC4CH1sPCKPOemQDgPfu4V5sBEnrQvp0HQNBHo/SG1SWyADhz2yQX6eCo26IkSN4c36suELonlADgAH7oTZGLswYrGHWKAFAW7cD1MWuzLACdoWkd8SUQ06ZnwyEAbiZ8fuKn52yAcW8sADPD8IO6TRDppKPZRfDc5u6BkgBmxJoXQNwAABGNSURBVFB1kWJ+oM7Oj3jtKABtBSz+PbMAwMvQg4d+j32MSStq5LIARWsFBJBzp4kBQGvp5zuakRRpmPxUQMYQG/uMfzUOoIUb0wCsYQDaEYh/M0jlKApAcULX5zNcHwsACjuCe+n7JHqhtHIA4Mjud6MAoD/RAzdAvzsGANh3nUOMIEdKPejOnAzEtplXwlQcgIsNHvCGCdOa+BG3EQOgODs9cMT0DIgBAPZq/jB8TOck/aEcICcAxQ1KVDY9l6IDQNGc3jz/wyAuKWFDC1yFAP6ceSVMxQHMSN2K+rwxFXyJ9EFxAIoLyD0zRhYZAGBIcSmkrki/Swmw8wJQziWqHc1t0AGg6uIF2AIXuK12gmDgX0STp6hiAJwmiRQEhj4jCuILEp0lACgrI8jHqEzppYjBzjYvXtfDoQetCkkAWOIAIiUqyg3SAfRty78U8bQgLE644ebVPjgOIIi6geCsnkAdEoJZuCWTAJwmeeoMkwaVbgFTOww78BUSR0K5ptwWgCYaAeYd0gG04lNjSN5pxue5OL2c2WtEMQAeCWgMI2PoInHhxDMZeCAiCQDN1CKdEO2eqQBgFmxFM8op7ndtM/XtKwB4weiMnexEFAaAjhqPczWSdxqxow7IIwg4s4qYigFYkM4k1cXx5ZDowsAXlQIQDG/GSqaRv1EAwKuIDSd3iO9MZ8NXALiUqNLjtlQAsNOK9+wkmNVjo7Ud4gV507qYigEgpc28CXUQBAMbTYJNA1D6OrlnfZdyAzQAWhMe4RD7RXDPyW9fA0A7hXFZyg3QADhDOxHcu6TmECvQekEDgLyVOCUBIHDmJm+OMEWn4GutARUAGbUBtFIhDQBM7Ix4nLjAz0XaVK4BELoUSomKBmBmJ0OmYKQj9m03ANAuCkCeadhKGCgCfz+IFuMi1xzcswWSw3k0AGgOZnw+ohM4meS3rwIQJk0wLEjUuygAHBiVJA9wwo+TbUcuJgDAKNryRQNAL32xNY0BSFtA6NyBaSf6cQoAVERN3vOKng1fBwDG8kGJKjHoSgGwGKbDZJd43GhotCgKwOk6ALPQcDoMAOd79hN1GwoA2J+ax0RH4A1JRS7xyF4JQJlawTSJ+IB1GoB2sg092W86LT/ZSCGAeVEAOHNfaOqToRefDeA8IqXGq3wUAKmwQznX0ZL54bUAziWqeD6VBtDpwctO3cwUZzbRAm1hXdC1AKxMAEo4SO/HCmFpAIOhleqckY3hfhfELeNaAOfEKR7apgFA0/bH6eIEHpyPFmjDKOhYlA/ICwBnSrwuKJzDlZw3lgZw8mkjToHjTORyVwNQvGCkIjbbOQ1grFOH8w7xUdgzAMu8OQ8gZYMrAbCdMFLgu2BU50V/mXByqBhCqxaTVMAGsV8GtSCQHwB81IxL4BCeOwkAZsGGQSkiupYRd0leUG65ORHrG9Y1TjjwAcw8gGgK0m4gZQEo7KCNfrmqleoyQgDGFQC0SdglXuYtpQBAd0QtMDuknnFxSYMgvS6qFJE7Cgp6F0YmHJ7pELq+S0eSBKA1Tfqc7EEvmJMT/eUNAFDBKbiay4BNAgAqMtLHxknYZ5vhiQMiQM1TxQ9EK8blzYQD14HfJmADOJcirUsInQTgoSyYes99kv7EzOUWAOeynHkuKiQBzCxgW/T5MMHUkdA/hNm1wCspKcXL0cErjjknV5BMmARsPADn2XLnZkwCgCjNdMUIf5c8G3bUP9wEAAbvJBtQw2p/AgCK91kzakj50fLDf4fjAbnK+ERxACTHyFkNDUek8bd4AJTZMShFhr1MEsDYZ92EdgjSn8gjehuAMOgms8SVFAA0I/q4UJxQmnb+MQy8z0/8lKQ54rOpIjcWBRAMeRpWrpGdYBiH2A0XAHmnBrm+IANKAIDhnGFH79m5/NjHc5NjU2NvBBB2HJZJPhIHgNy00R5f1OtF/hHEE2G4SKbpFzAovwiGd68ZESMj1bRi3EVOMDXE8slHEgBQixyj9xz5eXwE8dDjZgBnNxBMX40D6KDUw/L1s0zz8nMwtny+9iBPsYz8YRB1VkSq/sFVMCZMIhSuBaCxo+CeSfYUB9BBBzIu96we9eg945uOpl23AkBBL74aHedUcQAo0rGiiv+TmHI4J/k8Lyjfeir4qzEAwZizKfRqf6hgFi7pEDMAnCeK6zjFjwNY2ajMG7nJY6wFgn734oZvBnCeLYerT3EAMO41e9MVQ9ODEXNJQTlOcFmQqBITs8h4EfMlBKpazIlZNK38oBSJXF8MAM6C96xbXk1J7uTvzoe6HYByLsutEgBc0+JOkCXjpFYYM3tDMxUjiCkBoBMUIxiz96iXEtTHiUPKBOCEA5hoqlUMAMqCGa9iYA1wJBoZIQwAmDcAGIzDEtUiDuCgZrjUSbxAOwlea8kzow0rOTuaVC31HCT7gQGkJ+fSdV7Oo+3GakHOQee/3xAM515qyAEA/wYA59ly/thzIgA68IlmLtNAvqjj6RFWkLUERQT+G1k0JQEscnuTfYCMXEk2ABhgBzOA55oXsQBoxcaR21okRLDPb14WASCciADMQ0e/AJjp0Cj4hYWgQBtQcvbpPEVISQCDsRrpUATUwTdgWMGArQAAZRq4AXUCn78zAOgQbb7zH+xJIT5s0kIAKGFkbB7sMwAUjGRNDyQFoXO1boHjosw3o1NKvSO2IuN1wnWlJuMVJZ5apBhstFuXLkiDdpG1mgCZonXOo4sBoPTCstyloNyHCWFWd05KoJcWPwRARE3AmzfRR1MAgmlWumBWTV7iMs5PpRCA4BzAgv1oeKOw7zPMjHsOQg87DD2KAeDNz8tbBADQTCSf/4bzebrS2VA6bfrUdZamQO31Hcp7wsSdsFdoiF/FBCcBl4liQgAUL3B94JJNQlcSiTAZCsaGgxitIABK37bjAODlXd77ZGqBX+S352FfQQZ50m9v0IUK7Cq89zSAIKszDyLZMBnnsv3ki9pZ6ltWHAAKpLmvUZPTkUsLCqYEgHEzAOUUjI+FAKa+IVARDmvH4Qkc+tQBhlDw6B9oFqAMhuTNHxF3gs8ZfeVEEMC5FBkCWPnAFJhYhl83MIKidFEWcB6dCQCg8RXO66yhtCmIr11AAmyh5dGUjmWSmIO2WEewBEd6PkBKJJWPvlHGL8ZFFM4QJAA67EI05YQqmTkXJmLszlIQAFoAMwIATYUUedsreIHwUjZw8UCNnbUuDhLqZvClUdcLWpmYQOZD0DkSUtGpzIIWAK9ejwBYHC1TJIskKX/Q5sUBgG1uXwCgsWDOYo0XBX3OZX2ahYoXTGlnNsD0aAXTn6gAtImKF0HJCkqwyfmxl1CFAYSz5ciaLeieWwLeK+gsSLxaIIDAg2IA6G3gbHeEFLikyJo8UwvdlGlm2E8fBjrqjrNkmXPAayLylrYI3zr049OoxAHAjOMMwGvbjLHgpMgLaRZ2F0UCIKEHBrBCkyHE0iCVVO8jAdOsTZaPmfCepv7QP2dOjEX7oA2gNRF5awaRflNPDF/mAEDuGQOA9yywxB8+PpmWhuu+QRTEMVRxAMFaaxCABs+gZ60vF2gSlGEi/VV/iGzJ8vfMq9JWEJIeNi1z3dAJWn/InzNtyR3jBTKTH8gBQNHmKgGAVqURvGf0+gYIht8KBYAjagRgcTSoU5No8kjOFLNBt4cqLYY6nFKDOs09qKj/Cb/CXjl3hp5wvd2neqPBCq3rh9bVTfwhDwAcNSAAfbTWr+AYEEl/8LyBEMDNYSgRjMwhAPyCTlYWHCoM/WMPT6dp4r7Z3lMW13YnQ1Tz652vmbN2tLeHjsA8Nin35+59E63aeqK9VisOAKbjuBbUQmtEi36HDOTaMPQIE7G+x1A+ADD6sVQHxZZiLhiJLAiYXK7C3ammAbsHcz7xnMvmm47T3wPVNny/efk8b/V0bQV021aHrfieGZrbsnWYDfm0HSXyAdAmPow+PcPKMacpXDOmEw6qG+0hQ8rQtHMAcPa6OliZpthi61idno7GTpNDB9ppbMOOyPBVfdg6LVykfnN8VFXb8q1etN1gE9iWxaqies2h6Zuqvlu53mCgaZoz8Pp7XzUstIEAdXGjnm6LP0Dojauhu1Jtkawv/MoRXrFtmlMIQEcjyLbPkrJrty3xi0F+zduD9lFouTws6FCRQOqNP+/UM1Tk1s3IDhoWsNXjON5u0AKOUMwyttvc6SraP2PY2x8Oh1ZvqMLmV63xhO6nOvtjG+SoiXvt+aJ3bB9zrA5yMNA9Gy2tA7/IlbKAyrXqguq5+b7SWWCll5jXBv3DnGw5YhkGfExshOJ4Sh3c6yPNmOd0vOkeftP3g+1o0K4oxmHG2slHy3kDymy+QF/JMZAU3PNCw+fiKcdlBGIs+n+dYKe/mOznbbTmLnxUhvupd8UbHPhAi8MOHwYcj+3x6crDMA6+yj2OfU/dY4cox4Md+O0H7njQkwhvCfXUU0899dRTTz311FNPPfXUU0899dRT8kvTxOpqWoFlM8FT1k+ofuhmF281/Dn00cwbHfRXq1V28dxZTGezflZt22FvDR+RO5vNplklY8eNvOPvpXeuv4jcbOZmi27WPWrZjaUo8/3pdGr1aMPaUXV6vdUJiT4DIXLSWW8Kr37ay5yy1lp43nSfMRy6EJkMeOjNXG/Rypjy67Yvk6n7bd7EanizsE3G7Gkz5HjDrKFcR2QiHXnZsNPKmObgzbOn4uJz7oM50y6fwCLY+cwb8ufa9LNHwp0daXmnxdmnAl2Rqp8nuvS4u7d15nj8dMrf8c/lvyGnoNmkAhOJwjn2/SP31fPOTgzA4TxfqM97jdQdhodz+VMCFpkAnFa4jL8z5u4D6A7b4Um98ZAPgMylbnEnP2UC0CZHwP8E0vklhyl3ooAggMVl/vaA06lph8tmYnvuXjDZABaXRaoXPu8W3P1eDVAdVj0BC4Dmx3s4MgF4rYPADPIzgM6OtwaSGIBow/Lkti/PKt8EMgFoh8usM43bsbitWbhf1LgjBABeGs+KswDMJl47e6MbvIgX1oQ31VsMgDcX2yBjFbG2AW3jibMyAXjDyHSdMW+utHsYjMkztjpo44wuCP9/z40AsgBovUXGEbAu71lNeY9iZ9cadJC4UaHbFpu9d4g062DI64MyAbjR951avJe33Zaywl2Cs3ezAOw9z53ux9yQLwvAYo8/k2UCUQAcn90Zzw8tJO6EpsVR7M3RVqRZnR1vT04BABFn3+T5MbelDfCHFy0nA8Bu3mweevYhI6riA2ih59nOnEN7ATDjAti1OngyKf+arrAAZ8x72S+7C8oDQOntPBiczJRMCxhAeac516nzAXj4DaJVphsW7oJEfIA7zHyNFusU7YLavLbIBhANn/eA82kEYAHvsXPwMgG0gsyCs+JtFoDVHqXTU84ulUQXAE3e/i5iADo9zpZxEfX1y2uSHW66kwlgsL+8dawBnjtBAJxeT+vD82VaALmkGe/sfABOb4+77LGZUUs5R0HekLYa6fmaxPKA06UP0Dh3OOhdtnyY8J5agTxgegneoD/g3AICAD/toQqDMACeU+cC6AetucjabSgEMNhzl6ASBDBon18J9niFkP55C6KBzc3AswHAkD74SdvzM1cEwJv3UIgpBkA7XW0B2mEVXl5Gr2w3wxeKuSUB0VLEIozqnT2vFKGdgg0QYA/C7bSyAUAvECwmd+Kvw4IBOAf8IW3MWzQnzAMGbfoKrcHxeAC88ws+E52fCugtF8a8h3ZG9dKbB1FQVoW1P5x7g0FnsctYUWy6c2GgsRhnvG3cV6eZZ/V2s4EzcFvMHWmJMACljxf5ygLQQ+dctXu8GjEXwOmcnbg23w2fmodDq5lZTB+s4OfQ2w+ZFVZvMm4d9vvMB9dtTibNSdbHvGazBc/KnxPvrCanZnOW4e06OK0a4DNqU/r7geHxUKMcTgvuw9FhvP9Bjn/524l3Kjx6JTSYpIXK/iQyFYFhFPg5gXK52FkH3AEW6mEzT5p9jCJO9VTF+g8bIqO0DKAodgAAAABJRU5ErkJggg==" alt="Imprenta Nacional de Colombia">
+    <div class="brand">
+      <small>Jornada de formación ambiental</small>
+      <h1>Ecoeficiencia <span>360</span></h1>
+      <span class="slogan">Comunicar con transparencia es la mejor impresión</span>
+    </div>
+    <div class="progress" aria-live="polite">Tu avance<b id="total">0 / 9</b>respuestas correctas</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="menu" aria-label="Módulos">
+    <a href="#politica" data-k="politica"><span class="num">1</span><span class="t">Política Ambiental</span><span class="d">9 compromisos y 6 actitudes</span><span class="st" id="st-politica">3 preguntas pendientes</span></a>
+    <a href="#energia" data-k="energia"><span class="num">2</span><span class="t">Programa de Uso y Ahorro de Energía 2026</span><span class="d">Metas, acciones y hábitos</span><span class="st" id="st-energia">3 preguntas pendientes</span></a>
+    <a href="#respel" data-k="respel"><span class="num">3</span><span class="t">Plan de Gestión Integral de Residuos Peligrosos</span><span class="d">Qué son, cómo se manejan, qué hacer</span><span class="st" id="st-respel">3 preguntas pendientes</span></a>
+  </nav>
+
+  <!-- ============ 1. POLÍTICA ============ -->
+  <section class="mod" id="politica">
+    <div class="eyebrow">Módulo 1</div>
+    <h2>Política Ambiental 2026</h2>
+    <p class="lead">Desde 1894, la Imprenta Nacional de Colombia imprime la memoria de la nación. Hoy, como empresa industrial y comercial del Estado del sector de la comunicación gráfica, también se hace responsable de proteger y conservar el medio ambiente. Lo concreta en 9 compromisos, que agrupamos en 3 pilares.</p>
+    <p class="doc">Firmada por la Gerencia General. Las palabras clave son las mismas que encuentras en tu rompecabezas.</p>
+
+    <h3>Los 9 compromisos en 3 pilares</h3>
+    <div class="grid g3">
+      <div class="card pillar">
+        <h4>Prevenir y controlar</h4>
+        <div class="commit"><span class="n">1</span><div><span class="kw">PREVENCIÓN</span>Prevenir la contaminación y controlar y mitigar los impactos de nuestras actividades, productos y servicios.</div></div>
+        <div class="commit"><span class="n">2</span><div><span class="kw">CUMPLIMIENTO</span>Cumplir los requisitos legales ambientales y los compromisos que la entidad suscriba.</div></div>
+        <div class="commit"><span class="n">3</span><div><span class="kw">METAS</span>Establecer objetivos, metas e indicadores para controlar y mejorar el desempeño ambiental.</div></div>
+      </div>
+      <div class="card pillar">
+        <h4>Usar con eficiencia</h4>
+        <div class="commit"><span class="n">4</span><div><span class="kw">AHORRO</span>Usar de forma eficiente y racional el agua, la energía y los demás recursos de los procesos productivos y administrativos.</div></div>
+        <div class="commit"><span class="n">5</span><div><span class="kw">CIRCULARIDAD</span>Aprovechar y disponer bien los residuos, con prácticas de economía circular.</div></div>
+        <div class="commit"><span class="n">6</span><div><span class="kw">COMPRA VERDE</span>Incluir criterios ambientales al comprar bienes, servicios e insumos.</div></div>
+      </div>
+      <div class="card pillar">
+        <h4>Cultura y mejora</h4>
+        <div class="commit"><span class="n">7</span><div><span class="kw">CLIMA</span>Mitigar el cambio climático con movilidad sostenible, uso eficiente de recursos y buenas prácticas.</div></div>
+        <div class="commit"><span class="n">8</span><div><span class="kw">CONCIENCIA</span>Fortalecer la cultura ambiental de servidores públicos, contratistas y demás partes interesadas.</div></div>
+        <div class="commit"><span class="n">9</span><div><span class="kw">MEJORA CONTINUA</span>Hacer seguimiento, evaluar y mejorar de forma continua el Sistema de Gestión Ambiental.</div></div>
+      </div>
+    </div>
+
+    <h3>Las 6 actitudes ambientales</h3>
+    <p>La política se vuelve real en lo que cada persona hace en su puesto de trabajo.</p>
+    <div class="att">
+      <div class="card"><b>CONOCE PARA CUIDAR</b>Conoce la Política Ambiental de la Imprenta para actuar de forma pertinente, eficaz y eficiente.</div>
+      <div class="card"><b>SÉ RESPETUOSO</b>Valora los recursos naturales e industriales de tu entorno y a todas las personas de tu ecosistema.</div>
+      <div class="card"><b>PROMUEVE EL AMOR AMBIENTAL</b>Quiere, cuida y protege los recursos que tienes a tu disposición.</div>
+      <div class="card"><b>PARTICIPA</b>Aporta tu colaboración en las acciones ambientales dentro y fuera de la Imprenta. Juntos logramos más.</div>
+      <div class="card"><b>SÉ HONESTO</b>Reconoce si estás aportando, cuidando o perjudicando tu entorno, para poder mejorar.</div>
+      <div class="card"><b>SÉ RESPONSABLE</b>Asume un rol activo, comprometido y constante con el entorno.</div>
+    </div>
+
+    <div class="quiz" data-quiz="politica"></div>
+  </section>
+
+  <!-- ============ 2. ENERGÍA ============ -->
+  <section class="mod" id="energia">
+    <div class="eyebrow">Módulo 2</div>
+    <h2>Programa de Uso Eficiente y Ahorro de Energía 2026</h2>
+    <p class="lead">Casi todo lo que hacemos en la Imprenta necesita energía eléctrica: la planta, las oficinas, los pasillos y la cafetería. El programa busca ahorrar y usar este recurso de forma racional en todas las actividades, productos y servicios.</p>
+    <p class="doc">Documento SG-DC-8, versión 07 · Grupo Mejora Continua</p>
+
+    <h3>La meta y cómo se mide</h3>
+    <div class="stats">
+      <div class="stat"><b>3 %</b><span>Meta 2026: mantener un promedio de eficiencia del 3 % en el consumo de energía con respecto a la producción.</span></div>
+      <div class="stat"><b>kWh ÷ tiros</b><span>Indicador: consumo de energía dividido entre la cantidad de tiros producidos en el período.</span></div>
+      <div class="stat"><b>Cada mes</b><span>Seguimiento mensual y evaluación anual, a cargo del Coordinador de Mejora Continua.</span></div>
+    </div>
+
+    <h3>¿Dónde consumimos energía?</h3>
+    <div class="grid g2">
+      <div class="card"><h4>Iluminación</h4>Luminarias de la planta de producción, oficinas, pasillos, escaleras, baños, polideportivo, museo, cafeterías, recepciones y zonas exteriores.</div>
+      <div class="card"><h4>Máquinas de producción</h4>51 máquinas y equipos de planta en acabados, impresión, mantenimiento, imposición y almacén.</div>
+      <div class="card"><h4>Equipos de oficina</h4>519 equipos electrónicos, entre ellos 240 computadores de mesa, 183 teléfonos, 29 impresoras y 27 escáneres.</div>
+      <div class="card"><h4>Cafetería</h4>Hornos microondas y neveras de las cafeterías.</div>
+    </div>
+
+    <h3>Lo que ya hace la Imprenta</h3>
+    <ul class="steps">
+      <li>Cambió en la planta 30 luminarias de 1.000 W por luminarias de 400 W.</li>
+      <li>Reemplazó los tubos fluorescentes de 32 W de las oficinas por paneles LED de menor consumo y mayor vida útil.</li>
+      <li>Cambia las luminarias del polideportivo de 400 W por tecnología LED de 200 W.</li>
+      <li>Instala sensores de movimiento en baños y escaleras, y revisa los tableros eléctricos.</li>
+      <li>Controla a diario las luces externas y comparte tips de ahorro en las pantallas cada dos meses.</li>
+    </ul>
+
+    <h3>Lo que haces tú cada día</h3>
+    <div class="tips">
+      <div class="tip"><div><strong>Aprovecha la luz natural</strong>Si hay suficiente luz y es cómodo trabajar, apaga la luz artificial.</div></div>
+      <div class="tip"><div><strong>Apaga al salir</strong>Luces y aire acondicionado cuando no haya nadie en la oficina, y la luz del baño al salir.</div></div>
+      <div class="tip"><div><strong>Baja el brillo al 55 %</strong>La pantalla consume cerca del 70 % de la energía del computador.</div></div>
+      <div class="tip"><div><strong>Activa el modo ahorro</strong>Puede reducir hasta un 37 % el consumo de los equipos.</div></div>
+      <div class="tip"><div><strong>Apaga los equipos que no uses</strong>Apagar los equipos en desuso ahorra cerca del 10 %. En las pausas, apaga al menos la pantalla.</div></div>
+      <div class="tip"><div><strong>Desconecta el cargador</strong>Si el celular no está cargando, el cargador no debe quedar enchufado.</div></div>
+    </div>
+    <p class="doc" style="margin-top:12px">Atención: se harán inspecciones sin previo aviso. El puesto de trabajo que esté haciendo uso irracional de la energía recibirá un sello de multa ambiental.</p>
+
+    <div class="quiz" data-quiz="energia"></div>
+  </section>
+
+  <!-- ============ 3. RESPEL ============ -->
+  <section class="mod" id="respel">
+    <div class="eyebrow">Módulo 3</div>
+    <h2>Plan de Gestión Integral de Residuos Peligrosos (PGIRP)</h2>
+    <p class="lead">Un residuo peligroso, o RESPEL, es un material que después de desecharse puede dañar la salud de las personas, la flora, la fauna y los ecosistemas. También son peligrosos los envases y empaques que estuvieron en contacto con él.</p>
+    <p class="doc">Documento SG-DC-7 · Grupo Mejora Continua</p>
+
+    <h3>¿Qué residuos peligrosos genera la Imprenta?</h3>
+    <p>Salen sobre todo de la impresión, el mantenimiento industrial y la infraestructura. Sus principales peligros son ser inflamables, tóxicos o corrosivos.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Residuo</th><th>Dónde se genera</th><th>Peligro</th></tr></thead>
+      <tbody>
+        <tr><td>Aguatinta y solventes del lavado de máquinas</td><td>Impresión</td><td>Inflamable</td></tr>
+        <tr><td>Trapos impregnados de tinta y solventes</td><td>Impresión y acabados</td><td>Inflamable, tóxico</td></tr>
+        <tr><td>Aceites usados</td><td>Mantenimiento y máquinas</td><td>Inflamable</td></tr>
+        <tr><td>Tóner y cartuchos</td><td>Todas las oficinas</td><td>Tóxico</td></tr>
+        <tr><td>Luminarias</td><td>Infraestructura y servicios generales</td><td>Tóxico (contienen mercurio)</td></tr>
+        <tr><td>RAEE (aparatos eléctricos y electrónicos) y baterías</td><td>Sistemas y mantenimiento</td><td>Tóxico</td></tr>
+        <tr><td>Envases contaminados y EPP con tinta o solventes</td><td>Impresión e infraestructura</td><td>Tóxico</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Vamos bien, y podemos mejorar</h3>
+    <div class="stats">
+      <div class="stat"><b>12.861 kg</b><span>de residuos peligrosos en todo 2025, un promedio de 972 kg al mes.</span></div>
+      <div class="stat"><b>8.693 kg</b><span>en 2026 hasta agosto, con un promedio móvil de 543 kg al mes.</span></div>
+      <div class="stat"><b>100 %</b><span>Meta: que todos los residuos peligrosos sean gestionados y tengan certificado.</span></div>
+    </div>
+
+    <h3>El recorrido de un residuo peligroso</h3>
+    <div class="flow">
+      <div class="card"><small>1 · En tu puesto</small>Los líquidos van al bidón de cada máquina. Los sólidos van a la caneca con <b>bolsa roja</b>.</div>
+      <div class="card"><small>2 · Recolección</small>El personal de aseo recorre la planta todas las tardes. Los líquidos pasan al isotanque de 1.000 L con dique de contención.</div>
+      <div class="card"><small>3 · Cuarto de acopio</small>Cada bolsa se pesa, se etiqueta, se registra en la planilla y se ubica en su zona demarcada.</div>
+      <div class="card"><small>4 · Gestor autorizado</small>Solo empresas con licencia ambiental los recogen. Entregan un certificado de disposición final.</div>
+    </div>
+
+    <h3>Las reglas de oro</h3>
+    <div class="grid g2">
+      <div class="card">
+        <h4>Siempre</h4>
+        <ul>
+          <li>Separa los residuos peligrosos de los no peligrosos.</li>
+          <li>Pide solo el material peligroso que vas a necesitar.</li>
+          <li>Revisa la etiqueta y la hoja de seguridad del producto antes de usarlo.</li>
+          <li>Etiqueta en español el nombre, los componentes, el estado, las fechas, el generador y los pictogramas de peligro.</li>
+          <li>Usa tus elementos de protección: guantes para químicos, botas, overol, delantal y tapabocas cuando lo indique la hoja de seguridad.</li>
+        </ul>
+      </div>
+      <div class="never">
+        <h4 style="font-family:var(--display);margin:0">Nunca</h4>
+        <ul>
+          <li>Mezclar residuos peligrosos con los ordinarios: aumenta el volumen de RESPEL.</li>
+          <li>Guardar productos químicos en envases de alimentos.</li>
+          <li>Trasvasar un producto sin volver a etiquetar el envase.</li>
+          <li>Botar líquidos por sifones o desagües.</li>
+          <li>Dejar las bolsas rojas sobre las rejillas que protegen el circuito eléctrico.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Si hay un derrame</h3>
+    <ol class="steps">
+      <li>Alerta a tus compañeros y aleja a las personas del área.</li>
+      <li>Identifica qué se derramó: busca la etiqueta y la hoja de seguridad.</li>
+      <li>Ponte los elementos de protección y trae el kit antiderrames (absorbente, pala, escoba, bolsas, guantes, gafas y cinta de señalización).</li>
+      <li>Aísla y demarca la zona. Rodea con absorbente los sifones y desagües para que el producto no llegue al alcantarillado.</li>
+      <li>Avisa al conmutador (Encargado de Comunicaciones en Emergencia) y al jefe de brigada.</li>
+    </ol>
+
+    <div class="quiz" data-quiz="respel"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span class="slogan">Comunicar con transparencia es <b>la mejor impresión</b></span>Ecoeficiencia 360 · Imprenta Nacional de Colombia, desde 1894 · Una experiencia de Simoné.<br>Fuentes: Política Ambiental 2026; Programa de Uso Eficiente y Ahorro de Energía (SG-DC-8, v07); Plan de Gestión Integral de Residuos Peligrosos (SG-DC-7).</div>
+</footer>
+
+<script>
+const QUIZ = {
+  politica: [
+    {q:"¿Cuántos compromisos tiene la Política Ambiental 2026 de la Imprenta Nacional?",
+     o:["3 compromisos","6 compromisos","9 compromisos","12 compromisos"], a:2,
+     e:"Son 9 compromisos, agrupados en 3 pilares: prevenir y controlar, usar con eficiencia, y cultura y mejora."},
+    {q:"¿Qué significa el compromiso CIRCULARIDAD?",
+     o:["Rotar a los colaboradores entre áreas","Aprovechar y disponer bien los residuos con prácticas de economía circular","Comprar más insumos para tener inventario","Hacer reuniones en círculo"], a:1,
+     e:"La circularidad busca que los residuos se aprovechen y se dispongan adecuadamente, en lugar de terminar como basura."},
+    {q:"¿Qué actitud te invita a reconocer si estás cuidando o perjudicando tu entorno?",
+     o:["Participa","Sé respetuoso","Sé honesto","Conoce para cuidar"], a:2,
+     e:"Sé honesto: solo reconociendo lo que aportamos y lo que afectamos podemos hacer planes de mejora."}
+  ],
+  energia: [
+    {q:"¿Cuál es la meta del programa de energía para 2026?",
+     o:["Reducir a la mitad el consumo de energía","Mantener un promedio de eficiencia del 3 % en el consumo de energía con respecto a la producción","Apagar la planta un día a la semana","Usar solo energía solar"], a:1,
+     e:"La meta, alineada con el PIGA, es mantener un promedio de eficiencia del 3 % en el consumo de energía con respecto a la producción."},
+    {q:"¿Con qué indicador se mide el uso eficiente de la energía?",
+     o:["Consumo de energía ÷ número de colaboradores","Consumo de energía ÷ cantidad de tiros producidos en el período","Valor de la factura ÷ metros cuadrados","Número de bombillos ÷ número de oficinas"], a:1,
+     e:"Se mide la energía consumida frente a los tiros producidos. Así se ve si producimos más gastando menos."},
+    {q:"¿A qué nivel se recomienda ajustar el brillo de la pantalla del computador?",
+     o:["Al 100 %, para ver mejor","Cerca del 55 %","Al 10 %","No influye en el consumo"], a:1,
+     e:"La pantalla consume cerca del 70 % de la energía del computador. Un brillo cercano al 55 % ahorra energía sin afectar el trabajo."}
+  ],
+  respel: [
+    {q:"¿De qué color son las bolsas para residuos peligrosos sólidos en las canecas de la planta?",
+     o:["Verde","Blanca","Roja","Negra"], a:2,
+     e:"Los residuos peligrosos sólidos, como los trapos con tinta, van en canecas con bolsa roja."},
+    {q:"Terminas de limpiar una máquina con un trapo impregnado de tinta y solvente. ¿Qué haces con él?",
+     o:["Lo boto en la caneca de residuos ordinarios","Lo lavo en el lavamanos para reutilizarlo","Lo deposito en la caneca de residuos peligrosos, sin mezclarlo con otros residuos","Lo dejo en la máquina para el siguiente turno"], a:2,
+     e:"Es un residuo peligroso inflamable y tóxico. Va a la caneca de bolsa roja y luego a un gestor autorizado."},
+    {q:"Hay un derrame de solvente cerca de un desagüe. ¿Qué es lo primero que debes hacer?",
+     o:["Echarle agua para que se vaya por el desagüe","Alertar a los compañeros y alejar a las personas del área","Esperar a que se evapore","Limpiarlo con papel y botarlo en la caneca de reciclaje"], a:1,
+     e:"Lo primero es alertar y alejar a las personas. Después identificas el producto, usas el kit antiderrames y proteges los desagües."}
+  ]
+};
+const LET = "ABCD";
+const state = {politica:{}, energia:{}, respel:{}};
+function load(){ try{ const s = JSON.parse(localStorage.getItem("eco360")||"null"); if(s) Object.assign(state, s); }catch(e){} }
+function save(){ try{ localStorage.setItem("eco360", JSON.stringify(state)); }catch(e){} }
+
+function renderQuiz(k){
+  const box = document.querySelector('[data-quiz="'+k+'"]');
+  const qs = QUIZ[k];
+  let h = '<h3>Valida lo que aprendiste</h3><p class="doc" style="margin-top:-6px">3 preguntas. Elige una respuesta y verás de inmediato si es correcta.</p>';
+  qs.forEach((it,i)=>{
+    h += '<div class="q" data-i="'+i+'"><p class="qt">'+(i+1)+'. '+it.q+'</p><div class="opts">';
+    it.o.forEach((op,j)=>{ h += '<button type="button" id="'+k+'-'+i+'-'+j+'" data-j="'+j+'"><span class="l">'+LET[j]+'</span><span>'+op+'</span></button>'; });
+    h += '</div><div class="fb" role="status"></div></div>';
+  });
+  h += '<div class="qfoot"><span class="score" id="sc-'+k+'"></span><button type="button" class="btn" id="re-'+k+'">Intentar de nuevo</button><span id="nx-'+k+'"></span></div>';
+  box.innerHTML = h;
+  box.querySelectorAll('.q').forEach(qel=>{
+    const i = +qel.dataset.i;
+    qel.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      if(state[k][i] !== undefined) return;
+      state[k][i] = +b.dataset.j; save(); paint(k); total();
+    }));
+  });
+  document.getElementById('re-'+k).addEventListener('click',()=>{ state[k] = {}; save(); paint(k); total(); });
+  paint(k);
+}
+function paint(k){
+  const box = document.querySelector('[data-quiz="'+k+'"]');
+  const qs = QUIZ[k]; let done=0, ok=0;
+  box.querySelectorAll('.q').forEach(qel=>{
+    const i = +qel.dataset.i, it = qs[i], ans = state[k][i];
+    const fb = qel.querySelector('.fb');
+    qel.querySelectorAll('button').forEach(b=>{
+      const j = +b.dataset.j; b.className=''; b.disabled = ans !== undefined;
+      if(ans !== undefined){ if(j===it.a) b.className='right'; else if(j===ans) b.className='wrong'; }
+    });
+    if(ans === undefined){ fb.className='fb'; fb.textContent=''; }
+    else { done++; const good = ans===it.a; if(good) ok++;
+      fb.className = 'fb show ' + (good?'ok':'no');
+      fb.innerHTML = '<b>'+(good?'¡Correcto! ':'La respuesta correcta es la '+LET[it.a]+'. ')+'</b>'+it.e; }
+  });
+  document.getElementById('sc-'+k).textContent = done ? ok+' de 3 correctas' : '';
+  document.getElementById('re-'+k).style.display = done ? '' : 'none';
+  const order = ["politica","energia","respel"], next = order[order.indexOf(k)+1];
+  const nx = document.getElementById('nx-'+k);
+  nx.innerHTML = (done===3 && next) ? '<a class="btn solid" href="#'+next+'">Siguiente módulo</a>' : (done===3 ? '<b>¡Completaste los 3 módulos!</b>' : '');
+  const st = document.getElementById('st-'+k);
+  st.textContent = done===3 ? '✓ Validado: '+ok+' de 3' : (done ? done+' de 3 respondidas' : '3 preguntas pendientes');
+}
+function total(){
+  let ok=0; for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{ if(state[k][i]===it.a) ok++; });
+  document.getElementById('total').textContent = ok+' / 9';
+}
+function route(){
+  const h = (location.hash||'').slice(1);
+  const k = QUIZ[h] ? h : 'politica';
+  document.querySelectorAll('section.mod').forEach(s=>s.classList.toggle('on', s.id===k));
+  document.querySelectorAll('nav.menu a').forEach(a=>{ const on = a.dataset.k===k; a.classList.toggle('on', on); a.setAttribute('aria-current', on?'page':'false'); });
+}
+load();
+Object.keys(QUIZ).forEach(renderQuiz);
+total(); route();
+window.addEventListener('hashchange', ()=>{ route(); document.querySelector('nav.menu').scrollIntoView({block:'start'}); });
+</script>
+</body>
+</html>
