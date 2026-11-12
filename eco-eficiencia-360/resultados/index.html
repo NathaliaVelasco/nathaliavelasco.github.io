@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resultados ECO EFICIENCIA 360</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f7f7; --card:#fff; --ink:#1a1a1a; --muted:#5a6266; --line:#e0e4e4; --teal:#178a84; --teal-soft:#e2f2f0; --bad:#b3261e;
+  --display:"Jost","Century Gothic","Segoe UI",system-ui,sans-serif; --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  /* Tablero de control: acceso con clave, resumen por grupo, descarga de Excel */
+  color-scheme: light;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 48px}
+h1{font-family:var(--display);font-weight:500;font-size:30px;margin:0 0 4px;text-transform:uppercase;letter-spacing:.02em}
+h1 span{color:var(--teal);font-weight:600}
+.sub{color:var(--muted);margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-bottom:16px}
+label{font-weight:700;display:block;margin-bottom:6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;min-width:220px}
+input:focus{outline:3px solid var(--teal);outline-offset:1px}
+.btn{font:inherit;font-weight:700;padding:10px 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.btn.alt{background:var(--card);color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.err{color:var(--bad);min-height:22px;margin-top:8px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.tile{background:var(--teal-soft);border-left:5px solid var(--teal);border-radius:4px;padding:12px 14px}
+.tile b{display:block;font-family:var(--display);font-weight:600;font-size:28px;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left}
+th{background:var(--teal-soft)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.note{font-size:14px;color:var(--muted);margin-top:10px;max-width:70ch}
+#panel[hidden]{display:none}
+@media (max-width:600px){.tiles{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Eco eficiencia <span>360</span> · Resultados</h1>
+  <p class="sub">Imprenta Nacional de Colombia · Registro de participantes y puntaje por grupo de trabajo</p>
+
+  <form class="card" id="login" novalidate>
+    <label for="clave">Clave de administración</label>
+    <div class="row">
+      <input id="clave" type="password" autocomplete="off" placeholder="ECO-XXXXXX">
+      <button class="btn" type="submit" id="entrar">Ver resultados</button>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+
+  <div id="panel" hidden>
+    <div class="tiles">
+      <div class="tile"><b id="t1">0</b>personas registradas de 255</div>
+      <div class="tile"><b id="t2">0</b>completaron las 9 preguntas</div>
+      <div class="tile"><b id="t3">0</b>puntos promedio en preguntas (de 72)</div>
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <strong>Puntaje de preguntas por grupo de trabajo</strong>
+        <div class="row"><button class="btn alt" type="button" id="actualizar">Actualizar</button><button class="btn" type="button" id="excel">Descargar Excel</button></div>
+      </div>
+      <p class="note">Los 28 puntos de asistencia se registran en el Excel, en la hoja Participantes, columna "Puntos asistencia". El ranking del Excel suma todo automáticamente.</p>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Grupo de trabajo</th><th class="n">Personas</th><th class="n">Puntos preguntas</th><th class="n">Promedio por persona</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const SB = "https://tovzbcwwdxueejgidoze.supabase.co/rest/v1/rpc/";
+const SBKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvdnpiY3d3ZHh1ZWVqZ2lkb3plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3MDA0NzAsImV4cCI6MjEwODI3NjQ3MH0.dHKHFpeYk00g93FEEF4BW5xzzHgXXQgg69ejzW0rWak";
+const MODS = {politica:"Política Ambiental", energia:"Energía", respel:"Residuos peligrosos"};
+let clave = "", rows = [];
+
+async function fetchRows(){
+  const r = await fetch(SB+"eco360_exportar",{method:"POST",headers:{"apikey":SBKEY,"Authorization":"Bearer "+SBKEY,"Content-Type":"application/json"},body:JSON.stringify({p_clave:clave})});
+  if(!r.ok){ let m=""; try{ m=(await r.json()).message||""; }catch(e){} throw new Error(m); }
+  return r.json();
+}
+function people(){
+  const map = new Map();
+  rows.forEach(r=>{
+    const key = r.nombre+"|"+r.grupo;
+    if(!map.has(key)) map.set(key,{nombre:r.nombre, grupo:r.grupo, fecha:r.registrado, politica:0, energia:0, respel:0, resp:0});
+    const p = map.get(key);
+    if(r.modulo){ p[r.modulo]+=r.puntos; p.resp++; }
+  });
+  return [...map.values()];
+}
+function render(){
+  const ps = people(), byG = {};
+  ps.forEach(p=>{ const g = byG[p.grupo] ||= {n:0,pts:0}; g.n++; g.pts += p.politica+p.energia+p.respel; });
+  document.getElementById('t1').textContent = ps.length;
+  document.getElementById('t2').textContent = ps.filter(p=>p.resp===9).length;
+  const tot = ps.reduce((s,p)=>s+p.politica+p.energia+p.respel,0);
+  document.getElementById('t3').textContent = ps.length ? (tot/ps.length).toFixed(1) : "0";
+  const tb = document.getElementById('tb');
+  const gs = Object.entries(byG).sort((a,b)=>b[1].pts-a[1].pts);
+  tb.innerHTML = gs.length ? gs.map(([g,v])=>'<tr><td>'+esc(g)+'</td><td class="n">'+v.n+'</td><td class="n">'+v.pts+'</td><td class="n">'+(v.pts/v.n).toFixed(1)+'</td></tr>').join('') : '<tr><td colspan="4">Todavía no hay registros.</td></tr>';
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function fmt(d){ const x=new Date(d); return x.toLocaleString('es-CO',{timeZone:'America/Bogota',dateStyle:'short',timeStyle:'short'}); }
+
+function excel(){
+  const ps = people().sort((a,b)=>a.grupo.localeCompare(b.grupo,'es',{numeric:true})||a.nombre.localeCompare(b.nombre,'es'));
+  const wb = XLSX.utils.book_new();
+  // Hoja Participantes
+  const head = ["Nombre completo","Grupo de trabajo","Fecha de registro","Política Ambiental (máx 24)","Energía (máx 24)","Residuos peligrosos (máx 24)","Puntos preguntas (máx 72)","Puntos asistencia (máx 28)","Total (máx 100)"];
+  const aoa = [head];
+  ps.forEach(p=>aoa.push([p.nombre,p.grupo,fmt(p.fecha),p.politica,p.energia,p.respel,null,null,null]));
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  for(let i=2;i<=ps.length+1;i++){
+    ws['G'+i]={t:'n',f:'SUM(D'+i+':F'+i+')'};
+    ws['H'+i]={t:'n',v:0};
+    ws['I'+i]={t:'n',f:'G'+i+'+H'+i};
+  }
+  ws['!cols']=[{wch:34},{wch:22},{wch:16},{wch:14},{wch:12},{wch:14},{wch:14},{wch:14},{wch:12}];
+  ws['!autofilter']={ref:'A1:I'+(ps.length+1)};
+  XLSX.utils.book_append_sheet(wb, ws, "Participantes");
+  // Hoja Ranking
+  const grupos = [...new Set(ps.map(p=>p.grupo))].sort((a,b)=>a.localeCompare(b,'es',{numeric:true}));
+  const rk = [["Grupo de trabajo","Personas","Puntos preguntas","Puntos asistencia","Total puntos","Promedio por persona (máx 100)"]];
+  grupos.forEach(g=>rk.push([g,null,null,null,null,null]));
+  const wr = XLSX.utils.aoa_to_sheet(rk);
+  grupos.forEach((g,ix)=>{ const i=ix+2;
+    wr['B'+i]={t:'n',f:'COUNTIF(Participantes!B:B,A'+i+')'};
+    wr['C'+i]={t:'n',f:'SUMIF(Participantes!B:B,A'+i+',Participantes!G:G)'};
+    wr['D'+i]={t:'n',f:'SUMIF(Participantes!B:B,A'+i+',Participantes!H:H)'};
+    wr['E'+i]={t:'n',f:'C'+i+'+D'+i};
+    wr['F'+i]={t:'n',f:'IF(B'+i+'=0,0,ROUND(E'+i+'/B'+i+',1))'};
+  });
+  wr['!cols']=[{wch:24},{wch:10},{wch:16},{wch:16},{wch:12},{wch:26}];
+  XLSX.utils.book_append_sheet(wb, wr, "Ranking por grupo");
+  // Hoja detalle
+  const QN = {politica:["¿Cuántos compromisos tiene la Política?","¿Qué significa CIRCULARIDAD?","Actitud: reconocer si cuidas o perjudicas"],
+              energia:["Meta de energía 2026","Indicador de energía","Brillo recomendado de pantalla"],
+              respel:["Color de bolsa para RESPEL sólidos","Qué hacer con trapo con tinta","Primer paso ante un derrame"]};
+  const det = [["Nombre completo","Grupo de trabajo","Módulo","Pregunta","Respuesta elegida","Correcta","Puntos","Fecha y hora"]];
+  rows.filter(r=>r.modulo).forEach(r=>det.push([r.nombre,r.grupo,MODS[r.modulo],QN[r.modulo][r.pregunta],"ABCD"[r.opcion],r.correcta?"Sí":"No",r.puntos,fmt(r.respondido)]));
+  const wd = XLSX.utils.aoa_to_sheet(det);
+  wd['!cols']=[{wch:34},{wch:22},{wch:20},{wch:40},{wch:10},{wch:9},{wch:8},{wch:16}];
+  XLSX.utils.book_append_sheet(wb, wd, "Detalle respuestas");
+  const hoy = new Date().toLocaleDateString('es-CO',{timeZone:'America/Bogota'}).replace(/\//g,'-');
+  XLSX.writeFile(wb, "ECO_EFICIENCIA_360_resultados_"+hoy+".xlsx");
+}
+
+document.getElementById('login').addEventListener('submit', async e=>{
+  e.preventDefault();
+  clave = document.getElementById('clave').value.trim();
+  const err = document.getElementById('err'), b = document.getElementById('entrar');
+  b.disabled = true; err.textContent = '';
+  try{ rows = await fetchRows(); document.getElementById('panel').hidden=false; document.getElementById('login').hidden=true; render(); }
+  catch(x){ err.textContent = /clave/i.test(x.message) ? 'La clave no es correcta.' : 'No pudimos conectar. Revisa tu conexión e intenta de nuevo.'; }
+  b.disabled = false;
+});
+document.getElementById('actualizar').addEventListener('click', async e=>{ e.target.disabled=true; try{ rows = await fetchRows(); render(); }catch(x){} e.target.disabled=false; });
+document.getElementById('excel').addEventListener('click', async e=>{ e.target.disabled=true; try{ rows = await fetchRows(); render(); excel(); }catch(x){} e.target.disabled=false; });
+</script>
+</body>
+</html>
