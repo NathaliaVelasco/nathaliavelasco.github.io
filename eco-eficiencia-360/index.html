@@ -159,6 +159,10 @@ tr:last-child td{border-bottom:0}
 .gate label{display:block;font-weight:700;font-size:15px;margin:12px 0 6px}
 .gate input,.gate select{width:100%;font:inherit;font-size:17px;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
 .gate input:focus,.gate select:focus{outline:3px solid var(--teal);outline-offset:1px}
+.gate .hd{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px;line-height:1.45;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.gate .hd input{width:20px;height:20px;flex:0 0 20px;margin:1px 0 0;accent-color:var(--teal)}
+.gate .hd label{display:inline;font-weight:400;font-size:14px;margin:0}
+.gate .hd b{color:var(--ink)}
 .gate .err{color:var(--bad);font-size:15px;min-height:22px;margin:10px 0 0}
 .gate .btn{width:100%;margin-top:6px;padding:12px;font-size:17px}
 .who{font-size:14px;color:var(--muted);margin-top:4px}
@@ -208,6 +212,7 @@ footer .wrap{padding-top:24px;padding-bottom:28px}
     <input id="gnombre" name="nombre" autocomplete="name" maxlength="120" placeholder="Nombres y apellidos">
     <label for="ggrupo">Grupo de trabajo</label>
     <select id="ggrupo" name="grupo"><option value="">Selecciona tu grupo de trabajo</option></select>
+    <div class="hd"><input type="checkbox" id="ghd"><label for="ghd"><b>Autorizo el tratamiento de mis datos.</b> En cumplimiento de la Ley 1581 de 2012 (habeas data), tu nombre y tu grupo de trabajo se recogen únicamente para evaluar la jornada ECO EFICIENCIA 360 de la Imprenta Nacional de Colombia y seleccionar a las 30 personas ganadoras del taller de bienestar. No se usarán para otro fin ni se compartirán con terceros. Puedes pedir que se actualicen o eliminen al equipo organizador de la jornada.</label></div>
     <div class="err" id="gerr" role="alert"></div>
     <button class="btn solid" type="submit" id="gbtn">Empezar</button>
   </form>
@@ -464,7 +469,7 @@ function showWho(){
   w.innerHTML = me ? me.nombre+' · '+me.grupo+' · <a href="#" id="salir">No soy yo</a>' : '';
   if(me) document.getElementById('salir').addEventListener('click',e=>{ e.preventDefault(); me=null; asis=0; saveMe(); for(const k in state) state[k]={}; refreshAll(); openGate(); });
 }
-function openGate(){ document.getElementById('gate').hidden=false; document.getElementById('gnombre').value=''; document.getElementById('ggrupo').value=''; document.getElementById('gerr').textContent=''; setTimeout(()=>document.getElementById('gnombre').focus(),50); }
+function openGate(){ document.getElementById('gate').hidden=false; document.getElementById('gnombre').value=''; document.getElementById('ggrupo').value=''; document.getElementById('ghd').checked=false; document.getElementById('gerr').textContent=''; setTimeout(()=>document.getElementById('gnombre').focus(),50); }
 async function syncAnswers(){
   if(!me) return;
   try{
@@ -583,6 +588,7 @@ document.getElementById('gform').addEventListener('submit', async e=>{
   const grupo = sel.value, err = document.getElementById('gerr'), btn = document.getElementById('gbtn');
   if(nombre.split(' ').length < 2){ err.textContent='Escribe tu nombre completo: nombres y apellidos.'; return; }
   if(!grupo){ err.textContent='Selecciona tu grupo de trabajo.'; return; }
+  if(!document.getElementById('ghd').checked){ err.textContent='Para participar debes autorizar el tratamiento de tus datos.'; return; }
   err.textContent=''; btn.disabled=true; btn.textContent='Registrando…';
   try{
     const id = await rpc("eco360_registrar",{p_nombre:nombre,p_grupo:grupo});
