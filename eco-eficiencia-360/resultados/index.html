@@ -27,7 +27,9 @@ label{font-weight:700;display:block;margin-bottom:6px}
 input{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;min-width:220px}
 input:focus{outline:3px solid var(--teal);outline-offset:1px}
 .btn{font:inherit;font-weight:700;padding:10px 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
-.btn.alt{background:var(--card);color:var(--ink)}
+.btn.alt{background:var(--card);color:var(--ink);text-decoration:none;display:inline-block}
+.win td{background:#f3faf8}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--teal-soft);color:var(--teal)}
 .btn:disabled{opacity:.5;cursor:default}
 .btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
 .err{color:var(--bad);min-height:22px;margin-top:8px}
@@ -48,7 +50,8 @@ tr:last-child td{border-bottom:0}
 <body>
 <div class="wrap">
   <h1>Eco eficiencia <span>360</span> · Resultados</h1>
-  <p class="sub">Imprenta Nacional de Colombia · Registro de participantes y puntaje por grupo de trabajo</p>
+  <p class="sub">Imprenta Nacional de Colombia · Top 30 ganadores del taller de bienestar</p>
+  <p><a class="btn alt" href="../">← Ir a ECO EFICIENCIA 360</a></p>
 
   <form class="card" id="login" novalidate>
     <label for="clave">Clave de administración</label>
@@ -63,17 +66,17 @@ tr:last-child td{border-bottom:0}
     <div class="tiles">
       <div class="tile"><b id="t1">0</b>personas registradas de 255</div>
       <div class="tile"><b id="t2">0</b>completaron las 9 preguntas</div>
-      <div class="tile"><b id="t3">0</b>puntos promedio en preguntas (de 72)</div>
+      <div class="tile"><b id="t3">0</b>con asistencia registrada</div>
     </div>
     <div class="card">
       <div class="row" style="justify-content:space-between">
-        <strong>Puntaje de preguntas por grupo de trabajo</strong>
+        <strong>Top 30 · ganan el taller de bienestar</strong>
         <div class="row"><button class="btn alt" type="button" id="actualizar">Actualizar</button><button class="btn" type="button" id="excel">Descargar Excel</button></div>
       </div>
-      <p class="note">Los 28 puntos de asistencia se registran en el Excel, en la hoja Participantes, columna "Puntos asistencia". El ranking del Excel suma todo automáticamente.</p>
+      <p class="note">Puntaje: 8 puntos por cada respuesta correcta (72) más 28 de asistencia, para un total de 100. En caso de empate, gana quien completó primero sus respuestas y su asistencia. Las personas que aún no han terminado aparecen con la etiqueta "En curso".</p>
     </div>
     <div class="tbl"><table>
-      <thead><tr><th>Grupo de trabajo</th><th class="n">Personas</th><th class="n">Puntos preguntas</th><th class="n">Promedio por persona</th></tr></thead>
+      <thead><tr><th class="n">#</th><th>Nombre completo</th><th>Grupo de trabajo</th><th class="n">Preguntas</th><th class="n">Asistencia</th><th class="n">Total</th><th>Completó</th></tr></thead>
       <tbody id="tb"></tbody>
     </table></div>
   </div>
@@ -87,7 +90,7 @@ const MODS = {politica:"Política Ambiental", energia:"Energía", respel:"Residu
 let clave = "", rows = [];
 
 async function fetchRows(){
-  const r = await fetch(SB+"eco360_exportar",{method:"POST",headers:{"apikey":SBKEY,"Authorization":"Bearer "+SBKEY,"Content-Type":"application/json"},body:JSON.stringify({p_clave:clave})});
+  const r = await fetch(SB+"eco360_resultados",{method:"POST",headers:{"apikey":SBKEY,"Authorization":"Bearer "+SBKEY,"Content-Type":"application/json"},body:JSON.stringify({p_clave:clave})});
   if(!r.ok){ let m=""; try{ m=(await r.json()).message||""; }catch(e){} throw new Error(m); }
   return r.json();
 }
@@ -95,62 +98,46 @@ function people(){
   const map = new Map();
   rows.forEach(r=>{
     const key = r.nombre+"|"+r.grupo;
-    if(!map.has(key)) map.set(key,{nombre:r.nombre, grupo:r.grupo, fecha:r.registrado, politica:0, energia:0, respel:0, resp:0});
+    if(!map.has(key)) map.set(key,{nombre:r.nombre, grupo:r.grupo, fecha:r.registrado, asistencia:r.asistencia||0, asisFecha:r.asistencia_fecha, politica:0, energia:0, respel:0, resp:0, ultima:null});
     const p = map.get(key);
-    if(r.modulo){ p[r.modulo]+=r.puntos; p.resp++; }
+    if(r.modulo){ p[r.modulo]+=r.puntos; p.resp++; if(!p.ultima || r.respondido>p.ultima) p.ultima=r.respondido; }
   });
-  return [...map.values()];
+  return [...map.values()].map(p=>{
+    p.preguntas = p.politica+p.energia+p.respel; p.total = p.preguntas+p.asistencia;
+    p.completo = p.resp===9 && p.asistencia>0;
+    const ts = [p.ultima,p.asisFecha].filter(Boolean).map(x=>new Date(x).getTime());
+    p.fin = ts.length ? Math.max(...ts) : new Date(p.fecha).getTime();
+    return p;
+  }).sort((a,b)=> b.total-a.total || (b.completo-a.completo) || a.fin-b.fin || a.nombre.localeCompare(b.nombre,'es'));
 }
 function render(){
-  const ps = people(), byG = {};
-  ps.forEach(p=>{ const g = byG[p.grupo] ||= {n:0,pts:0}; g.n++; g.pts += p.politica+p.energia+p.respel; });
+  const ps = people();
   document.getElementById('t1').textContent = ps.length;
   document.getElementById('t2').textContent = ps.filter(p=>p.resp===9).length;
-  const tot = ps.reduce((s,p)=>s+p.politica+p.energia+p.respel,0);
-  document.getElementById('t3').textContent = ps.length ? (tot/ps.length).toFixed(1) : "0";
+  document.getElementById('t3').textContent = ps.filter(p=>p.asistencia>0).length;
   const tb = document.getElementById('tb');
-  const gs = Object.entries(byG).sort((a,b)=>b[1].pts-a[1].pts);
-  tb.innerHTML = gs.length ? gs.map(([g,v])=>'<tr><td>'+esc(g)+'</td><td class="n">'+v.n+'</td><td class="n">'+v.pts+'</td><td class="n">'+(v.pts/v.n).toFixed(1)+'</td></tr>').join('') : '<tr><td colspan="4">Todavía no hay registros.</td></tr>';
+  tb.innerHTML = ps.length ? ps.slice(0,30).map((p,i)=>'<tr class="win"><td class="n">'+(i+1)+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.grupo)+'</td><td class="n">'+p.preguntas+'</td><td class="n">'+p.asistencia+'</td><td class="n"><b>'+p.total+'</b></td><td>'+(p.completo? fmt(p.fin) : '<span class="pill">En curso</span>')+'</td></tr>').join('') : '<tr><td colspan="7">Todavía no hay registros.</td></tr>';
 }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function fmt(d){ const x=new Date(d); return x.toLocaleString('es-CO',{timeZone:'America/Bogota',dateStyle:'short',timeStyle:'short'}); }
 
 function excel(){
-  const ps = people().sort((a,b)=>a.grupo.localeCompare(b.grupo,'es',{numeric:true})||a.nombre.localeCompare(b.nombre,'es'));
+  const ps = people();
   const wb = XLSX.utils.book_new();
-  // Hoja Participantes
-  const head = ["Nombre completo","Grupo de trabajo","Fecha de registro","Política Ambiental (máx 24)","Energía (máx 24)","Residuos peligrosos (máx 24)","Puntos preguntas (máx 72)","Puntos asistencia (máx 28)","Total (máx 100)"];
-  const aoa = [head];
-  ps.forEach(p=>aoa.push([p.nombre,p.grupo,fmt(p.fecha),p.politica,p.energia,p.respel,null,null,null]));
-  const ws = XLSX.utils.aoa_to_sheet(aoa);
-  for(let i=2;i<=ps.length+1;i++){
-    ws['G'+i]={t:'n',f:'SUM(D'+i+':F'+i+')'};
-    ws['H'+i]={t:'n',v:0};
-    ws['I'+i]={t:'n',f:'G'+i+'+H'+i};
-  }
-  ws['!cols']=[{wch:34},{wch:22},{wch:16},{wch:14},{wch:12},{wch:14},{wch:14},{wch:14},{wch:12}];
-  ws['!autofilter']={ref:'A1:I'+(ps.length+1)};
-  XLSX.utils.book_append_sheet(wb, ws, "Participantes");
-  // Hoja Ranking
-  const grupos = [...new Set(ps.map(p=>p.grupo))].sort((a,b)=>a.localeCompare(b,'es',{numeric:true}));
-  const rk = [["Grupo de trabajo","Personas","Puntos preguntas","Puntos asistencia","Total puntos","Promedio por persona (máx 100)"]];
-  grupos.forEach(g=>rk.push([g,null,null,null,null,null]));
-  const wr = XLSX.utils.aoa_to_sheet(rk);
-  grupos.forEach((g,ix)=>{ const i=ix+2;
-    wr['B'+i]={t:'n',f:'COUNTIF(Participantes!B:B,A'+i+')'};
-    wr['C'+i]={t:'n',f:'SUMIF(Participantes!B:B,A'+i+',Participantes!G:G)'};
-    wr['D'+i]={t:'n',f:'SUMIF(Participantes!B:B,A'+i+',Participantes!H:H)'};
-    wr['E'+i]={t:'n',f:'C'+i+'+D'+i};
-    wr['F'+i]={t:'n',f:'IF(B'+i+'=0,0,ROUND(E'+i+'/B'+i+',1))'};
-  });
-  wr['!cols']=[{wch:24},{wch:10},{wch:16},{wch:16},{wch:12},{wch:26}];
-  XLSX.utils.book_append_sheet(wb, wr, "Ranking por grupo");
-  // Hoja detalle
+  const head = ["Puesto","Nombre completo","Grupo de trabajo","Política Ambiental (máx 24)","Energía (máx 24)","Residuos peligrosos (máx 24)","Puntos preguntas (máx 72)","Puntos asistencia (máx 28)","Total (máx 100)","Estado","Completó (fecha y hora)","Fecha de registro"];
+  const fila = (p,i)=>[i+1,p.nombre,p.grupo,p.politica,p.energia,p.respel,p.preguntas,p.asistencia,p.total,p.completo?"Completo":"En curso",p.completo?fmt(p.fin):"",fmt(p.fecha)];
+  const cols = [{wch:7},{wch:34},{wch:22},{wch:14},{wch:12},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:18},{wch:16}];
+  const top = XLSX.utils.aoa_to_sheet([head, ...ps.slice(0,30).map(fila)]); top['!cols']=cols;
+  XLSX.utils.book_append_sheet(wb, top, "Top 30");
+  const all = XLSX.utils.aoa_to_sheet([head, ...ps.map(fila)]); all['!cols']=cols;
+  all['!autofilter']={ref:'A1:L'+(ps.length+1)};
+  XLSX.utils.book_append_sheet(wb, all, "Participantes");
   const QN = {politica:["¿Cuántos compromisos tiene la Política?","¿Qué significa CIRCULARIDAD?","Actitud: reconocer si cuidas o perjudicas"],
               energia:["Meta de energía 2026","Indicador de energía","Brillo recomendado de pantalla"],
               respel:["Color de bolsa para RESPEL sólidos","Qué hacer con trapo con tinta","Primer paso ante un derrame"]};
   const det = [["Nombre completo","Grupo de trabajo","Módulo","Pregunta","Respuesta elegida","Correcta","Puntos","Fecha y hora"]];
   rows.filter(r=>r.modulo).forEach(r=>det.push([r.nombre,r.grupo,MODS[r.modulo],QN[r.modulo][r.pregunta],"ABCD"[r.opcion],r.correcta?"Sí":"No",r.puntos,fmt(r.respondido)]));
+  rows.filter(r=>r.asistencia>0).reduce((m,r)=>m.set(r.nombre+"|"+r.grupo,r),new Map()).forEach(r=>det.push([r.nombre,r.grupo,"Asistencia","Clave del mediador","","Sí",r.asistencia,fmt(r.asistencia_fecha)]));
   const wd = XLSX.utils.aoa_to_sheet(det);
   wd['!cols']=[{wch:34},{wch:22},{wch:20},{wch:40},{wch:10},{wch:9},{wch:8},{wch:16}];
   XLSX.utils.book_append_sheet(wb, wd, "Detalle respuestas");
