@@ -178,9 +178,9 @@ function excel(){
   const all = XLSX.utils.aoa_to_sheet([head, ...ps.map(fila)]); all['!cols']=cols;
   all['!autofilter']={ref:'A1:L'+(ps.length+1)};
   XLSX.utils.book_append_sheet(wb, all, "Participantes");
-  const QN = {politica:["¿Cuántos compromisos tiene la Política?","¿Qué significa CIRCULARIDAD?","Actitud: reconocer si cuidas o perjudicas"],
-              energia:["Meta de energía 2026","Indicador de energía","Brillo recomendado de pantalla"],
-              respel:["Color de bolsa para RESPEL sólidos","Qué hacer con trapo con tinta","Primer paso ante un derrame"]};
+  const QN = {politica:["¿Cuántos compromisos tiene la Política?","¿Qué significa ECONOMÍA CIRCULAR?","Actitud: reconocer si cuidas o perjudicas"],
+              energia:["Computador en las pausas","Luz natural","Último en salir de la oficina"],
+              respel:["Color de bolsa para RESPEL sólidos","Qué hacer con trapo con tinta","Qué hacer ante un derrame"]};
   const det = [["Nombre completo","Grupo de trabajo","Módulo","Pregunta","Respuesta elegida","Correcta","Puntos","Fecha y hora"]];
   rows.filter(r=>r.modulo).forEach(r=>det.push([r.nombre,r.grupo,MODS[r.modulo],QN[r.modulo][r.pregunta],"ABCD"[r.opcion],r.correcta?"Sí":"No",r.puntos,fmt(r.respondido)]));
   rows.filter(r=>r.asistencia>0).reduce((m,r)=>m.set(r.nombre+"|"+r.grupo,r),new Map()).forEach(r=>det.push([r.nombre,r.grupo,"Asistencia","Clave del mediador","","Sí",r.asistencia,fmt(r.asistencia_fecha)]));
@@ -206,19 +206,19 @@ document.getElementById('excel').addEventListener('click', async e=>{ e.target.d
 // ===== Informe =====
 const UNIVERSO = 255;
 const PAL = ["#178a84","#0072a8","#26a95e","#e8891c","#98c340","#68bc9a","#7b5ea7","#c2362b","#3f9fc4","#b8860b","#5a6266","#d46a9f"];
-const QTXT = {politica:["Número de compromisos de la Política (9)","Significado de CIRCULARIDAD","Actitud SÉ HONESTO"],
-  energia:["Meta 2026: eficiencia del 3 % frente a la producción","Indicador: energía ÷ tiros producidos","Brillo de pantalla recomendado (≈55 %)"],
-  respel:["Bolsa roja para RESPEL sólidos","Manejo de trapos con tinta y solvente","Primer paso ante un derrame"]};
+const QTXT = {politica:["Número de compromisos de la Política (9)","Significado de ECONOMÍA CIRCULAR","Actitud SÉ HONESTO"],
+  energia:["Uso del computador en las pausas","Aprovechar la luz natural","Apagar todo al salir de la oficina"],
+  respel:["Bolsa roja para RESPEL sólidos","Manejo de trapos con tinta y solvente","Qué hacer ante un derrame"]};
 const REC = {
   politica:["Reforzar la estructura de la Política Ambiental: 9 compromisos agrupados en 3 pilares. Usar el rompecabezas del kit como recordatorio en los puestos de trabajo y repasar las 9 palabras clave en reuniones de área.",
             "Hacer una campaña sobre economía circular: qué se aprovecha, qué se dispone y cómo se separa en la fuente, con ejemplos de los residuos propios de la Imprenta.",
             "Socializar las 6 actitudes ambientales con casos cotidianos, en especial SÉ HONESTO: reconocer cuándo una práctica propia afecta el entorno y proponer una mejora."],
-  energia:["Comunicar la meta de energía 2026 (eficiencia del 3 % frente a la producción) y su avance mensual en las pantallas internas y en reuniones de planta.",
-           "Explicar en planta el indicador consumo de energía ÷ tiros producidos, con el dato real del mes, para que cada área entienda cómo su trabajo lo mueve.",
-           "Repetir los tips de ahorro en equipos de oficina (brillo cercano al 55 %, modo ahorro, apagar pantallas en pausas), como prevé el programa cada dos meses."],
+  energia:["Reforzar los hábitos de ahorro en equipos de oficina: apagar la pantalla en las pausas, activar el modo ahorro y bajar el brillo. Repetir estos tips en las pantallas internas cada dos meses, como prevé el programa.",
+           "Hacer una campaña sobre el aprovechamiento de la luz natural, con señalización junto a los interruptores de oficinas, pasillos y baños.",
+           "Implementar un recordatorio de cierre de jornada (último en salir: luces, aire acondicionado y equipos apagados) y verificarlo en las inspecciones sin previo aviso."],
   respel:["Reforzar el código de colores en los puntos ecológicos de planta: los residuos peligrosos sólidos van en bolsa roja. Señalizar las canecas con ejemplos visuales.",
           "Hacer una capacitación práctica junto a las máquinas sobre la segregación de trapos impregnados de tinta y solvente, envases contaminados y EPP usados.",
-          "Hacer un simulacro de derrame con el kit antiderrames: alertar y alejar a las personas, identificar el producto, proteger sifones y desagües y avisar al conmutador."]};
+          "Socializar el protocolo de derrame: ante cualquier derrame se avisa al Grupo de Mejora Continua (encargado ambiental) para que active el protocolo. Recomendamos un simulacro coordinado por ese grupo."]};
 const MODNAME = {politica:"Política Ambiental", energia:"Programa de Ahorro de Energía", respel:"Residuos Peligrosos (PGIRP)"};
 const MODCOLOR = {politica:"#178a84", energia:"#e8891c", respel:"#c2362b"};
 
