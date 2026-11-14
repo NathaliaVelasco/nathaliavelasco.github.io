@@ -99,7 +99,7 @@ tr:last-child td{border-bottom:0}
 <body>
 <div class="wrap">
   <h1>Eco eficiencia <span>360</span> · Resultados</h1>
-  <p class="sub">Imprenta Nacional de Colombia · Top 30 ganadores del taller de bienestar</p>
+  <p class="sub">Imprenta Nacional de Colombia · Top 20 ganadores del taller de bienestar</p>
   <p><a class="btn alt" href="../">← Ir a ECO EFICIENCIA 360</a></p>
 
   <form class="card" id="login" novalidate>
@@ -119,7 +119,7 @@ tr:last-child td{border-bottom:0}
     </div>
     <div class="card">
       <div class="row" style="justify-content:space-between">
-        <strong>Top 30 · ganan el taller de bienestar</strong>
+        <strong>Top 20 · ganan el taller de bienestar</strong>
         <div class="row"><button class="btn alt" type="button" id="actualizar">Actualizar</button><button class="btn alt" type="button" id="verinf">Ver informe para el cliente</button><button class="btn" type="button" id="excel">Descargar Excel</button></div>
       </div>
       <p class="note">Puntaje: 8 puntos por cada respuesta correcta (72) más 28 de asistencia, para un total de 100. En caso de empate, gana quien completó primero sus respuestas y su asistencia. Las personas que aún no han terminado aparecen con la etiqueta "En curso".</p>
@@ -180,7 +180,7 @@ function render(){
   document.getElementById('t2').textContent = ps.filter(p=>p.resp===9).length;
   document.getElementById('t3').textContent = ps.filter(p=>p.asistencia>0).length;
   const tb = document.getElementById('tb');
-  tb.innerHTML = ps.length ? ps.slice(0,30).map((p,i)=>'<tr class="win"><td class="n">'+(i+1)+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.grupo)+'</td><td class="n">'+p.preguntas+'</td><td class="n">'+p.asistencia+'</td><td class="n"><b>'+p.total+'</b></td><td>'+(p.completo? fmt(p.fin) : '<span class="pill">En curso</span>')+'</td></tr>').join('') : '<tr><td colspan="7">Todavía no hay registros.</td></tr>';
+  tb.innerHTML = ps.length ? ps.slice(0,20).map((p,i)=>'<tr class="win"><td class="n">'+(i+1)+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.grupo)+'</td><td class="n">'+p.preguntas+'</td><td class="n">'+p.asistencia+'</td><td class="n"><b>'+p.total+'</b></td><td>'+(p.completo? fmt(p.fin) : '<span class="pill">En curso</span>')+'</td></tr>').join('') : '<tr><td colspan="7">Todavía no hay registros.</td></tr>';
 }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function fmt(d){ const x=new Date(d); return x.toLocaleString('es-CO',{timeZone:'America/Bogota',dateStyle:'short',timeStyle:'short'}); }
@@ -191,8 +191,8 @@ function excel(){
   const head = ["Puesto","Nombre completo","Grupo de trabajo","Política Ambiental (máx 24)","Energía (máx 24)","Residuos peligrosos (máx 24)","Puntos preguntas (máx 72)","Puntos asistencia (máx 28)","Total (máx 100)","Estado","Completó (fecha y hora)","Fecha de registro"];
   const fila = (p,i)=>[i+1,p.nombre,p.grupo,p.politica,p.energia,p.respel,p.preguntas,p.asistencia,p.total,p.completo?"Completo":"En curso",p.completo?fmt(p.fin):"",fmt(p.fecha)];
   const cols = [{wch:7},{wch:34},{wch:22},{wch:14},{wch:12},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:18},{wch:16}];
-  const top = XLSX.utils.aoa_to_sheet([head, ...ps.slice(0,30).map(fila)]); top['!cols']=cols;
-  XLSX.utils.book_append_sheet(wb, top, "Top 30");
+  const top = XLSX.utils.aoa_to_sheet([head, ...ps.slice(0,20).map(fila)]); top['!cols']=cols;
+  XLSX.utils.book_append_sheet(wb, top, "Top 20");
   const all = XLSX.utils.aoa_to_sheet([head, ...ps.map(fila)]); all['!cols']=cols;
   all['!autofilter']={ref:'A1:L'+(ps.length+1)};
   XLSX.utils.book_append_sheet(wb, all, "Participantes");
@@ -332,9 +332,9 @@ function informe(){
   if(n < UNIVERSO*0.8) recs.push({c:'#0072a8', t:'Ampliar la cobertura', d:'Participó el '+f1(pct(n,UNIVERSO))+' % del universo. Recomendamos una jornada de nivelación para los grupos de trabajo con menor participación'+(cero.length?', empezando por los que no registraron participantes':'')+'.'});
   h += '<h3>4. Recomendaciones de refuerzo</h3><ul class="recs">'+recs.map(r=>'<li style="--c:'+r.c+'"><b>'+r.t+'</b>'+r.d+'</li>').join('')+'</ul>';
 
-  // Top 30
-  const top = ps.slice(0,30);
-  h += '<h3 class="pb">5. Ganadores del taller de bienestar (Top 30)</h3><div class="tbl"><table><thead><tr><th class="n">#</th><th>Nombre completo</th><th>Grupo de trabajo</th><th class="n">Preguntas</th><th class="n">Asistencia</th><th class="n">Total</th></tr></thead><tbody>'+
+  // Top 20
+  const top = ps.slice(0,20);
+  h += '<h3 class="pb">5. Ganadores del taller de bienestar (Top 20)</h3><div class="tbl"><table><thead><tr><th class="n">#</th><th>Nombre completo</th><th>Grupo de trabajo</th><th class="n">Preguntas</th><th class="n">Asistencia</th><th class="n">Total</th></tr></thead><tbody>'+
     (top.length ? top.map((p,i)=>'<tr><td class="n">'+(i+1)+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.grupo)+'</td><td class="n">'+p.preguntas+'</td><td class="n">'+p.asistencia+'</td><td class="n"><b>'+p.total+'</b></td></tr>').join('') : '<tr><td colspan="6">Sin registros.</td></tr>')+'</tbody></table></div>';
   h += '<p style="font-size:14px;color:var(--muted)">Criterio: mayor puntaje total (8 puntos por respuesta correcta, máximo 72, más 28 por asistencia). En caso de empate, gana quien completó primero sus respuestas y su asistencia.</p>';
   h += '<div class="foot">Datos recolectados en ECO EFICIENCIA 360 con autorización de los participantes (Ley 1581 de 2012), únicamente para la evaluación de la jornada. Informe preparado por Simoné para la Imprenta Nacional de Colombia.</div>';
