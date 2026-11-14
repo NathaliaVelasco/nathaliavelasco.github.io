@@ -46,6 +46,12 @@ tr:last-child td{border-bottom:0}
 #panel[hidden]{display:none}
 /* ===== Informe para el cliente ===== */
 #informe[hidden]{display:none}
+.danger{margin-top:28px;border:1.5px solid #f0c3bd;background:#fff7f6;border-radius:6px;padding:16px 20px}
+.danger h4{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 6px;color:var(--bad)}
+.danger p{margin:0 0 10px;font-size:15px;max-width:70ch}
+.btn.red{background:var(--bad);border-color:var(--bad);color:#fff}
+#resetbox[hidden]{display:none}
+.okmsg{background:#e1f2e7;border-radius:6px;padding:10px 14px;margin-top:10px;font-weight:600}
 .rep-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .rep{background:#fff;border:1px solid var(--line);border-radius:6px;padding:40px 44px;max-width:900px;margin:0 auto}
 .rep-head{display:flex;align-items:center;gap:20px;border-bottom:6px solid transparent;border-image:linear-gradient(90deg,#98c340 0 8%,#0072a8 8% 33%,#68bc9a 33% 58%,#26a95e 58% 83%,#178a84 83%) 1;padding-bottom:18px;margin-bottom:22px}
@@ -65,6 +71,7 @@ tr:last-child td{border-bottom:0}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-1px}
 .rep table{font-size:14px}
 .rep th{background:#f1f4f4}
+.rep tr.dep td{background:#f6f8f8}
 .flag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px}
 .flag.hi{background:#e1f2e7;color:#1d7a45} .flag.lo{background:#fbe4e1;color:#b3261e} .flag.mid{background:#fdf0e0;color:#9a5a00}
 .verdict{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
@@ -121,7 +128,18 @@ tr:last-child td{border-bottom:0}
       <thead><tr><th class="n">#</th><th>Nombre completo</th><th>Grupo de trabajo</th><th class="n">Preguntas</th><th class="n">Asistencia</th><th class="n">Total</th><th>Completó</th></tr></thead>
       <tbody id="tb"></tbody>
     </table></div>
-  </div>
+      <div class="danger">
+      <h4>Reiniciar datos</h4>
+      <p>Borra todos los participantes, respuestas y asistencias registrados. Úsalo solo antes de empezar las actividades del 20 de noviembre. Esta acción no se puede deshacer: si necesitas conservar algo, descarga primero el Excel.</p>
+      <button class="btn red" type="button" id="resetopen">Reiniciar datos</button>
+      <div id="resetbox" hidden style="margin-top:12px">
+        <label for="resetconf">Para confirmar, escribe REINICIAR</label>
+        <div class="row"><input id="resetconf" autocomplete="off" placeholder="REINICIAR"><button class="btn red" type="button" id="resetgo">Borrar todo</button><button class="btn alt" type="button" id="resetcancel">Cancelar</button></div>
+      </div>
+      <div class="err" id="reseterr" role="alert"></div>
+      <div id="resetok"></div>
+    </div>
+</div>
   <div id="informe" hidden>
     <div class="rep-bar"><button class="btn alt" type="button" id="volver">← Volver a resultados</button><button class="btn" type="button" id="imprimir">Imprimir o guardar en PDF</button></div>
     <article class="rep" id="rep"></article>
@@ -205,6 +223,14 @@ document.getElementById('excel').addEventListener('click', async e=>{ e.target.d
 
 // ===== Informe =====
 const UNIVERSO = 255;
+const DEPS = [
+  ["Gerencia General", ["Gerencia General","Grupo Control Disciplinario Interno","Grupo de Comunicaciones"]],
+  ["Oficina Asesora de Planeación", ["Oficina Asesora de Planeación","Grupo de Mejora Continua"]],
+  ["Subgerencia Comercial y de Divulgación", ["Subgerencia Comercial y de Divulgación","Grupo Gestión de Ventas","Grupo Promoción y Divulgación"]],
+  ["Subgerencia de Producción", ["Subgerencia de Producción","Grupo Impresión Gráfica","Grupo Impresión en Seguridad y Servicios Digitales","Grupo Diario Oficial y Gacetas","Grupo Despachos","Grupo Mantenimiento Operativo","Grupo Aseguramiento de la Calidad"]],
+  ["Subgerencia Administrativa y Financiera", ["Subgerencia Administrativa y Financiera","Grupo Talento Humano","Grupo Financiera","Grupo Adquisiciones","Grupo de Facturación y Cartera","Grupo de Almacén General","Grupo de Infraestructura y Servicios Generales","Grupo de Gestión Documental"]]
+];
+const DEPCOL = ["#178a84","#0072a8","#98c340","#e8891c","#26a95e"];
 const PAL = ["#178a84","#0072a8","#26a95e","#e8891c","#98c340","#68bc9a","#7b5ea7","#c2362b","#3f9fc4","#b8860b","#5a6266","#d46a9f"];
 const QTXT = {politica:["Número de compromisos de la Política (9)","Significado de ECONOMÍA CIRCULAR","Actitud SÉ HONESTO"],
   energia:["Uso del computador en las pausas","Aprovechar la luz natural","Apagar todo al salir de la oficina"],
@@ -242,12 +268,15 @@ function informe(){
   const ps = people();
   const n = ps.length;
   const ans = rows.filter(r=>r.modulo);
-  // participación por grupo
+  // participación por dependencia y grupo
   const byG = {}; ps.forEach(p=>{ byG[p.grupo]=(byG[p.grupo]||0)+1; });
-  const grupos = Object.keys(byG).sort((a,b)=>a.localeCompare(b,'es',{numeric:true}));
   const sinReg = Math.max(UNIVERSO-n,0);
-  const gParts = grupos.map((g,i)=>({l:g,v:byG[g],c:PAL[i%PAL.length]}));
-  const pieG = pieSVG([...gParts,{l:"No participaron",v:sinReg,c:"#e0e4e4"}],240);
+  const known = new Set(DEPS.flatMap(d=>d[1]));
+  const otros = Object.keys(byG).filter(g=>!known.has(g));
+  const deps = DEPS.map(([d,gs],i)=>({l:d, gs, v:gs.reduce((s,g)=>s+(byG[g]||0),0), c:DEPCOL[i]}));
+  if(otros.length) deps.push({l:"Otros", gs:otros, v:otros.reduce((s,g)=>s+byG[g],0), c:"#7b5ea7"});
+  const gParts = deps;
+  const pieG = pieSVG([...deps,{l:"No participaron",v:sinReg,c:"#e0e4e4"}],240);
   // aciertos por categoría
   const cat = {}, q = {};
   Object.keys(MODNAME).forEach(m=>{ cat[m]={ok:0,tot:0}; q[m]=[0,1,2].map(()=>({ok:0,tot:0})); });
@@ -268,12 +297,15 @@ function informe(){
     '<div class="kpi"><b>'+f1(prom)+'</b>puntaje promedio (de 100)</div></div>';
   h += '<p style="margin-top:12px">De un universo de '+UNIVERSO+' colaboradores, '+n+' participaron en la evaluación, una cobertura del '+f1(pct(n,UNIVERSO))+' %.'+(sinReg?' '+sinReg+' personas no se registraron.':'')+'</p>';
 
-  h += '<h3>2. Participación por grupo de trabajo</h3><div class="pie-row"><div>'+pieG+'</div><div class="legend">'+
-    gParts.map(p=>'<div><i style="background:'+p.c+'"></i>'+esc(p.l)+': <b>'+p.v+'</b> ('+f1(pct(p.v,UNIVERSO))+' % del universo)</div>').join('')+
+  h += '<h3>2. Participación por dependencia y grupo de trabajo</h3><div class="pie-row"><div>'+pieG+'</div><div class="legend">'+
+    deps.map(p=>'<div><i style="background:'+p.c+'"></i>'+esc(p.l)+': <b>'+p.v+'</b> ('+f1(pct(p.v,UNIVERSO))+' % del universo)</div>').join('')+
     '<div><i style="background:#e0e4e4"></i>No participaron: <b>'+sinReg+'</b> ('+f1(pct(sinReg,UNIVERSO))+' %)</div></div></div>';
-  h += '<div class="tbl" style="margin-top:14px"><table><thead><tr><th>Grupo de trabajo</th><th class="n">Participantes</th><th class="n">% del universo (255)</th><th class="n">% de los participantes</th></tr></thead><tbody>'+
-    grupos.map(g=>'<tr><td>'+esc(g)+'</td><td class="n">'+byG[g]+'</td><td class="n">'+f1(pct(byG[g],UNIVERSO))+' %</td><td class="n">'+f1(pct(byG[g],n))+' %</td></tr>').join('')+
+  h += '<div class="tbl" style="margin-top:14px"><table><thead><tr><th>Dependencia / grupo de trabajo</th><th class="n">Participantes</th><th class="n">% del universo (255)</th><th class="n">% de los participantes</th></tr></thead><tbody>'+
+    deps.map(d=>'<tr class="dep"><td><i style="display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;background:'+d.c+'"></i><b>'+esc(d.l)+'</b></td><td class="n"><b>'+d.v+'</b></td><td class="n"><b>'+f1(pct(d.v,UNIVERSO))+' %</b></td><td class="n"><b>'+f1(pct(d.v,n))+' %</b></td></tr>'+
+      d.gs.map(g=>{ const v=byG[g]||0; return '<tr><td style="padding-left:30px">'+esc(g===d.l?g+' (despacho)':g)+'</td><td class="n">'+v+'</td><td class="n">'+f1(pct(v,UNIVERSO))+' %</td><td class="n">'+f1(pct(v,n))+' %</td></tr>'; }).join('')).join('')+
     '<tr><td><b>Total</b></td><td class="n"><b>'+n+'</b></td><td class="n"><b>'+f1(pct(n,UNIVERSO))+' %</b></td><td class="n"><b>100,0 %</b></td></tr></tbody></table></div>';
+  const cero = DEPS.flatMap(d=>d[1]).filter(g=>!byG[g]);
+  if(cero.length && n) h += '<p style="font-size:14px;color:var(--muted)">Sin participantes registrados: '+cero.map(g=>esc(g)).join(', ')+'.</p>';
 
   h += '<h3>3. Aciertos y errores por categoría</h3><div class="pies3">'+
     Object.keys(MODNAME).map(m=>{ const c=cat[m], a=pct(c.ok,c.tot);
@@ -297,7 +329,7 @@ function informe(){
   weak.forEach(x=>recs.push({c:MODCOLOR[x.m], t:QTXT[x.m][x.i]+' · '+f1(x.a)+' % de aciertos', d:REC[x.m][x.i]}));
   mid.slice(0,3).forEach(x=>recs.push({c:MODCOLOR[x.m], t:QTXT[x.m][x.i]+' · '+f1(x.a)+' % de aciertos', d:'Nivel aceptable. Conviene repasarlo en las comunicaciones internas: '+REC[x.m][x.i].charAt(0).toLowerCase()+REC[x.m][x.i].slice(1)}));
   if(!weak.length && !mid.length && flat.some(x=>x.tot)) recs.push({c:'#26a95e', t:'Mantener el conocimiento', d:'Todos los temas superan el 85 % de aciertos. Recomendamos sostenerlo con recordatorios periódicos y la capacitación trimestral que prevé el PGIRP.'});
-  if(n < UNIVERSO*0.8) recs.push({c:'#0072a8', t:'Ampliar la cobertura', d:'Participó el '+f1(pct(n,UNIVERSO))+' % del universo. Recomendamos una jornada de nivelación para los grupos de trabajo con menor participación.'});
+  if(n < UNIVERSO*0.8) recs.push({c:'#0072a8', t:'Ampliar la cobertura', d:'Participó el '+f1(pct(n,UNIVERSO))+' % del universo. Recomendamos una jornada de nivelación para los grupos de trabajo con menor participación'+(cero.length?', empezando por los que no registraron participantes':'')+'.'});
   h += '<h3>4. Recomendaciones de refuerzo</h3><ul class="recs">'+recs.map(r=>'<li style="--c:'+r.c+'"><b>'+r.t+'</b>'+r.d+'</li>').join('')+'</ul>';
 
   // Top 30
@@ -311,6 +343,24 @@ function informe(){
 document.getElementById('verinf').addEventListener('click', async e=>{ e.target.disabled=true; try{ rows = await fetchRows(); }catch(x){} informe(); document.getElementById('panel').hidden=true; document.getElementById('informe').hidden=false; window.scrollTo(0,0); e.target.disabled=false; });
 document.getElementById('volver').addEventListener('click', ()=>{ document.getElementById('informe').hidden=true; document.getElementById('panel').hidden=false; render(); });
 document.getElementById('imprimir').addEventListener('click', ()=>window.print());
+
+// ===== Reinicio =====
+document.getElementById('resetopen').addEventListener('click',()=>{ document.getElementById('resetbox').hidden=false; document.getElementById('resetok').innerHTML=''; document.getElementById('resetconf').focus(); });
+document.getElementById('resetcancel').addEventListener('click',()=>{ document.getElementById('resetbox').hidden=true; document.getElementById('resetconf').value=''; document.getElementById('reseterr').textContent=''; });
+document.getElementById('resetgo').addEventListener('click', async e=>{
+  const conf = document.getElementById('resetconf').value.trim().toUpperCase(), err = document.getElementById('reseterr');
+  if(conf!=='REINICIAR'){ err.textContent='Escribe REINICIAR para confirmar.'; return; }
+  e.target.disabled=true; err.textContent='';
+  try{
+    const r = await fetch(SB+"eco360_reiniciar",{method:"POST",headers:{"apikey":SBKEY,"Authorization":"Bearer "+SBKEY,"Content-Type":"application/json"},body:JSON.stringify({p_clave:clave,p_confirmacion:conf})});
+    if(!r.ok) throw new Error();
+    const d = await r.json();
+    document.getElementById('resetbox').hidden=true; document.getElementById('resetconf').value='';
+    document.getElementById('resetok').innerHTML='<div class="okmsg">Listo. Se borraron '+d.participantes+' participantes y '+d.respuestas+' respuestas. El registro quedó en cero.</div>';
+    rows = await fetchRows(); render();
+  }catch(x){ err.textContent='No se pudo reiniciar. Revisa tu conexión e intenta de nuevo.'; }
+  e.target.disabled=false;
+});
 </script>
 </body>
 </html>
